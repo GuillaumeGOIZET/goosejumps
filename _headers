@@ -1,0 +1,4 @@
+# Netlify : le service worker ne doit jamais rester en cache,
+# sinon les téléphones mettent longtemps à recevoir les mises à jour
+/sw.js
+  Cache-Control: no-cache

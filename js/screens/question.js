@@ -165,9 +165,12 @@ export function render(root, app, params) {
 
   // Met à jour uniquement le chrono (sans redessiner tout l'écran)
   function tick() {
+    const before = timeLeft;
     timeLeft = Math.max(0, Math.ceil((deadline - Date.now()) / 1000));
+    // On ne redessine qu'au changement de seconde (les animations du sablier
+    // et du chiffre se rejouent ainsi une fois par seconde)
     const slot = root.querySelector('.timer-slot');
-    if (slot) slot.innerHTML = timerHTML();
+    if (slot && timeLeft !== before) slot.innerHTML = timerHTML();
     if (timeLeft === 0) {
       if (navigator.vibrate) navigator.vibrate(300);
       showAnswer();

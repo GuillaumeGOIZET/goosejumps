@@ -1,0 +1,4 @@
+# Netlify : ces fichiers servent au développement, ils ne doivent pas être publics
+/docs/*     /   404!
+/CLAUDE.md  /   404!
+/README.md  /   404!

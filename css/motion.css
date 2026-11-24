@@ -1,0 +1,698 @@
+/* =========================================================
+   Animations et micro-interactions
+   Tout est regroupé ici pour être facile à régler ou à retirer
+   (supprimer ce fichier et js/motion.js suffit à tout enlever).
+
+   1. Clic : enfoncement plus « élastique » + onde (créée par js/motion.js)
+   2. Survol : uniquement sur les appareils avec souris (pas sur mobile,
+      sinon l'effet reste « collé » après un tap)
+   3. Entrée d'écran : le contenu arrive en cascade
+   4. Petites animations par écran (oie, chrono, VS, podium…)
+
+   Les animations utilisent surtout les propriétés `translate`, `scale`
+   et `rotate` (et pas `transform`) pour ne pas écraser les rotations
+   déjà prévues dans les autres fichiers CSS (titres penchés, etc.).
+
+   base.css coupe tout si l'utilisateur demande moins d'animations
+   (réglage « Réduire les animations » du téléphone).
+   ========================================================= */
+
+:root {
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1); /* dépasse un peu, puis revient */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+body {
+  transition: background-color 0.4s ease; /* passage en douceur vers le fond sombre des Battles */
+}
+
+/* =========================================================
+   1. CLIC
+   ========================================================= */
+
+/* Les gros boutons en relief : retour élastique après le clic */
+.btn,
+.icon-btn,
+.type-btn,
+.level-btn,
+.pick-btn,
+.theme-btn,
+.event-card--back {
+  transition:
+    transform 0.18s var(--ease-bounce),
+    box-shadow 0.18s var(--ease-bounce),
+    filter 0.18s ease;
+}
+
+/* Les petits boutons (pastilles, onglets…) : ils rétrécissent au clic */
+.swatch,
+.chip,
+.tab,
+.cat-btn,
+.roster__item,
+.winner-btn,
+.dashed-btn,
+.link-btn,
+.mini-logo,
+.pill {
+  transition:
+    transform 0.2s var(--ease-bounce),
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.swatch:active,
+.chip:active,
+.tab:active,
+.cat-btn:active,
+.roster__item:active,
+.winner-btn:active,
+.dashed-btn:active,
+.link-btn:active,
+.mini-logo:active {
+  transform: scale(0.9);
+}
+
+/* Pendant l'appui, l'enfoncement est instantané */
+:is(.btn, .icon-btn, .type-btn, .level-btn, .pick-btn, .theme-btn, .event-card--back,
+    .swatch, .chip, .tab, .cat-btn, .roster__item, .winner-btn, .dashed-btn, .link-btn, .mini-logo):active {
+  transition-duration: 0.05s;
+}
+
+/* Onde au clic : js/motion.js ajoute un <span class="ripple"> dans le bouton.
+   `isolation` + `z-index: -1` placent l'onde au-dessus du fond du bouton
+   mais sous son texte. */
+.btn,
+.icon-btn,
+.type-btn,
+.level-btn,
+.pick-btn,
+.theme-btn,
+.winner-btn,
+.chip,
+.cat-btn,
+.tab,
+.dashed-btn {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.ripple {
+  position: absolute;
+  z-index: -1;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.22;
+  pointer-events: none;
+  animation: ripple 0.6s var(--ease-out) forwards;
+}
+
+@keyframes ripple {
+  from {
+    scale: 0;
+    opacity: 0.3;
+  }
+  to {
+    scale: 1;
+    opacity: 0;
+  }
+}
+
+/* Les oies sautent quand on les touche (js/motion.js ajoute .is-jumping) */
+.is-jumping > svg {
+  animation: goose-jump 0.6s var(--ease-out);
+}
+
+@keyframes goose-jump {
+  0% {
+    translate: 0 0;
+    scale: 1 1;
+  }
+  15% {
+    translate: 0 0;
+    scale: 1.12 0.86; /* on s'écrase avant de sauter */
+  }
+  45% {
+    translate: 0 -26px;
+    scale: 0.92 1.1;
+  }
+  75% {
+    translate: 0 0;
+    scale: 1.08 0.92;
+  }
+  100% {
+    translate: 0 0;
+    scale: 1 1;
+  }
+}
+
+/* =========================================================
+   2. SURVOL (souris uniquement)
+   ========================================================= */
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover:not(:active):not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 calc(var(--lift) + 3px) 0 var(--btn-shadow);
+    filter: brightness(1.06);
+  }
+
+  .icon-btn:hover:not(:active) {
+    transform: translateY(-2px) rotate(-5deg);
+    box-shadow: 0 6px 0 var(--btn-shadow);
+  }
+
+  .type-btn:hover:not(:active) {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 0 var(--ink);
+  }
+
+  .type-btn.is-selected:hover:not(:active) {
+    box-shadow: 0 0 0 3px var(--accent), 0 8px 0 var(--ink);
+  }
+
+  .level-btn:hover:not(:active) {
+    transform: translateY(-3px) rotate(-0.8deg);
+    box-shadow: 0 10px 0 var(--ink);
+  }
+
+  .pick-btn:hover:not(:active):not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 9px 0 var(--ink);
+  }
+
+  .pick-btn--battle:hover:not(:active):not(:disabled) {
+    box-shadow: 0 9px 0 var(--accent);
+  }
+
+  .theme-btn:hover:not(:active) {
+    transform: translateY(-3px) rotate(-1deg);
+    box-shadow: 0 9px 0 var(--accent);
+  }
+
+  .event-card--back:hover:not(:active) {
+    transform: translateY(-5px) rotate(-1deg);
+    box-shadow: 0 14px 0 var(--ink);
+  }
+
+  .swatch:hover:not(:active),
+  .chip:hover:not(:active),
+  .cat-btn:hover:not(:active),
+  .pill:hover {
+    transform: translateY(-2px) scale(1.07);
+  }
+
+  .pill:hover {
+    transform: translateY(-2px) rotate(-4deg) scale(1.1);
+  }
+
+  .tab:hover:not(.is-selected) {
+    background: var(--circle);
+  }
+
+  .roster__item:hover:not(:active) {
+    transform: translateY(-4px);
+  }
+
+  .winner-btn:hover:not(:active) {
+    transform: scale(1.04);
+  }
+
+  .dashed-btn:hover {
+    border-color: var(--text-2);
+    color: var(--text);
+  }
+
+  .link-btn:hover {
+    color: var(--text);
+  }
+
+  .mini-logo:hover:not(:active) {
+    transform: rotate(-4deg) scale(1.06);
+  }
+
+  /* Les lignes du classement et des règles glissent légèrement */
+  .rank-row,
+  .rule {
+    transition: transform 0.2s var(--ease-bounce), border-color 0.2s ease;
+  }
+
+  .rank-row:hover,
+  .rule:hover {
+    transform: translateX(5px);
+    border-color: var(--dashed);
+  }
+
+  /* Les oies qu'on peut toucher montrent qu'elles sont « vivantes » */
+  .home__mascot,
+  .victory__goose,
+  .turn-banner__avatar,
+  .editor__preview {
+    cursor: pointer;
+  }
+}
+
+/* =========================================================
+   3. ENTRÉE D'ÉCRAN
+   js/app.js ajoute .screen-enter au premier affichage d'un écran.
+   Les enfants arrivent l'un après l'autre (effet cascade).
+   `:where()` donne une priorité nulle à ces règles : un élément qui a
+   déjà sa propre animation (bannière, résultat…) garde la sienne.
+   ========================================================= */
+:where(.screen-enter > :not(.deco)) {
+  animation: rise 0.45s var(--ease-out) both;
+}
+
+:where(.screen-enter > :nth-child(2)) { animation-delay: 0.03s; }
+:where(.screen-enter > :nth-child(3)) { animation-delay: 0.06s; }
+:where(.screen-enter > :nth-child(4)) { animation-delay: 0.09s; }
+:where(.screen-enter > :nth-child(5)) { animation-delay: 0.12s; }
+:where(.screen-enter > :nth-child(6)) { animation-delay: 0.15s; }
+:where(.screen-enter > :nth-child(7)) { animation-delay: 0.18s; }
+:where(.screen-enter > :nth-child(8)) { animation-delay: 0.21s; }
+:where(.screen-enter > :nth-child(n + 9)) { animation-delay: 0.24s; }
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    translate: 0 18px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+/* Apparition « élastique » réutilisée un peu partout */
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    scale: 0.6;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+/* Petits éléments en liste : chacun arrive un peu après le précédent */
+.home__pills > :nth-child(1),
+.types__grid > :nth-child(1),
+.theme-grid > :nth-child(1),
+.roster > :nth-child(1) { animation-delay: 0.15s; }
+.home__pills > :nth-child(2),
+.types__grid > :nth-child(2),
+.theme-grid > :nth-child(2),
+.roster > :nth-child(2) { animation-delay: 0.2s; }
+.home__pills > :nth-child(3),
+.types__grid > :nth-child(3),
+.theme-grid > :nth-child(3),
+.roster > :nth-child(3) { animation-delay: 0.25s; }
+.home__pills > :nth-child(4),
+.types__grid > :nth-child(4),
+.theme-grid > :nth-child(4),
+.roster > :nth-child(4) { animation-delay: 0.3s; }
+.types__grid > :nth-child(5),
+.roster > :nth-child(5) { animation-delay: 0.35s; }
+.types__grid > :nth-child(6) { animation-delay: 0.4s; }
+.types__grid > :nth-child(7) { animation-delay: 0.45s; }
+
+.home__pills > *,
+.types__grid > *,
+.theme-grid > * {
+  animation: pop-in 0.4s var(--ease-bounce) both;
+}
+
+/* Lignes de listes : elles glissent depuis la gauche.
+   Préfixe .screen-enter : uniquement au premier affichage de l'écran,
+   sinon l'ordre de jeu rejouerait la cascade à chaque image du dé. */
+.screen-enter .rank-list > *,
+.screen-enter .rules-list > *,
+.screen-enter .order-list > *,
+.screen-enter .pick-list > * {
+  animation: slide-in 0.4s var(--ease-out) both;
+}
+
+.rank-list > :nth-child(2),
+.rules-list > :nth-child(2),
+.order-list > :nth-child(2),
+.pick-list > :nth-child(2) { animation-delay: 0.06s; }
+.rank-list > :nth-child(3),
+.rules-list > :nth-child(3),
+.order-list > :nth-child(3),
+.pick-list > :nth-child(3) { animation-delay: 0.12s; }
+.rank-list > :nth-child(4),
+.rules-list > :nth-child(4),
+.order-list > :nth-child(4),
+.pick-list > :nth-child(4) { animation-delay: 0.18s; }
+.rank-list > :nth-child(n + 5),
+.rules-list > :nth-child(n + 5),
+.order-list > :nth-child(n + 5),
+.pick-list > :nth-child(n + 5) { animation-delay: 0.24s; }
+
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    translate: -24px 0;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+/* =========================================================
+   4. ANIMATIONS PAR ÉCRAN
+   ========================================================= */
+
+/* Cercles décoratifs du fond : ils dérivent lentement */
+.screen > .deco {
+  animation: drift 14s ease-in-out infinite alternate;
+}
+
+.screen > .deco:nth-of-type(even) {
+  animation-duration: 18s;
+  animation-direction: alternate-reverse;
+}
+
+@keyframes drift {
+  from {
+    translate: 0 0;
+    scale: 1;
+  }
+  to {
+    translate: 18px 26px;
+    scale: 1.08;
+  }
+}
+
+/* Oie qui flotte doucement (accueil, tour, victoire) */
+@keyframes float-y {
+  from {
+    translate: 0 0;
+  }
+  to {
+    translate: 0 -8px;
+  }
+}
+
+/* ---------- Accueil ---------- */
+.home__goose {
+  animation: title-bob 2.4s ease-in-out infinite alternate;
+}
+
+.home__jumps {
+  animation: title-bob 2.4s ease-in-out -1.2s infinite alternate;
+}
+
+@keyframes title-bob {
+  from {
+    translate: 0 0;
+  }
+  to {
+    translate: 0 -6px;
+  }
+}
+
+.home__mascot {
+  animation: float-y 2.8s ease-in-out infinite alternate;
+}
+
+/* Bouton PLAY : il « respire » pour attirer le regard */
+.home__play {
+  animation: breathe 2.4s ease-in-out 1s infinite;
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    scale: 1;
+  }
+  50% {
+    scale: 1.03;
+  }
+}
+
+/* ---------- Joueurs ---------- */
+/* L'oie de l'éditeur rebondit à chaque changement de couleur ou de chapeau */
+.editor__preview > svg {
+  animation: pop-in 0.35s var(--ease-bounce);
+}
+
+.swatch.is-selected,
+.chip.is-selected,
+.cat-btn.is-selected,
+.tab.is-selected {
+  animation: select-pop 0.3s var(--ease-bounce);
+}
+
+@keyframes select-pop {
+  from {
+    scale: 0.85;
+  }
+  to {
+    scale: 1;
+  }
+}
+
+/* Uniquement à l'arrivée sur l'écran (il se redessine à chaque choix) */
+:where(.screen-enter) .roster > * {
+  animation: pop-in 0.35s var(--ease-bounce) both;
+}
+
+/* ---------- Tour ---------- */
+.turn-banner__avatar {
+  animation: float-y 1.4s ease-in-out infinite alternate;
+}
+
+/* Le joueur actif sautille sur la barre de progression */
+.racer--active .avatar {
+  animation: hop 1.1s ease-in-out infinite;
+}
+
+@keyframes hop {
+  0%,
+  60%,
+  100% {
+    translate: 0 0;
+  }
+  30% {
+    translate: 0 -7px;
+  }
+}
+
+/* Le drapeau d'arrivée s'agite */
+.race__flag {
+  transform-origin: bottom left;
+  animation: flag-wave 1.6s ease-in-out infinite;
+}
+
+@keyframes flag-wave {
+  0%,
+  100% {
+    rotate: 0deg;
+  }
+  50% {
+    rotate: -8deg;
+  }
+}
+
+/* ---------- Carte question ---------- */
+.level-btn {
+  animation: pop-in 0.4s var(--ease-bounce) both;
+}
+
+.level-btn:nth-of-type(2) {
+  animation-delay: 0.08s;
+}
+
+/* Le reflet de la carte tourne lentement */
+.card__shine {
+  animation: shine 4s ease-in-out infinite alternate;
+}
+
+@keyframes shine {
+  from {
+    translate: 0 0;
+    opacity: 0.25;
+  }
+  to {
+    translate: -14px 12px;
+    opacity: 0.35;
+  }
+}
+
+/* Le sablier bascule à chaque seconde (le chrono est redessiné chaque seconde) */
+.timer svg {
+  animation: hourglass 0.6s var(--ease-bounce);
+}
+
+@keyframes hourglass {
+  from {
+    rotate: -14deg;
+  }
+  to {
+    rotate: 0deg;
+  }
+}
+
+/* Les 10 dernières secondes : le chiffre bat comme un cœur, la barre clignote */
+.timer--low .timer__time {
+  animation: heartbeat 1s ease-out;
+}
+
+.timer--low {
+  animation: shake 0.35s ease-in-out;
+}
+
+@keyframes heartbeat {
+  0% {
+    scale: 1.35;
+  }
+  100% {
+    scale: 1;
+  }
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  25% {
+    translate: -3px 0;
+  }
+  75% {
+    translate: 3px 0;
+  }
+}
+
+/* Titre du résultat (Correct!, Wrong!…) : il rebondit */
+.result__title,
+.battle-result__title {
+  animation: pop-in 0.5s var(--ease-bounce) 0.1s both;
+}
+
+/* ---------- Chance / Special ---------- */
+.event-card__mark {
+  animation: mark-wiggle 2.6s ease-in-out infinite;
+}
+
+@keyframes mark-wiggle {
+  0%,
+  100% {
+    rotate: 0deg;
+    scale: 1;
+  }
+  25% {
+    rotate: -6deg;
+    scale: 1.05;
+  }
+  50% {
+    rotate: 0deg;
+    scale: 1;
+  }
+  75% {
+    rotate: 6deg;
+    scale: 1.05;
+  }
+}
+
+/* ---------- Battle ---------- */
+.versus__vs {
+  animation: vs-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes vs-pulse {
+  0%,
+  100% {
+    scale: 1;
+  }
+  50% {
+    scale: 1.15;
+  }
+}
+
+/* Les deux combattants arrivent chacun de leur côté (au premier affichage) */
+.screen-enter .versus > .fighter:first-child {
+  animation: from-left 0.5s var(--ease-bounce) both;
+}
+
+.screen-enter .versus > .fighter:last-child {
+  animation: from-right 0.5s var(--ease-bounce) both;
+}
+
+@keyframes from-left {
+  from {
+    opacity: 0;
+    translate: -40px 0;
+  }
+}
+
+@keyframes from-right {
+  from {
+    opacity: 0;
+    translate: 40px 0;
+  }
+}
+
+.winner-btn {
+  animation: pop-in 0.4s var(--ease-bounce) both;
+}
+
+/* ---------- Classement ---------- */
+/* Les marches du podium montent : 3e, puis 2e, puis 1er (suspense !)
+   Ordre à l'écran : 2e, 1er, 3e */
+.podium__block {
+  transform-origin: bottom;
+  animation: grow-up 0.6s var(--ease-bounce) both;
+}
+
+.podium__step > svg {
+  animation: pop-in 0.4s var(--ease-bounce) both;
+}
+
+.podium__step:nth-child(3) .podium__block { animation-delay: 0.1s; }
+.podium__step:nth-child(3) > svg { animation-delay: 0.4s; }
+.podium__step:nth-child(1) .podium__block { animation-delay: 0.3s; }
+.podium__step:nth-child(1) > svg { animation-delay: 0.6s; }
+.podium__step:nth-child(2) .podium__block { animation-delay: 0.5s; }
+.podium__step:nth-child(2) > svg { animation-delay: 0.8s; }
+
+@keyframes grow-up {
+  from {
+    scale: 1 0;
+  }
+  to {
+    scale: 1 1;
+  }
+}
+
+/* Les barres de progression se remplissent */
+.rank-row__bar div {
+  transform-origin: left;
+  animation: fill-bar 0.9s var(--ease-out) 0.2s both;
+}
+
+@keyframes fill-bar {
+  from {
+    scale: 0 1;
+  }
+}
+
+/* ---------- Victoire ---------- */
+.victory__title {
+  animation: winner-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes winner-pulse {
+  0%,
+  100% {
+    scale: 1;
+  }
+  50% {
+    scale: 1.06;
+  }
+}

@@ -29,6 +29,7 @@ Puis ouvrir http://localhost:8080 et passer en vue mobile dans les DevTools (390
 | Changer une couleur, une police, un arrondi      | `css/tokens.css` |
 | Modifier un écran                                | `js/screens/<écran>.js` + `css/screens.css` |
 | Ajouter une couleur de plumes ou un chapeau      | `js/goose.js` |
+| Régler ou retirer les animations (hover, clic, entrées d'écran) | `css/motion.css` + `js/motion.js` |
 
 Effets de cartes reconnus (`effect.type`) : `move`, `moveOthers`, `swap`, `skipTurn`, `judged`, `bonusQuestion`, `manual`.
 Voir le commentaire en haut de `js/screens/event.js`.
@@ -44,6 +45,10 @@ Voir le commentaire en haut de `js/screens/event.js`.
 Seuls ces fichiers/dossiers sont nécessaires : `index.html`, `manifest.webmanifest`, `sw.js`, `css/`, `js/`, `data/`, `assets/`.
 Le dossier `docs/` (maquettes) n'a pas besoin d'être servi.
 
+- **Netlify** (le plus simple) : sur app.netlify.com, *Add new site → Deploy manually*, puis glisser-déposer
+  le dossier du projet entier. Ou *Import from Git* avec le dépôt GitHub : pas de commande de build,
+  *Publish directory* = `.` (la racine). Les fichiers `_redirects` (cache `docs/`) et `_headers`
+  (`sw.js` jamais en cache) sont lus automatiquement par Netlify.
 - **GitHub Pages** : pousser le dépôt, puis *Settings → Pages → Deploy from branch → main / root*.
   Tous les chemins sont relatifs, l'app marche aussi dans un sous-dossier (`https://user.github.io/goose-jumps/`).
 - **VPS Debian (nginx)** : copier les fichiers dans le dossier du site, activer HTTPS (Certbot) et `gzip on;`

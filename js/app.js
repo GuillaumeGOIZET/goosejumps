@@ -13,6 +13,7 @@
 
 import { loadData } from './game.js';
 import { loadState, saveState, createState } from './state.js';
+import { enterScreen } from './motion.js';
 
 import * as home from './screens/home.js';
 import * as rules from './screens/rules.js';
@@ -45,6 +46,7 @@ export const app = {
     root.onclick = null;
     root.innerHTML = '';
     cleanup = screen.render(root, app, params);
+    enterScreen(root); // animation d'arrivée (css/motion.css)
 
     // Nouvel écran : on remonte en haut et on place le focus sur le titre
     window.scrollTo(0, 0);
