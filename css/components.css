@@ -183,6 +183,7 @@
   font-weight: 900;
   font-size: 13px;
   letter-spacing: 1.5px;
+  white-space: nowrap;
 }
 
 /* ---------- Avatar dans un rond ---------- */

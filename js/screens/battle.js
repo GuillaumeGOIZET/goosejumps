@@ -69,9 +69,9 @@ export function render(root, app) {
     if (phase === 'question' || phase === 'winner') {
       const info = SPACE_TYPES[theme];
       return `
-      <div class="card battle-card" style="--c: ${info.color}">
+      <div class="card battle-card">
         <div class="card__head">
-          <span class="tag">${info.label.toUpperCase()}</span>
+          <span class="tag" style="--tag-color: ${info.color}">${info.label.toUpperCase()}</span>
           <span class="battle-card__kind">SPEED QUESTION</span>
         </div>
         <h1 class="battle-card__question">${esc(question.question)}</h1>

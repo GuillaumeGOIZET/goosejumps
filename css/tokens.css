@@ -55,6 +55,8 @@
   --chance-border: #04A339;
   --special: #F18814;
   --special-border: #FFF7E7;
+  --battle-card: #F9D0D2;         /* carte question de l'écran Battle */
+  --battle-card-border: #E52421;
 
   /* Polices */
   --font-title: 'Lilita One', 'Arial Rounded MT Bold', sans-serif;

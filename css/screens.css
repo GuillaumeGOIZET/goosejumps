@@ -1064,13 +1064,15 @@ body:has(.battle) {
 }
 
 .battle-card {
-  border-color: var(--text);
+  --c: var(--battle-card);
+  border-color: var(--battle-card-border);
   box-shadow: 0 8px 0 var(--accent);
 }
 
 .battle-card__kind {
   font-size: 13px;
   font-weight: 900;
+  text-align: right;
 }
 
 .battle-card__question {
