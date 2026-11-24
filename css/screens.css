@@ -302,3 +302,266 @@
   font-family: var(--font-title);
   font-size: 22px;
 }
+
+/* ---------- Tour (Turn) ---------- */
+.turn {
+  padding-top: 20px;
+  gap: 14px;
+}
+
+.race {
+  border-radius: var(--r-lg);
+  padding: 12px 14px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.race__labels {
+  display: flex;
+  justify-content: space-between;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  color: var(--text-2);
+}
+
+.race__track {
+  position: relative;
+  height: 104px;
+}
+
+.race__line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 84px;
+  height: 14px;
+  border-radius: 999px;
+  background: var(--bg);
+  border: var(--b-thin) solid var(--ink);
+}
+
+.race__flag {
+  position: absolute;
+  right: -2px;
+  top: 76px;
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  background: var(--accent);
+  border: var(--b-thin) solid var(--ink);
+}
+
+.racer {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  transition: left 0.6s ease;
+}
+
+.racer--active {
+  z-index: 2;
+}
+
+.racer__space {
+  font-size: 11px;
+  font-weight: 900;
+  background: var(--ink);
+  color: var(--text);
+  padding: 1px 6px;
+  border-radius: 999px;
+}
+
+.turn-banner {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  border-radius: 26px;
+  border: var(--b) solid var(--ink);
+  box-shadow: 0 var(--lift) 0 var(--ink);
+  background: var(--accent);
+  color: var(--ink);
+}
+
+.turn-banner__avatar {
+  flex-shrink: 0;
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: var(--b) solid var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.turn-banner__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.turn-banner__meta {
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+}
+
+.turn-banner h1 {
+  font-size: 32px;
+  line-height: 1;
+  overflow-wrap: anywhere;
+}
+
+.types {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.types__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.types__hint {
+  font-size: 13px;
+}
+
+.types__hint strong {
+  color: var(--text);
+  font-weight: 900;
+}
+
+.nap {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: center;
+}
+
+.nap h2 {
+  font-size: 30px;
+  color: var(--chance);
+}
+
+.nap p {
+  font-weight: 800;
+}
+
+/* ---------- Classement (Ranking) ---------- */
+.ranking {
+  gap: 18px;
+}
+
+.podium {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 10px;
+  min-height: 230px;
+}
+
+.podium__step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 104px;
+  min-width: 0;
+}
+
+.podium__name {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 900;
+  font-size: 15px;
+}
+
+.podium__block {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-top: 8px;
+  border-radius: 18px 18px 6px 6px;
+  border: var(--b) solid var(--ink);
+  font-family: var(--font-title);
+  font-size: 34px;
+  color: var(--ink);
+}
+
+.rank-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.rank-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 14px;
+  border-radius: 20px;
+  background: var(--surface);
+  border: var(--b) solid var(--ink);
+}
+
+.rank-row__line {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.rank-row__rank {
+  font-family: var(--font-title);
+  font-size: 20px;
+  width: 28px;
+}
+
+.rank-row__name {
+  flex-grow: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 900;
+  font-size: 16px;
+}
+
+.rank-row__left {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--text-2);
+}
+
+.rank-row__space {
+  font-family: var(--font-title);
+  font-size: 20px;
+  min-width: 40px;
+  text-align: right;
+}
+
+.rank-row__bar {
+  height: 12px;
+  border-radius: 999px;
+  background: var(--bg);
+  border: 2px solid var(--ink);
+  overflow: hidden;
+}
+
+.rank-row__bar div {
+  height: 100%;
+  border-radius: 999px;
+}
