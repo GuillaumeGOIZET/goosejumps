@@ -7,7 +7,7 @@
    augmenter CACHE_VERSION pour que les téléphones récupèrent la nouvelle version.
    ========================================================= */
 
-const CACHE_VERSION = 'v8';
+const CACHE_VERSION = 'v9';
 const CACHE_NAME = 'goose-jumps-' + CACHE_VERSION;
 
 // Tous les fichiers nécessaires pour jouer hors-ligne
@@ -49,6 +49,18 @@ const APP_FILES = [
   'assets/fonts/nunito-600.woff2',
   'assets/fonts/nunito-800.woff2',
   'assets/fonts/nunito-900.woff2',
+
+  // Les 5 oies (en pied + tête)
+  'assets/gooses/sir-honk.webp',
+  'assets/gooses/sir-honk-head.webp',
+  'assets/gooses/zippy.webp',
+  'assets/gooses/zippy-head.webp',
+  'assets/gooses/daisy.webp',
+  'assets/gooses/daisy-head.webp',
+  'assets/gooses/bowie.webp',
+  'assets/gooses/bowie-head.webp',
+  'assets/gooses/queenie.webp',
+  'assets/gooses/queenie-head.webp',
 
   'assets/icons/icon-192.png',
   'assets/icons/icon-512.png',

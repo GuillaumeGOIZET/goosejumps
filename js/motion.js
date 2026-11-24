@@ -13,7 +13,7 @@
 import { sfx } from './sound.js';
 
 // Boutons qui reçoivent l'onde (ils ont overflow: hidden dans motion.css)
-const RIPPLE_TARGETS = '.btn, .icon-btn, .type-btn, .level-btn, .pick-btn, .theme-btn, .winner-btn, .chip, .cat-btn, .tab, .dashed-btn';
+const RIPPLE_TARGETS = '.btn, .icon-btn, .type-btn, .level-btn, .pick-btn, .theme-btn, .winner-btn, .cat-btn, .tab, .dashed-btn';
 
 // Oies qu'on peut faire sauter en les touchant
 const JUMP_TARGETS = '.home__mascot, .victory__goose, .turn-banner__avatar, .editor__preview';
@@ -58,7 +58,7 @@ document.addEventListener('pointerdown', (event) => {
 });
 
 document.addEventListener('animationend', (event) => {
-  // L'animation du saut est sur le <svg> à l'intérieur de l'oie
+  // L'animation du saut est sur l'image à l'intérieur de l'oie
   const goose = event.target.parentElement;
   if (event.animationName === 'goose-jump' && goose) goose.classList.remove('is-jumping');
 });

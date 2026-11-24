@@ -4,7 +4,7 @@
    Le type de la case est pré-sélectionné grâce à board.json.
    ========================================================= */
 
-import { avatar, gooseSVG } from '../goose.js';
+import { avatar, gooseImg } from '../goose.js';
 import { FINISH, SPACE_TYPES, currentPlayer, nextTurn, spaceTypeAt } from '../game.js';
 import { esc, bindActions, ICONS, spaceMark } from '../ui.js';
 import { sfx, soundButton } from '../sound.js';
@@ -25,7 +25,7 @@ export function raceTrack(state, activeId) {
     return `
     <div class="racer${active ? ' racer--active' : ''}"
          style="left: calc((100% - 40px) * ${percent}); top: ${i % 2 === 0 ? 0 : 18}px">
-      ${avatar(p, 40, { size: 30, active })}
+      ${avatar(p, 40, { active })}
       <span class="racer__space">${p.position}</span>
     </div>`;
   }).join('');
@@ -80,7 +80,7 @@ export function render(root, app) {
 
     <div class="turn-banner">
       <div class="turn-banner__avatar">
-        ${gooseSVG({ color: player.color, hat: player.hat, size: 64, look: 'right' })}
+        ${gooseImg(player.character, 68, { head: true })}
       </div>
       <div class="turn-banner__text">
         <span class="turn-banner__meta">ROUND ${state.round} · SPACE ${player.position}</span>

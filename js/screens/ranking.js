@@ -3,7 +3,7 @@
    Accessible à tout moment pendant la partie.
    ========================================================= */
 
-import { gooseSVG } from '../goose.js';
+import { gooseImg, character } from '../goose.js';
 import { FINISH, ranking } from '../game.js';
 import { esc, backButton, bindActions } from '../ui.js';
 
@@ -18,7 +18,7 @@ export function podium(list) {
   <div class="podium">
     ${onScreen.map((i) => `
       <div class="podium__step">
-        ${gooseSVG({ color: top[i].color, hat: top[i].hat, size: 64 })}
+        ${gooseImg(top[i].character, 76)}
         <span class="podium__name">${esc(top[i].name)}</span>
         <div class="podium__block" style="height:${HEIGHTS[i]}px;background:${MEDALS[i]}">
           <span>${i + 1}</span>
@@ -43,7 +43,7 @@ export function rankingList(state, list) {
           <span class="rank-row__space" aria-label="Space ${p.position}">${p.position}</span>
         </div>
         <div class="rank-row__bar" aria-hidden="true">
-          <div style="width:${percent}%;background:${p.color}"></div>
+          <div style="width:${percent}%;background:${character(p).color}"></div>
         </div>
       </li>`;
     }).join('')}

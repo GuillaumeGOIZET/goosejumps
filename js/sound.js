@@ -504,7 +504,7 @@ function cycleSettings() {
 });
 
 // Petit clic sur tous les boutons (un son plus aigu pour les sélections)
-const SELECT_TARGETS = '.swatch, .chip, .tab, .cat-btn, .roster__item';
+const SELECT_TARGETS = '.goose-pick, .tab, .cat-btn, .roster__item';
 document.addEventListener('pointerdown', (event) => {
   const button = event.target.closest('button');
   if (!button || button.disabled || button.hasAttribute('data-sound-toggle')) return;

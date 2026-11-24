@@ -5,7 +5,7 @@
    Le gagnant avance d'1 case, l'autre reste sur place.
    ========================================================= */
 
-import { gooseSVG } from '../goose.js';
+import { gooseImg } from '../goose.js';
 import {
   CATEGORIES, SPACE_TYPES, BATTLE_WIN_MOVE,
   currentPlayer, otherPlayers, getPlayer, drawBattleQuestion, movePlayer, nextTurn
@@ -36,7 +36,7 @@ export function render(root, app) {
     return `
     <div class="fighter">
       <div class="fighter__ring${player === me ? ' fighter__ring--me' : ''}">
-        ${gooseSVG({ color: player.color, hat: player.hat, size: 70, look })}
+        ${gooseImg(player.character, 76, { head: true })}
       </div>
       <span class="fighter__name">${esc(player.name)}</span>
     </div>`;

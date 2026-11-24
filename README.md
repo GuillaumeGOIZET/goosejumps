@@ -28,7 +28,7 @@ Puis ouvrir http://localhost:8080 et passer en vue mobile dans les DevTools (390
 | Corriger le type d'une case du plateau           | `data/board.json` |
 | Changer une couleur, une police, un arrondi      | `css/tokens.css` |
 | Modifier un écran                                | `js/screens/<écran>.js` + `css/screens.css` |
-| Ajouter une couleur de plumes ou un chapeau      | `js/goose.js` |
+| Renommer une oie, changer sa phrase ou sa couleur | `js/goose.js` (images dans `assets/gooses/`, découpées depuis `assets/icons/gooses.png`) |
 | Régler ou retirer les animations (hover, clic, entrées d'écran) | `css/motion.css` + `js/motion.js` |
 | Régler le volume, la musique ou un bruitage      | `js/sound.js` (volumes et musiques en haut du fichier, sons synthétisés : aucun fichier audio) |
 

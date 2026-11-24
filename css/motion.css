@@ -46,8 +46,7 @@ body {
 
 /* Les petits boutons (pastilles, onglets…) : ils rétrécissent au clic */
 .install-btn,
-.swatch,
-.chip,
+.goose-pick,
 .tab,
 .cat-btn,
 .roster__item,
@@ -64,8 +63,7 @@ body {
     box-shadow 0.15s ease;
 }
 
-.swatch:active,
-.chip:active,
+.goose-pick:active,
 .tab:active,
 .cat-btn:active,
 .roster__item:active,
@@ -78,7 +76,7 @@ body {
 
 /* Pendant l'appui, l'enfoncement est instantané */
 :is(.btn, .icon-btn, .type-btn, .level-btn, .pick-btn, .theme-btn, .event-card--back,
-    .swatch, .chip, .tab, .cat-btn, .roster__item, .winner-btn, .dashed-btn, .link-btn, .mini-logo):active {
+    .goose-pick, .tab, .cat-btn, .roster__item, .winner-btn, .dashed-btn, .link-btn, .mini-logo):active {
   transition-duration: 0.05s;
 }
 
@@ -92,7 +90,6 @@ body {
 .pick-btn,
 .theme-btn,
 .winner-btn,
-.chip,
 .cat-btn,
 .tab,
 .dashed-btn {
@@ -123,7 +120,7 @@ body {
 }
 
 /* Les oies sautent quand on les touche (js/motion.js ajoute .is-jumping) */
-.is-jumping > svg {
+.is-jumping > img {
   animation: goose-jump 0.6s var(--ease-out);
 }
 
@@ -198,8 +195,7 @@ body {
     box-shadow: 0 14px 0 var(--ink);
   }
 
-  .swatch:hover:not(:active),
-  .chip:hover:not(:active),
+  .goose-pick:hover:not(:active),
   .cat-btn:hover:not(:active),
   .pill:hover {
     transform: translateY(-2px) scale(1.07);
@@ -443,13 +439,12 @@ body {
 }
 
 /* ---------- Joueurs ---------- */
-/* L'oie de l'éditeur rebondit à chaque changement de couleur ou de chapeau */
-.editor__preview > svg {
+/* L'oie de l'éditeur rebondit à chaque changement d'oie */
+.editor__preview > img {
   animation: pop-in 0.35s var(--ease-bounce);
 }
 
-.swatch.is-selected,
-.chip.is-selected,
+.goose-pick.is-selected,
 .cat-btn.is-selected,
 .tab.is-selected {
   animation: select-pop 0.3s var(--ease-bounce);
@@ -657,16 +652,16 @@ body {
   animation: grow-up 0.6s var(--ease-bounce) both;
 }
 
-.podium__step > svg {
+.podium__step > img {
   animation: pop-in 0.4s var(--ease-bounce) both;
 }
 
 .podium__step:nth-child(3) .podium__block { animation-delay: 0.1s; }
-.podium__step:nth-child(3) > svg { animation-delay: 0.4s; }
+.podium__step:nth-child(3) > img { animation-delay: 0.4s; }
 .podium__step:nth-child(1) .podium__block { animation-delay: 0.3s; }
-.podium__step:nth-child(1) > svg { animation-delay: 0.6s; }
+.podium__step:nth-child(1) > img { animation-delay: 0.6s; }
 .podium__step:nth-child(2) .podium__block { animation-delay: 0.5s; }
-.podium__step:nth-child(2) > svg { animation-delay: 0.8s; }
+.podium__step:nth-child(2) > img { animation-delay: 0.8s; }
 
 @keyframes grow-up {
   from {

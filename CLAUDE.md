@@ -39,7 +39,7 @@ docs/       (maquettes, schéma) → référence uniquement, ne pas servir
 ## Déroulé de la partie
 
 1. Les joueurs scannent le QR code et arrivent sur l'**accueil** (Play / Rules).
-2. **Joueurs** : de 2 à 5. Chacun a un prénom et un avatar d'oie personnalisable : 6 couleurs de plumes, 4 chapeaux (top hat, cap, crown, beanie).
+2. **Joueurs** : de 2 à 5. Chacun a un prénom et choisit une oie parmi 5 personnages (Sir Honk, Zippy, Daisy, Bowie, Queenie), une oie différente par joueur. Choisir une oie déjà prise échange les oies des deux joueurs.
 3. **Ordre de jeu** : chaque joueur lance le dé numérique une seule fois.
    - Le plus haut score commence, et les autres suivent par ordre décroissant.
    - En cas d'égalité, seuls les joueurs à égalité relancent.
@@ -89,7 +89,7 @@ Tokens (à mettre dans `css/tokens.css`) :
 - Couleurs des catégories (fond) : Code (clé `web`) `#C2D6FF`, Cyber Security (clé `cyber`) `#D699C4`, Design `#DCB8FF`, Marketing `#FFD561`, Chance `#C6DA89` avec contour `#04A339` et un trèfle à 4 feuilles, Special `#F18814` avec contour `#FFF7E7`. L'interface garde `--blue` `#4C8DFF` (bouton Correct) et `--yellow` `#FFD23F` (classement, chrono). Les cases Battle (bouton « VS · Battle ») ont un fond `#F9D0D2` avec un contour et un texte `#E52421`. L'écran Battle lui-même reste sombre et orange.
 - Polices : titres en **Lilita One**, texte en **Nunito** (600, 800, 900).
 - Style : contours épais (3 à 5 px, `#120C26`), coins arrondis (14 à 28 px) et boutons « en relief » avec `box-shadow: 0 6px 0 #120C26`. On les enfonce au clic avec `translateY` et une ombre réduite.
-- Les avatars sont des oies **originales** en SVG modulaire : corps arrondi, gros yeux, bec orange, chapeau optionnel (voir les maquettes). **Ne pas utiliser** les personnages ni les assets de Goose Goose Duck, qui ne servaient que d'inspiration.
+- Les avatars sont les 5 oies **dessinées par l'équipe** (`assets/icons/gooses.png`), découpées en WebP dans `assets/gooses/` : `<id>.webp` en pied, `<id>-head.webp` pour les petits ronds. Liste et noms dans `js/goose.js`. **Ne pas utiliser** les personnages ni les assets de Goose Goose Duck, qui ne servaient que d'inspiration.
 - Pas d'emoji dans l'interface. Les icônes sont des SVG inline en trait.
 
 ## Plan de travail (v1)

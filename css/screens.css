@@ -80,9 +80,9 @@
 
 /* Petits écrans en hauteur : on réduit la mascotte */
 @media (max-height: 700px) {
-  .home__mascot svg {
-    width: 140px;
-    height: 140px;
+  .home__mascot .goose {
+    width: 150px;
+    height: 150px;
   }
   .home__title {
     font-size: 64px;
@@ -136,45 +136,64 @@
   margin-bottom: 4px;
 }
 
-.swatches {
+/* Nom et petite phrase de l'oie choisie, sous l'aperçu */
+.editor__character {
+  margin-top: -4px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--text-2);
+}
+
+.editor__character strong {
+  display: block;
+  font-family: var(--font-title);
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 1.1;
+  color: var(--text);
+}
+
+/* Les 5 oies à choisir : tiennent sur une ligne, même sur un écran de 360 px */
+.goose-picker {
   display: flex;
+  justify-content: space-between;
   gap: 8px;
 }
 
-/* Les 6 pastilles tiennent sur une ligne, même sur un écran de 360 px */
-.swatch {
-  flex: 0 1 44px;
-  min-width: 0;
+.goose-pick {
+  flex: 0 1 52px;
+  min-width: 44px;
   aspect-ratio: 1;
   padding: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
   border-radius: 50%;
   border: var(--b-thin) solid var(--ink);
+  background: var(--bg);
 }
 
-.swatch.is-selected {
+.goose-pick .goose {
+  width: 92%;
+  height: 92%;
+}
+
+.goose-pick.is-selected {
+  border-color: var(--accent);
   box-shadow: 0 0 0 3px var(--accent);
 }
 
-.chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+/* Oie prise par un autre joueur */
+.goose-pick.is-taken {
+  opacity: 0.4;
 }
 
-.chip {
-  min-height: 44px;
-  padding: 8px 14px;
-  border-radius: var(--r-sm);
-  border: var(--b-thin) solid var(--ink);
-  background: var(--text);
-  color: var(--ink);
-  font-family: var(--font-body);
-  font-weight: 900;
-  font-size: 14px;
-}
-
-.chip.is-selected {
-  background: var(--accent);
+.editor__picker-hint {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-2);
 }
 
 .editor__remove {
@@ -403,8 +422,9 @@
   background: var(--bg);
   border: var(--b) solid var(--ink);
   display: flex;
-  align-items: center;
+  align-items: flex-end;   /* la tête de l'oie « sort » du bas du rond */
   justify-content: center;
+  overflow: hidden;
 }
 
 .turn-banner__text {
@@ -1000,8 +1020,9 @@ body:has(.battle) {
   background: var(--bg);
   border: var(--b) solid var(--text);
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
+  overflow: hidden;
 }
 
 .fighter__ring--me {

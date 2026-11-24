@@ -3,7 +3,7 @@
    PLAY / RULES, ou CONTINUE / NEW GAME si une partie est en cours.
    ========================================================= */
 
-import { gooseSVG } from '../goose.js';
+import { gooseImg } from '../goose.js';
 import { bindActions } from '../ui.js';
 import { hasGameInProgress } from '../state.js';
 import { soundButton } from '../sound.js';
@@ -26,7 +26,7 @@ export function render(root, app) {
     </h1>
 
     <div class="home__mascot">
-      ${gooseSVG({ color: '#FFFFFF', hat: 'top', size: 200, wing: true, shadow: true })}
+      ${gooseImg('sir-honk', 210)}
     </div>
 
     <div class="home__pills">

@@ -2,7 +2,7 @@
    Écran de victoire + classement final
    ========================================================= */
 
-import { gooseSVG } from '../goose.js';
+import { gooseImg } from '../goose.js';
 import { getPlayer, ranking } from '../game.js';
 import { esc, bindActions } from '../ui.js';
 import { rankingList } from './ranking.js';
@@ -32,7 +32,7 @@ export function render(root, app) {
 
     <p class="victory__kicker">FINISH!</p>
     <div class="victory__goose">
-      ${gooseSVG({ color: winner.color, hat: winner.hat, size: 150, wing: true, shadow: true })}
+      ${gooseImg(winner.character, 170)}
     </div>
     <h1 class="victory__title">${esc(winner.name)} wins!</h1>
     <p class="hint hint--center">First goose to reach the FINISH. Well played, everyone!</p>

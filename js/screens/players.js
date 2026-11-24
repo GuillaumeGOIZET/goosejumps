@@ -1,9 +1,11 @@
 /* =========================================================
    Écran Joueurs (maquette Players)
-   2 à 5 joueurs, chacun avec un prénom et une oie personnalisée.
+   2 à 5 joueurs, chacun avec un prénom et une oie à choisir parmi 5.
+   Chaque oie ne peut appartenir qu'à un joueur : choisir une oie déjà prise
+   échange les oies des deux joueurs.
    ========================================================= */
 
-import { FEATHERS, HATS, gooseSVG, avatar } from '../goose.js';
+import { CHARACTERS, character, gooseImg, avatar } from '../goose.js';
 import { MIN_PLAYERS, MAX_PLAYERS } from '../game.js';
 import { makePlayer } from '../state.js';
 import { esc, backButton, bindActions, ICONS } from '../ui.js';
@@ -22,6 +24,7 @@ export function render(root, app) {
       : null;
 
     const player = selected();
+    const mine = character(player);
     const canAdd = state.players.length < MAX_PLAYERS;
     const canRemove = state.players.length > MIN_PLAYERS;
 
@@ -31,12 +34,13 @@ export function render(root, app) {
         ${backButton('back')}
         <h1>Who's playing?</h1>
       </div>
-      <p class="hint">${MIN_PLAYERS} to ${MAX_PLAYERS} players · tap a goose to customise it</p>
+      <p class="hint">${MIN_PLAYERS} to ${MAX_PLAYERS} players · tap a player below to edit them</p>
 
       <div class="panel panel--lift editor">
         <div class="editor__preview">
-          ${gooseSVG({ color: player.color, hat: player.hat, size: 112 })}
+          ${gooseImg(mine.id, 124)}
         </div>
+        <p class="editor__character"><strong>${mine.name}</strong>${mine.tagline}</p>
 
         <label for="player-name" class="sr-only">Player name</label>
         <input id="player-name" class="editor__name" type="text" maxlength="12"
@@ -44,20 +48,21 @@ export function render(root, app) {
                value="${esc(player.name)}" placeholder="Name">
 
         <div class="editor__options">
-          <span class="label" id="feathers-label">Feathers</span>
-          <div class="swatches" role="group" aria-labelledby="feathers-label">
-            ${FEATHERS.map((f) => `
-              <button type="button" class="swatch${player.color === f.hex ? ' is-selected' : ''}"
-                      style="background:${f.hex}" data-action="color" data-value="${f.hex}"
-                      aria-label="${f.label} feathers" aria-pressed="${player.color === f.hex}"></button>`).join('')}
+          <span class="label" id="goose-label">Choose your goose</span>
+          <div class="goose-picker" role="group" aria-labelledby="goose-label">
+            ${CHARACTERS.map((c) => {
+              const isMine = c.id === mine.id;
+              const owner = state.players.find((p) => p.character === c.id && p.id !== player.id);
+              const label = owner ? `${c.name}, taken by ${esc(owner.name)}. Tap to swap.` : c.name;
+              return `
+              <button type="button" class="goose-pick${isMine ? ' is-selected' : ''}${owner ? ' is-taken' : ''}"
+                      data-action="goose" data-value="${c.id}" aria-pressed="${isMine}"
+                      aria-label="${label}" title="${label}">
+                ${gooseImg(c.id, 48, { head: true })}
+              </button>`;
+            }).join('')}
           </div>
-
-          <span class="label" id="hat-label">Hat</span>
-          <div class="chips" role="group" aria-labelledby="hat-label">
-            ${HATS.map((h) => `
-              <button type="button" class="chip${player.hat === h.id ? ' is-selected' : ''}"
-                      data-action="hat" data-value="${h.id}" aria-pressed="${player.hat === h.id}">${h.label}</button>`).join('')}
-          </div>
+          <p class="editor__picker-hint">Faded geese are taken: tap one to swap with its player.</p>
         </div>
 
         ${canRemove ? `
@@ -70,7 +75,7 @@ export function render(root, app) {
         ${state.players.map((p) => `
           <button type="button" class="roster__item" data-action="select" data-id="${p.id}"
                   aria-label="Edit ${esc(p.name)}" aria-pressed="${p.id === selectedId}">
-            ${avatar(p, 56, { active: p.id === selectedId, size: 46 })}
+            ${avatar(p, 56, { active: p.id === selectedId })}
             <span class="roster__name" data-name-of="${p.id}">${esc(p.name)}</span>
           </button>`).join('')}
       </div>
@@ -117,15 +122,17 @@ export function render(root, app) {
       selectedId = Number(id);
       draw();
     },
-    color({ value }) {
-      selected().color = value;
+    goose({ value }) {
+      const me = selected();
+      if (me.character === value) return;
+      // Oie déjà prise : les deux joueurs échangent leurs oies
+      const owner = state.players.find((p) => p.character === value);
+      if (owner) owner.character = me.character;
+      me.character = value;
       app.save();
       draw();
-    },
-    hat({ value }) {
-      selected().hat = value;
-      app.save();
-      draw();
+      if (owner) sfx.swap();
+      else sfx.honk();
     },
     add() {
       cleanNames();
