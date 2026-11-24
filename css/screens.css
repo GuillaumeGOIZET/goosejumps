@@ -1106,3 +1106,128 @@ body:has(.battle) {
   font-size: 14px;
   font-weight: 800;
 }
+
+/* ---------- Victoire ---------- */
+.victory {
+  align-items: stretch;
+  text-align: center;
+  padding-top: 36px;
+}
+
+.victory .label,
+.victory .rank-list {
+  text-align: left;
+}
+
+.victory .label {
+  margin-top: 6px;
+}
+
+.victory__kicker {
+  font-family: var(--font-title);
+  font-size: 22px;
+  letter-spacing: 3px;
+  color: var(--text-2);
+}
+
+.victory__goose {
+  align-self: center;
+  line-height: 0;
+  animation: bounce 1.2s ease-in-out infinite;
+}
+
+.victory__title {
+  font-size: 52px;
+  line-height: 1;
+  color: var(--accent);
+  -webkit-text-stroke: 4px var(--ink);
+  paint-order: stroke fill;
+  transform: rotate(-3deg);
+  overflow-wrap: anywhere;
+}
+
+.victory__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.confetti {
+  position: absolute;
+  width: 14px;
+  height: 22px;
+  border-radius: 4px;
+  border: 2px solid var(--ink);
+  animation: float 3s ease-in-out infinite alternate;
+}
+
+.confetti:nth-child(even) {
+  animation-delay: -1.5s;
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes float {
+  from {
+    translate: 0 0;
+  }
+  to {
+    translate: 0 18px;
+  }
+}
+
+/* ---------- Règles ---------- */
+.rules-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.rule {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 14px;
+  border-radius: 20px;
+  background: var(--surface);
+  border: var(--b) solid var(--ink);
+}
+
+.rule__num {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  border: var(--b-thin) solid var(--ink);
+  background: var(--c);
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-title);
+  font-size: 20px;
+}
+
+.rule__title {
+  font-size: 20px;
+  line-height: 1.1;
+  margin-bottom: 4px;
+}
+
+.rule__text {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.45;
+  color: var(--text-2);
+}
