@@ -76,7 +76,7 @@ export function render(root, app) {
       </div>
       <div class="turn-banner__text">
         <span class="turn-banner__meta">ROUND ${state.round} · SPACE ${player.position}</span>
-        <h1>It's ${esc(player.name)}'s turn!</h1>
+        <h1 class="${player.name.length > 10 ? 'is-very-long' : player.name.length > 7 ? 'is-long' : ''}">It's ${esc(player.name)}'s turn!</h1>
       </div>
     </div>
 
@@ -92,7 +92,9 @@ export function render(root, app) {
         <span class="label">What colour is your space?</span>
         <div class="types__grid">${typeButtons}</div>
         <p class="hint types__hint" id="suggestion">
-          Space ${player.position} should be <strong>${SPACE_TYPES[suggested] ? SPACE_TYPES[suggested].label : '–'}</strong>. Tap another colour if your goose is somewhere else.
+          ${SPACE_TYPES[suggested]
+            ? `Space ${player.position} should be <strong>${SPACE_TYPES[suggested].label}</strong>. Tap another colour if your goose is somewhere else.`
+            : `You're on <strong>START</strong>: pick the category you want.`}
         </p>
       </div>
     `}

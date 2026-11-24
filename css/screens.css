@@ -416,7 +416,16 @@
 .turn-banner h1 {
   font-size: 32px;
   line-height: 1;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
+}
+
+/* Prénoms longs : titre plus petit pour ne pas couper le prénom */
+.turn-banner h1.is-long {
+  font-size: 26px;
+}
+
+.turn-banner h1.is-very-long {
+  font-size: 22px;
 }
 
 .types {
