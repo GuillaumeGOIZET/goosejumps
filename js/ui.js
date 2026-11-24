@@ -17,11 +17,27 @@ export function esc(text) {
     .replace(/'/g, '&#39;');
 }
 
+// Trèfle à 4 feuilles (cases Chance) : 4 feuilles en cœur tournées de 90° + une tige.
+// On dessine d'abord tout en sombre avec un trait épais (le contour),
+// puis les mêmes formes en vert par-dessus.
+function cloverSVG() {
+  const leaf = 'M50 49 C44 43 34 37 34 27 C34 19 42 15 47 20 C49 22 50 25 50 27 C50 25 51 22 53 20 C58 15 66 19 66 27 C66 37 56 43 50 49 Z';
+  const stem = 'M50 52 Q54 74 66 92';
+  const leaves = [45, 135, 225, 315].map((angle) => `<path d="${leaf}" transform="rotate(${angle} 50 50)"/>`).join('');
+  return `<svg class="clover" viewBox="0 0 100 100" aria-hidden="true">
+    <path d="${stem}" fill="none" stroke="#120C26" stroke-width="13" stroke-linecap="round"/>
+    <g fill="#120C26" stroke="#120C26" stroke-width="6" stroke-linejoin="round">${leaves}</g>
+    <path d="${stem}" fill="none" stroke="#04A339" stroke-width="6" stroke-linecap="round"/>
+    <g fill="#04A339">${leaves}</g>
+  </svg>`;
+}
+
 // Icônes SVG en trait (pas d'emoji dans l'interface)
 export const ICONS = {
   back: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>`,
   leaderboard: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" aria-hidden="true"><path d="M3 20h18M5 20v-6h4v6M10 20V8h4v12M15 20v-9h4v9"/></svg>`,
   close: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>`,
+  clover: cloverSVG(),
   hourglass: `<svg width="36" height="48" viewBox="0 0 40 52" aria-hidden="true">
     <rect x="4" y="2" width="32" height="6" rx="3" fill="#FF8A1F" stroke="#120C26" stroke-width="3"/>
     <rect x="4" y="44" width="32" height="6" rx="3" fill="#FF8A1F" stroke="#120C26" stroke-width="3"/>
@@ -30,6 +46,13 @@ export const ICONS = {
     <path d="M13 12 L27 12 Q24 19 20 21 Q16 19 13 12 Z" fill="#FFD23F"/>
   </svg>`
 };
+
+/** Symbole d'une case : trèfle pour Chance, « ! » pour Special, rien sinon */
+export function spaceMark(type) {
+  if (type === 'chance') return ICONS.clover;
+  if (type === 'special') return '!';
+  return '';
+}
 
 /** Bouton retour carré. `action` = nom de l'action déclenchée au clic. */
 export function backButton(action = 'back', label = 'Back', extraClass = '') {

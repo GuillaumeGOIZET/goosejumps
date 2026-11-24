@@ -27,14 +27,17 @@ export const SHOW_EXAMPLE_CARD_NOTICE = true;
 // Les 4 catégories de questions
 export const CATEGORIES = ['web', 'cyber', 'design', 'marketing'];
 
-// Libellé et couleur (variable CSS) de chaque type de case
+// Libellé affiché, couleur de fond et contour (variables CSS) de chaque type de case.
+// Les clés (web, cyber…) ne changent pas : ce sont elles qu'utilisent
+// questions.json et board.json. Seul le libellé affiché change.
+// Le symbole de Chance / Special est dessiné par spaceMark() dans ui.js.
 export const SPACE_TYPES = {
-  web: { label: 'Web', color: 'var(--web)' },
-  cyber: { label: 'Cyber', color: 'var(--cyber)' },
+  web: { label: 'Code', color: 'var(--web)' },
+  cyber: { label: 'Cyber Security', color: 'var(--cyber)' },
   design: { label: 'Design', color: 'var(--design)' },
   marketing: { label: 'Marketing', color: 'var(--marketing)' },
-  chance: { label: 'Chance', color: 'var(--chance)', mark: '?' },
-  special: { label: 'Special', color: 'var(--special)', mark: '!' },
+  chance: { label: 'Chance', color: 'var(--chance)', border: 'var(--chance-border)' },
+  special: { label: 'Special', color: 'var(--special)', border: 'var(--special-border)' },
   battle: { label: 'Battle', color: 'var(--ink)' }
 };
 

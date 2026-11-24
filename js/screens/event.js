@@ -18,7 +18,7 @@ import {
   SPACE_TYPES, SHOW_EXAMPLE_CARD_NOTICE,
   currentPlayer, otherPlayers, drawCard, movePlayer, setPosition, nextTurn
 } from '../game.js';
-import { esc, backButton, bindActions, moveSentence, fromTo, spaceName } from '../ui.js';
+import { esc, backButton, bindActions, moveSentence, fromTo, spaceName, spaceMark } from '../ui.js';
 import { sfx } from '../sound.js';
 
 export function render(root, app, params) {
@@ -76,21 +76,23 @@ export function render(root, app, params) {
   function draw() {
     const info = SPACE_TYPES[deck];
     const kind = info.label.toUpperCase();
+    const mark = spaceMark(deck);
+    const colors = `--c: ${info.color}; --bd: ${info.border}`;
     const canSwitch = card === null;
 
     let cardHTML;
     if (!card) {
       cardHTML = `
-      <button type="button" class="event-card event-card--back" style="--c: ${info.color}" data-action="draw">
-        <span class="event-card__mark">${info.mark}</span>
+      <button type="button" class="event-card event-card--back" style="${colors}" data-action="draw">
+        <span class="event-card__mark">${mark}</span>
         <span class="event-card__cta">TAP TO DRAW</span>
       </button>`;
     } else {
       cardHTML = `
-      <div class="event-card event-card--front${justDrawn ? ' is-new' : ''}" style="--c: ${info.color}">
+      <div class="event-card event-card--front${justDrawn ? ' is-new' : ''}" style="${colors}">
         <div class="card__head">
           <span class="tag">${kind}</span>
-          <span class="event-card__small-mark" aria-hidden="true">${info.mark}</span>
+          <span class="event-card__small-mark" aria-hidden="true">${mark}</span>
         </div>
         <h2 class="event-card__title">${esc(card.title)}</h2>
         <p class="event-card__text">${esc(card.text)}</p>

@@ -29,8 +29,8 @@ export function render(root, app) {
     </div>
 
     <div class="home__pills">
-      <span class="pill" style="--c: var(--web)">WEB</span>
-      <span class="pill" style="--c: var(--cyber)">CYBER</span>
+      <span class="pill" style="--c: var(--web)">CODE</span>
+      <span class="pill" style="--c: var(--cyber)">CYBER SECURITY</span>
       <span class="pill" style="--c: var(--design)">DESIGN</span>
       <span class="pill" style="--c: var(--marketing)">MARKETING</span>
     </div>

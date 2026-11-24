@@ -1,8 +1,7 @@
 {
-  "_note": "Example cards only. The team will send the real Chance and Special cards later. 'effect' lets the app move the goose automatically; type 'manual' = players apply it themselves.",
+  "_note": "Example cards only. Chance = bonuses only (good news). Special = everything else, including all the penalties (move back, skip a turn…). The team will send the real Chance and Special cards later. 'effect' lets the app move the goose automatically; type 'manual' = players apply it themselves.",
   "chance": [
     { "id": "chance-01", "title": "Tailwind!", "text": "A gust of wind lifts your feathers. Move forward 2 spaces.", "effect": { "type": "move", "value": 2 } },
-    { "id": "chance-02", "title": "Wi-Fi down", "text": "Your connection dropped. Move back 1 space.", "effect": { "type": "move", "value": -1 } },
     { "id": "chance-03", "title": "Bonus round", "text": "Answer a Hard question from any category. Right: +4 spaces. Wrong: stay where you are.", "effect": { "type": "bonusQuestion", "level": "hard", "right": 4, "wrong": 0 } },
     { "id": "chance-04", "title": "Lucky egg", "text": "Keep this card. Use it once to cancel a move back.", "effect": { "type": "manual" } }
   ],
@@ -10,7 +9,8 @@
     { "id": "special-01", "title": "Swap!", "text": "Swap places with the player of your choice.", "effect": { "type": "swap" } },
     { "id": "special-02", "title": "Goose nap", "text": "You fell asleep on the job. Skip your next turn.", "effect": { "type": "skipTurn" } },
     { "id": "special-03", "title": "Honk attack", "text": "Every other player moves back 1 space.", "effect": { "type": "moveOthers", "value": -1 } },
-    { "id": "special-04", "title": "Teach me", "text": "Explain a web word in English to the group in 20 seconds. Success: +2 spaces.", "effect": { "type": "judged", "right": 2, "wrong": 0 } }
+    { "id": "special-04", "title": "Teach me", "text": "Explain a web word in English to the group in 20 seconds. Success: +2 spaces.", "effect": { "type": "judged", "right": 2, "wrong": 0 } },
+    { "id": "special-05", "title": "Wi-Fi down", "text": "Your connection dropped. Move back 1 space.", "effect": { "type": "move", "value": -1 } }
   ],
   "battle": {
     "web": [

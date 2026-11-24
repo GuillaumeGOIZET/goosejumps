@@ -86,7 +86,7 @@ Tokens (à mettre dans `css/tokens.css`) :
 
 - Fond `#2A1F4F`, surface `#3A2C72`, cercles décoratifs `#35286A`, contour et ombre `#120C26`, texte clair `#FFF6E5`, texte secondaire `#C9BDF2`.
 - Accent orange `#FF8A1F`.
-- Couleurs des catégories : Web `#4C8DFF`, Cyber `#2FD3B0`, Design `#FF7EC2`, Marketing `#FFD23F`, Chance `#B89CFF`, Special `#FFF6E5`. Les cases Battle ont un fond `#120C26` avec un contour et un texte `#FF8A1F`.
+- Couleurs des catégories (fond) : Code (clé `web`) `#C2D6FF`, Cyber Security (clé `cyber`) `#D699C4`, Design `#DCB8FF`, Marketing `#FFD561`, Chance `#C6DA89` avec contour `#04A339` et un trèfle à 4 feuilles, Special `#F18814` avec contour `#FFF7E7`. L'interface garde `--blue` `#4C8DFF` (bouton Correct) et `--yellow` `#FFD23F` (classement, chrono). Les cases Battle ont un fond `#120C26` avec un contour et un texte `#FF8A1F`.
 - Polices : titres en **Lilita One**, texte en **Nunito** (600, 800, 900).
 - Style : contours épais (3 à 5 px, `#120C26`), coins arrondis (14 à 28 px) et boutons « en relief » avec `box-shadow: 0 6px 0 #120C26`. On les enfonce au clic avec `translateY` et une ombre réduite.
 - Les avatars sont des oies **originales** en SVG modulaire : corps arrondi, gros yeux, bec orange, chapeau optionnel (voir les maquettes). **Ne pas utiliser** les personnages ni les assets de Goose Goose Duck, qui ne servaient que d'inspiration.

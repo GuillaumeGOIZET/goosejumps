@@ -713,7 +713,7 @@
 .timer__bar {
   height: 100%;
   border-radius: 999px;
-  background: var(--marketing);
+  background: var(--yellow);
   transition: width 0.25s linear;
 }
 
@@ -791,7 +791,7 @@
 .event-card {
   width: 100%;
   border-radius: 30px;
-  border: var(--b-thick) solid var(--ink);
+  border: var(--b-thick) solid var(--bd, var(--ink));
   box-shadow: 0 9px 0 var(--ink);
   background: var(--c);
   color: var(--ink);

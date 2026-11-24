@@ -42,13 +42,19 @@
   /* Accent */
   --accent: #FF8A1F;
 
-  /* Catégories de cases */
-  --web: #4C8DFF;
-  --cyber: #2FD3B0;
-  --design: #FF7EC2;
-  --marketing: #FFD23F;
-  --chance: #B89CFF;
-  --special: #FFF6E5;
+  /* Couleurs de l'interface (boutons, chrono…), indépendantes des cases */
+  --blue: #4C8DFF;    /* bouton CORRECT, résultat « Correct! » */
+  --yellow: #FFD23F;  /* bouton classement, barre du chrono */
+
+  /* Catégories de cases (fond, et contour quand il n'est pas #120C26) */
+  --web: #C2D6FF;     /* affiché « Code » */
+  --cyber: #D699C4;   /* affiché « Cyber Security » */
+  --design: #DCB8FF;
+  --marketing: #FFD561;
+  --chance: #C6DA89;
+  --chance-border: #04A339;
+  --special: #F18814;
+  --special-border: #FFF7E7;
 
   /* Polices */
   --font-title: 'Lilita One', 'Arial Rounded MT Bold', sans-serif;

@@ -113,7 +113,7 @@ export function render(root, app, params) {
     const moved = moveSentence(name, result.from, result.to);
     const next = state.phase === 'finished' ? null : currentPlayer(state);
     return `
-    <div class="result" style="--c: ${result.right ? 'var(--web)' : 'var(--accent)'}">
+    <div class="result" style="--c: ${result.right ? 'var(--blue)' : 'var(--accent)'}">
       <h1 class="result__title">${result.right ? 'Correct!' : 'Wrong!'}</h1>
       <span class="result__move">${moved}</span>
       <span class="result__space">${fromTo(result.from, result.to)}</span>

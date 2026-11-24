@@ -6,7 +6,7 @@
 
 import { avatar, gooseSVG } from '../goose.js';
 import { FINISH, SPACE_TYPES, currentPlayer, nextTurn, spaceTypeAt } from '../game.js';
-import { esc, bindActions, ICONS } from '../ui.js';
+import { esc, bindActions, ICONS, spaceMark } from '../ui.js';
 import { sfx, soundButton } from '../sound.js';
 
 // Pour ne jouer le « ding-dong » qu'au début d'un nouveau tour
@@ -56,10 +56,12 @@ export function render(root, app) {
   const typeButtons = TYPE_BUTTONS.map((type) => {
     const info = SPACE_TYPES[type];
     const selected = type === suggested;
-    const text = type === 'battle' ? 'VS · Battle' : (info.mark ? `${info.mark} ${info.label}` : info.label);
+    const mark = spaceMark(type);
+    const text = type === 'battle' ? 'VS · Battle' : (mark ? `${mark} ${info.label}` : info.label);
+    const border = info.border ? `; --bd: ${info.border}` : '';
     return `
     <button type="button" class="type-btn${type === 'battle' ? ' type-btn--battle' : ''}${selected ? ' is-selected' : ''}"
-            style="--c: ${info.color}" data-action="pick" data-type="${type}"
+            style="--c: ${info.color}${border}" data-action="pick" data-type="${type}"
             ${selected ? 'aria-describedby="suggestion"' : ''}>${text}</button>`;
   }).join('');
 

@@ -4,7 +4,7 @@
    cet écran se met à jour tout seul.
    ========================================================= */
 
-import { FINISH, MIN_PLAYERS, MAX_PLAYERS, TIMER_SECONDS, MOVES, BATTLE_WIN_MOVE } from '../game.js';
+import { FINISH, MIN_PLAYERS, MAX_PLAYERS, TIMER_SECONDS, MOVES, BATTLE_WIN_MOVE, CATEGORIES, SPACE_TYPES } from '../game.js';
 import { backButton, bindActions, spaces } from '../ui.js';
 
 const signed = (n) => (n > 0 ? `+${n}` : `−${-n}`);
@@ -29,7 +29,7 @@ const RULES = [
     text: 'Tell the app the colour of your space. It already knows where you are, so it suggests the right one.'
   },
   {
-    title: 'Web · Cyber · Design · Marketing',
+    title: CATEGORIES.map((c) => SPACE_TYPES[c].label).join(' · '), // Code · Cyber Security · Design · Marketing
     color: 'var(--web)',
     text: `Pick Easy or Hard. You have ${duration(TIMER_SECONDS)} to answer out loud, in English. The other players judge your answer.
       Easy: ${signed(MOVES.easy.right)} / ${signed(MOVES.easy.wrong)}. Hard: ${signed(MOVES.hard.right)} / ${signed(MOVES.hard.wrong)}.`

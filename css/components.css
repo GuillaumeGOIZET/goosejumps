@@ -40,7 +40,7 @@
 }
 
 .btn--blue {
-  --btn-bg: var(--web);
+  --btn-bg: var(--blue);
 }
 
 .btn--sm {
@@ -104,7 +104,7 @@
 }
 
 .icon-btn--yellow {
-  --btn-bg: var(--marketing);
+  --btn-bg: var(--yellow);
 }
 
 /* ---------- Barre du haut : bouton retour + titre ---------- */
@@ -205,12 +205,14 @@
   border-color: var(--accent);
 }
 
-/* ---------- Bouton de type de case (Web, Cyber…) ---------- */
+/* ---------- Bouton de type de case (Code, Cyber Security…) ----------
+   --c  : couleur de fond de la case
+   --bd : couleur du contour (Chance, Special), sinon contour sombre */
 .type-btn {
   min-height: 44px;
   padding: 14px 8px;
   border-radius: var(--r-md);
-  border: var(--b-thin) solid var(--ink);
+  border: var(--b-thin) solid var(--bd, var(--ink));
   background: var(--c);
   color: var(--ink);
   font-family: var(--font-body);
@@ -227,7 +229,7 @@
 
 /* Case pré-sélectionnée grâce à board.json */
 .type-btn.is-selected {
-  border-color: var(--text);
+  border-color: var(--bd, var(--text));
   box-shadow: 0 0 0 3px var(--accent), 0 5px 0 var(--ink);
 }
 
@@ -240,6 +242,22 @@
   font-weight: 400;
   font-size: 20px;
   letter-spacing: 1px;
+}
+
+/* Trèfle à 4 feuilles des cases Chance (SVG, voir ICONS.clover dans js/ui.js) */
+.clover {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.12em;
+  overflow: visible;
+}
+
+.type-btn .clover {
+  width: 1.25em;
+  height: 1.25em;
+  margin-right: 2px;
+  vertical-align: -0.3em;
 }
 
 /* ---------- Grande carte (question, chance, battle) ---------- */
