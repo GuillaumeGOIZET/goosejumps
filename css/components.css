@@ -1,0 +1,351 @@
+/* =========================================================
+   Composants réutilisés sur plusieurs écrans
+   ========================================================= */
+
+/* ---------- Gros bouton « en relief » ----------
+   Variantes de couleur : --orange (défaut), --cream, --blue.
+   Sur l'écran Battle, l'ombre devient orange (.btn--battle). */
+.btn {
+  --btn-bg: var(--accent);
+  --btn-shadow: var(--ink);
+  display: block;
+  width: 100%;
+  min-height: 44px;
+  padding: 16px;
+  border: var(--b) solid var(--ink);
+  border-radius: var(--r-lg);
+  background: var(--btn-bg);
+  color: var(--ink);
+  font-family: var(--font-title);
+  font-size: 24px;
+  letter-spacing: 0.5px;
+  text-align: center;
+  text-decoration: none;
+  box-shadow: 0 var(--lift) 0 var(--btn-shadow);
+  transition: transform 0.08s, box-shadow 0.08s;
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(4px);
+  box-shadow: 0 3px 0 var(--btn-shadow);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn--cream {
+  --btn-bg: var(--text);
+}
+
+.btn--blue {
+  --btn-bg: var(--web);
+}
+
+.btn--sm {
+  font-size: 22px;
+}
+
+.btn--battle {
+  --btn-shadow: var(--accent);
+}
+
+/* Bouton texte discret (« Draw another », « Remove »…) */
+.link-btn {
+  min-height: 44px;
+  padding: 10px;
+  background: transparent;
+  border: none;
+  color: var(--text-2);
+  font-family: var(--font-body);
+  font-weight: 900;
+  font-size: 14px;
+}
+
+/* Bouton en pointillés (« + Add a player », « Nobody got it ») */
+.dashed-btn {
+  width: 100%;
+  min-height: 44px;
+  padding: 12px;
+  border-radius: var(--r-md);
+  background: transparent;
+  color: var(--text-2);
+  font-family: var(--font-body);
+  font-weight: 900;
+  font-size: 15px;
+  border: var(--b-thin) dashed var(--dashed);
+}
+
+/* ---------- Bouton icône carré 44 px ---------- */
+.icon-btn {
+  --btn-bg: var(--text);
+  --btn-shadow: var(--ink);
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border-radius: var(--r-sm);
+  border: var(--b-thin) solid var(--ink);
+  background: var(--btn-bg);
+  color: var(--ink);
+  box-shadow: 0 4px 0 var(--btn-shadow);
+  font-family: var(--font-title);
+  font-size: 22px;
+  transition: transform 0.08s, box-shadow 0.08s;
+}
+
+.icon-btn:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 var(--btn-shadow);
+}
+
+.icon-btn--yellow {
+  --btn-bg: var(--marketing);
+}
+
+/* ---------- Barre du haut : bouton retour + titre ---------- */
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+}
+
+.topbar--between {
+  justify-content: space-between;
+}
+
+.topbar h1 {
+  font-size: 32px;
+  line-height: 1.05;
+}
+
+.topbar__step {
+  font-size: 14px;
+  font-weight: 900;
+  color: var(--text-2);
+  text-align: right;
+}
+
+.topbar__actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* Logo « GOOSE JUMPS » de la barre du haut */
+.mini-logo {
+  padding: 0;
+  min-height: 44px;
+  background: none;
+  border: none;
+  font-family: var(--font-title);
+  font-size: 22px;
+  color: var(--accent);
+  -webkit-text-stroke: 2px var(--ink);
+  paint-order: stroke fill;
+}
+
+/* ---------- Panneau (fond surface + contour épais) ---------- */
+.panel {
+  background: var(--surface);
+  border: var(--b) solid var(--ink);
+  border-radius: 24px;
+  padding: 16px;
+}
+
+.panel--lift {
+  box-shadow: 0 6px 0 var(--ink);
+}
+
+/* ---------- Pastilles catégories (accueil) ---------- */
+.pill {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: var(--b-thin) solid var(--ink);
+  background: var(--c, var(--text));
+  color: var(--ink);
+  font-weight: 900;
+  font-size: 12px;
+}
+
+/* Étiquette sombre en haut des cartes (CYBER, CHANCE…) */
+.tag {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--tag-color, var(--text));
+  font-weight: 900;
+  font-size: 13px;
+  letter-spacing: 1.5px;
+}
+
+/* ---------- Avatar dans un rond ---------- */
+.avatar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--bg);
+  border: var(--b-thin) solid var(--ink);
+}
+
+.avatar svg {
+  display: block;
+  overflow: visible;
+}
+
+.avatar--active {
+  border-color: var(--accent);
+}
+
+/* ---------- Bouton de type de case (Web, Cyber…) ---------- */
+.type-btn {
+  min-height: 44px;
+  padding: 14px 8px;
+  border-radius: var(--r-md);
+  border: var(--b-thin) solid var(--ink);
+  background: var(--c);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-weight: 900;
+  font-size: 17px;
+  box-shadow: 0 5px 0 var(--ink);
+  transition: transform 0.08s, box-shadow 0.08s;
+}
+
+.type-btn:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 var(--ink);
+}
+
+/* Case pré-sélectionnée grâce à board.json */
+.type-btn.is-selected {
+  border-color: var(--text);
+  box-shadow: 0 0 0 3px var(--accent), 0 5px 0 var(--ink);
+}
+
+.type-btn--battle {
+  grid-column: span 2;
+  background: var(--ink);
+  color: var(--accent);
+  border-color: var(--accent);
+  font-family: var(--font-title);
+  font-weight: 400;
+  font-size: 20px;
+  letter-spacing: 1px;
+}
+
+/* ---------- Grande carte (question, chance, battle) ---------- */
+.card {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 20px;
+  border-radius: var(--r-xl);
+  border: var(--b) solid var(--ink);
+  box-shadow: 0 8px 0 var(--ink);
+  background: var(--c, var(--text));
+  color: var(--ink);
+}
+
+.card__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.card__question {
+  font-family: var(--font-title);
+  font-size: 25px;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+
+/* Encadré « ANSWER » */
+.answer {
+  background: var(--text);
+  border: var(--b-thin) solid var(--ink);
+  border-radius: var(--r-md);
+  padding: 14px;
+  animation: pop 0.25s ease-out;
+}
+
+.answer .label {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--ink);
+}
+
+.answer__text {
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+/* ---------- Encadré de résultat (Correct!, Wrong!, …) ---------- */
+.result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+  padding: 34px 20px;
+  border-radius: var(--r-xl);
+  border: var(--b) solid var(--ink);
+  box-shadow: 0 8px 0 var(--ink);
+  background: var(--c, var(--accent));
+  color: var(--ink);
+  animation: pop 0.3s ease-out;
+}
+
+.result__title {
+  font-family: var(--font-title);
+  font-size: 44px;
+  line-height: 1;
+}
+
+.result__move {
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.result__space {
+  font-size: 14px;
+  font-weight: 800;
+}
+
+/* ---------- Animations ---------- */
+@keyframes pop {
+  from {
+    transform: scale(0.92);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes wobble {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  25% {
+    transform: rotate(-12deg) scale(1.08);
+  }
+  75% {
+    transform: rotate(12deg) scale(1.08);
+  }
+}

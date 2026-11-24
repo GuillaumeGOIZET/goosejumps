@@ -1,0 +1,70 @@
+/* =========================================================
+   Design tokens – couleurs, polices, rayons, ombres
+   Toutes les valeurs viennent des maquettes (docs/mockups).
+   ========================================================= */
+
+/* Polices auto-hébergées (fonctionnent hors-ligne) */
+@font-face {
+  font-family: 'Lilita One';
+  src: url('../assets/fonts/lilita-one-400.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Nunito';
+  src: url('../assets/fonts/nunito-600.woff2') format('woff2');
+  font-weight: 600 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Nunito';
+  src: url('../assets/fonts/nunito-800.woff2') format('woff2');
+  font-weight: 800;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Nunito';
+  src: url('../assets/fonts/nunito-900.woff2') format('woff2');
+  font-weight: 900;
+  font-display: swap;
+}
+
+:root {
+  /* Fond et surfaces */
+  --bg: #2A1F4F;
+  --surface: #3A2C72;
+  --circle: #35286A;
+  --ink: #120C26;        /* contours et ombres */
+  --text: #FFF6E5;       /* texte clair */
+  --text-2: #C9BDF2;     /* texte secondaire */
+  --dashed: #6A5BB0;     /* pointillés (ajouter un joueur, adversaire vide) */
+
+  /* Accent */
+  --accent: #FF8A1F;
+
+  /* Catégories de cases */
+  --web: #4C8DFF;
+  --cyber: #2FD3B0;
+  --design: #FF7EC2;
+  --marketing: #FFD23F;
+  --chance: #B89CFF;
+  --special: #FFF6E5;
+
+  /* Polices */
+  --font-title: 'Lilita One', 'Arial Rounded MT Bold', sans-serif;
+  --font-body: 'Nunito', system-ui, sans-serif;
+
+  /* Rayons */
+  --r-sm: 14px;
+  --r-md: 18px;
+  --r-lg: 22px;
+  --r-xl: 28px;
+
+  /* Bordures épaisses */
+  --b-thin: 3px;
+  --b: 4px;
+  --b-thick: 5px;
+
+  /* Ombre « relief » des boutons */
+  --lift: 7px;
+}
