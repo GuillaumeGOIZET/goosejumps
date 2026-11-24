@@ -1,0 +1,37 @@
+{
+  "_note": "Example cards only. The team will send the real Chance and Special cards later. 'effect' lets the app move the goose automatically; type 'manual' = players apply it themselves.",
+  "chance": [
+    { "id": "chance-01", "title": "Tailwind!", "text": "A gust of wind lifts your feathers. Move forward 2 spaces.", "effect": { "type": "move", "value": 2 } },
+    { "id": "chance-02", "title": "Wi-Fi down", "text": "Your connection dropped. Move back 1 space.", "effect": { "type": "move", "value": -1 } },
+    { "id": "chance-03", "title": "Bonus round", "text": "Answer a Hard question from any category. Right: +4 spaces. Wrong: stay where you are.", "effect": { "type": "bonusQuestion", "level": "hard", "right": 4, "wrong": 0 } },
+    { "id": "chance-04", "title": "Lucky egg", "text": "Keep this card. Use it once to cancel a move back.", "effect": { "type": "manual" } }
+  ],
+  "special": [
+    { "id": "special-01", "title": "Swap!", "text": "Swap places with the player of your choice.", "effect": { "type": "swap" } },
+    { "id": "special-02", "title": "Goose nap", "text": "You fell asleep on the job. Skip your next turn.", "effect": { "type": "skipTurn" } },
+    { "id": "special-03", "title": "Honk attack", "text": "Every other player moves back 1 space.", "effect": { "type": "moveOthers", "value": -1 } },
+    { "id": "special-04", "title": "Teach me", "text": "Explain a web word in English to the group in 20 seconds. Success: +2 spaces.", "effect": { "type": "judged", "right": 2, "wrong": 0 } }
+  ],
+  "battle": {
+    "web": [
+      { "question": "What do the letters \"www\" stand for?", "answer": "World Wide Web" },
+      { "question": "Chrome or Word: which one is a web browser?", "answer": "Chrome" },
+      { "question": "What do you click on a web page to go to another page?", "answer": "A link" }
+    ],
+    "cyber": [
+      { "question": "Is \"123456\" a strong or a weak password?", "answer": "Weak" },
+      { "question": "Should you give your password to a stranger? Yes or no?", "answer": "No!" },
+      { "question": "What software protects your computer from viruses? Anti…", "answer": "Antivirus" }
+    ],
+    "design": [
+      { "question": "What colour do you get when you mix blue and yellow?", "answer": "Green" },
+      { "question": "On a white page, which is easier to read: black text or yellow text?", "answer": "Black text" },
+      { "question": "What do we call the little picture that represents a brand?", "answer": "A logo" }
+    ],
+    "marketing": [
+      { "question": "A shirt costs 20 euros with \"-50%\". How much do you pay?", "answer": "10 euros" },
+      { "question": "What do we call a person who buys a product?", "answer": "A customer (or client)" },
+      { "question": "Where can a brand post photos for young people: Instagram or a fax machine?", "answer": "Instagram" }
+    ]
+  }
+}

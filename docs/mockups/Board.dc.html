@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Goose Jumps – Game board</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lilita+One&amp;family=Nunito:wght@600;800;900&amp;display=swap">
+<style>
+body{margin:0;font-family:'Nunito',sans-serif}
+a{color:#FFB347}a:hover{color:#FFD08A}
+</style>
+</helmet>
+<div style="width: 1600px; height: 1060px; box-sizing: border-box; background: #2A1F4F; border: 10px solid #120C26; border-radius: 56px; position: relative; overflow: hidden; font-family: 'Nunito', sans-serif; color: #FFF6E5">
+  <div style="position: absolute; left: -140px; bottom: -160px; width: 440px; height: 440px; border-radius: 50%; background: #35286A"></div>
+  <div style="position: absolute; right: -110px; top: -130px; width: 380px; height: 380px; border-radius: 50%; background: #35286A"></div>
+
+  <div style="position: absolute; left: 50px; right: 50px; top: 30px; display: flex; align-items: center; justify-content: space-between">
+    <div style="display: flex; align-items: baseline; gap: 16px">
+      <span style="font-family: 'Lilita One', sans-serif; font-size: 88px; line-height: 1; color: #FF8A1F; -webkit-text-stroke: 6px #120C26; paint-order: stroke fill; transform: rotate(-3deg); display: inline-block">GOOSE</span>
+      <span style="font-family: 'Lilita One', sans-serif; font-size: 88px; line-height: 1; color: #FFF6E5; -webkit-text-stroke: 6px #120C26; paint-order: stroke fill; transform: rotate(2deg); display: inline-block">JUMPS</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 16px">
+      <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 4px">
+        <span style="font-size: 16px; font-weight: 900; letter-spacing: 2px; color: #C9BDF2">ENGLISH GAME · 2–5 PLAYERS</span>
+        <span style="font-size: 16px; font-weight: 800; color: #C9BDF2">Scan to open the app</span>
+      </div>
+      <div style="width: 96px; height: 96px; box-sizing: border-box; border-radius: 18px; background: #FFF6E5; border: 4px solid #120C26; display: flex; align-items: center; justify-content: center; color: #120C26; font-weight: 900; font-size: 14px; text-align: center">[QR CODE]</div>
+    </div>
+  </div>
+
+  <sc-for list="{{ cells }}" as="cell" hint-placeholder-count="53">
+    <div style="{{ cell.style }}">
+      <span style="position: absolute; top: 6px; left: 10px; font-family: 'Lilita One', sans-serif; font-size: 17px; opacity: 0.7">{{ cell.num }}</span>
+      <span style="{{ cell.labelStyle }}">{{ cell.label }}</span>
+      <sc-if value="{{ cell.hasSub }}" hint-placeholder-val="{{ false }}">
+        <span style="font-size: 12px; font-weight: 900; letter-spacing: 1px">{{ cell.sub }}</span>
+      </sc-if>
+    </div>
+  </sc-for>
+
+  <div style="position: absolute; left: 39px; top: 283px; width: 1400px; height: 106px; display: flex; align-items: center; gap: 6px">
+    <svg viewBox="0 0 100 100" width="100" height="100" aria-hidden="true">
+      <rect x="28" y="24" width="44" height="68" rx="22" fill="#FFFFFF" stroke="#120C26" stroke-width="4"></rect>
+      <circle cx="41" cy="44" r="9" fill="#FFFFFF" stroke="#120C26" stroke-width="3"></circle>
+      <circle cx="59" cy="44" r="9" fill="#FFFFFF" stroke="#120C26" stroke-width="3"></circle>
+      <circle cx="44" cy="42" r="4" fill="#120C26"></circle>
+      <circle cx="62" cy="42" r="4" fill="#120C26"></circle>
+      <path d="M36 57 Q50 50 64 57 Q50 68 36 57 Z" fill="#FF8A1F" stroke="#120C26" stroke-width="3" stroke-linejoin="round"></path>
+      <rect x="35" y="5" width="30" height="18" rx="3" fill="#120C26"></rect>
+      <rect x="35" y="16" width="30" height="4" fill="#FF8A1F"></rect>
+      <rect x="25" y="21" width="50" height="5" rx="2.5" fill="#120C26"></rect>
+    </svg>
+    <div style="background: #FFF6E5; color: #120C26; border: 4px solid #120C26; border-radius: 24px; padding: 12px 22px; box-shadow: 0 6px 0 #120C26">
+      <span style="display: block; font-family: 'Lilita One', sans-serif; font-size: 28px">Land on a colour, answer in English!</span>
+      <span style="display: block; font-size: 16px; font-weight: 800">Easy = small move, small risk · Hard = big jump, big risk</span>
+    </div>
+  </div>
+
+  <div style="position: absolute; left: 165px; top: 519px; width: 1390px; height: 106px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap">
+    <span style="padding: 7px 14px; border-radius: 999px; background: #4C8DFF; color: #120C26; font-weight: 900; font-size: 15px; border: 4px solid #120C26">WEB · HTML/CSS, databases, algorithms</span>
+    <span style="padding: 7px 14px; border-radius: 999px; background: #2FD3B0; color: #120C26; font-weight: 900; font-size: 15px; border: 4px solid #120C26">CYBER</span>
+    <span style="padding: 7px 14px; border-radius: 999px; background: #FF7EC2; color: #120C26; font-weight: 900; font-size: 15px; border: 4px solid #120C26">DESIGN · wireframes, style guides</span>
+    <span style="padding: 7px 14px; border-radius: 999px; background: #FFD23F; color: #120C26; font-weight: 900; font-size: 15px; border: 4px solid #120C26">MARKETING · traffic, funnels</span>
+    <span style="padding: 7px 14px; border-radius: 999px; background: #B89CFF; color: #120C26; font-weight: 900; font-size: 15px; border: 4px solid #120C26">? CHANCE</span>
+    <span style="padding: 7px 14px; border-radius: 999px; background: #FFF6E5; color: #120C26; font-weight: 900; font-size: 15px; border: 4px solid #120C26">! SPECIAL</span>
+    <span style="padding: 7px 14px; border-radius: 999px; background: #120C26; color: #FF8A1F; font-weight: 900; font-size: 15px; border: 4px solid #FF8A1F">VS · BATTLE</span>
+  </div>
+
+  <div style="position: absolute; left: 39px; top: 755px; width: 1400px; height: 106px; display: flex; align-items: center; gap: 8px">
+    <svg viewBox="0 0 100 100" width="90" height="90" aria-hidden="true">
+      <rect x="28" y="24" width="44" height="68" rx="22" fill="#FFD23F" stroke="#120C26" stroke-width="4"></rect>
+      <circle cx="41" cy="44" r="9" fill="#FFFFFF" stroke="#120C26" stroke-width="3"></circle>
+      <circle cx="59" cy="44" r="9" fill="#FFFFFF" stroke="#120C26" stroke-width="3"></circle>
+      <circle cx="41" cy="46" r="4" fill="#120C26"></circle>
+      <circle cx="59" cy="46" r="4" fill="#120C26"></circle>
+      <path d="M36 57 Q50 50 64 57 Q50 68 36 57 Z" fill="#FF8A1F" stroke="#120C26" stroke-width="3" stroke-linejoin="round"></path>
+      <path d="M33 28 L35 10 L43 20 L50 6 L57 20 L65 10 L67 28 Z" fill="#FFD23F" stroke="#120C26" stroke-width="3" stroke-linejoin="round"></path>
+    </svg>
+    <svg viewBox="0 0 100 100" width="90" height="90" aria-hidden="true">
+      <rect x="28" y="24" width="44" height="68" rx="22" fill="#FF7EC2" stroke="#120C26" stroke-width="4"></rect>
+      <circle cx="41" cy="44" r="9" fill="#FFFFFF" stroke="#120C26" stroke-width="3"></circle>
+      <circle cx="59" cy="44" r="9" fill="#FFFFFF" stroke="#120C26" stroke-width="3"></circle>
+      <circle cx="38" cy="43" r="4" fill="#120C26"></circle>
+      <circle cx="56" cy="43" r="4" fill="#120C26"></circle>
+      <path d="M36 57 Q50 50 64 57 Q50 68 36 57 Z" fill="#FF8A1F" stroke="#120C26" stroke-width="3" stroke-linejoin="round"></path>
+      <path d="M30 30 Q30 8 50 8 Q70 8 70 30 Z" fill="#9FD6FF" stroke="#120C26" stroke-width="3" stroke-linejoin="round"></path>
+      <circle cx="50" cy="7" r="5" fill="#FFF6E5" stroke="#120C26" stroke-width="3"></circle>
+    </svg>
+    <svg viewBox="0 0 100 100" width="90" height="90" aria-hidden="true">
+      <rect x="28" y="24" width="44" height="68" rx="22" fill="#9FD6FF" stroke="#120C26" stroke-width="4"></rect>
+      <circle cx="41" cy="44" r="9" fill="#FFFFFF" stroke="#120C26" stroke-width="3"></circle>
+      <circle cx="59" cy="44" r="9" fill="#FFFFFF" stroke="#120C26" stroke-width="3"></circle>
+      <circle cx="43" cy="41" r="4" fill="#120C26"></circle>
+      <circle cx="61" cy="41" r="4" fill="#120C26"></circle>
+      <path d="M36 57 Q50 50 64 57 Q50 68 36 57 Z" fill="#FF8A1F" stroke="#120C26" stroke-width="3" stroke-linejoin="round"></path>
+      <path d="M30 28 Q50 4 70 28 Z" fill="#FF8A1F" stroke="#120C26" stroke-width="3" stroke-linejoin="round"></path>
+      <rect x="62" y="23" width="24" height="7" rx="3.5" fill="#FF8A1F" stroke="#120C26" stroke-width="3"></rect>
+    </svg>
+    <span style="margin-left: 16px; font-family: 'Lilita One', sans-serif; font-size: 40px; color: #FFF6E5; -webkit-text-stroke: 3px #120C26; paint-order: stroke fill">First goose to the finish wins!</span>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1600,"height":1060}}'>
+class Component extends DCLogic {
+  renderVals() {
+    // 13 x 7 grid, snake path: START top-left (2 wide) → FINISH bottom-left (2 wide).
+    const coords = [];
+    coords.push([0, 0]);                                  // 0 = START (cols 0–1)
+    for (let c = 2; c < 13; c++) coords.push([0, c]);   // 1–11
+    coords.push([1, 12]);                                 // 12
+    for (let c = 12; c >= 0; c--) coords.push([2, c]);  // 13–25
+    coords.push([3, 0]);                                  // 26
+    for (let c = 0; c < 13; c++) coords.push([4, c]);   // 27–39
+    coords.push([5, 12]);                                 // 40
+    for (let c = 12; c >= 2; c--) coords.push([6, c]);  // 41–51
+    coords.push([6, 0]);                                  // 52 = FINISH (cols 0–1)
+
+    // 51 spaces: 9 web, 9 cyber, 9 design, 9 marketing, 6 chance, 6 special, 3 battle
+    const seq = 'C M D S W M ? C D W S ? D W W B S C C ? W M C M D D S C ? W W M B D C ? M W S D M C ? W D B M S C D M'.split(' ');
+    const T = {
+      W: ['#4C8DFF', 'WEB'], C: ['#2FD3B0', 'CYBER'], D: ['#FF7EC2', 'DESIGN'], M: ['#FFD23F', 'MARKETING'],
+      '?': ['#B89CFF', '?'], S: ['#FFF6E5', '!'], B: ['#120C26', 'VS'], E: ['#FF8A1F', '']
+    };
+    const last = coords.length - 1;
+    const pitch = 118, size = 106;
+    const cells = coords.map(([r, c], i) => {
+      const end = i === 0 || i === last;
+      const k = end ? 'E' : seq[i - 1];
+      const mark = k === '?' || k === 'S' || k === 'B';
+      const battle = k === 'B';
+      return {
+        num: end ? '' : String(i),
+        label: i === 0 ? 'START' : i === last ? 'FINISH' : T[k][1],
+        sub: k === '?' ? 'CHANCE' : k === 'S' ? 'SPECIAL' : k === 'B' ? 'BATTLE' : '',
+        hasSub: mark,
+        labelStyle: 'line-height: 1; letter-spacing: 0.5px; font-family: ' + (mark || end ? "'Lilita One', sans-serif" : 'Nunito, sans-serif') + '; font-weight: 900; font-size: ' + (end ? '40px' : battle ? '40px' : mark ? '48px' : (k === 'M' ? '13px' : '17px')),
+        style: 'position: absolute; box-sizing: border-box; height: ' + size + 'px; width: ' + (end ? size + pitch : size) + 'px; left: ' + (39 + c * pitch) + 'px; top: ' + (165 + r * pitch) + 'px; background: ' + T[k][0] + '; color: ' + (battle ? '#FF8A1F' : '#120C26') + '; border: 5px solid ' + (battle ? '#FF8A1F' : '#120C26') + '; border-radius: 22px; box-shadow: 0 7px 0 #120C26; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; text-align: center'
+      };
+    });
+    return { cells };
+  }
+}
+</script>
+</body>
+</html>

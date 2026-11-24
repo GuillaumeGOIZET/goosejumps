@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Goose Jumps – Roll for order</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lilita+One&amp;family=Nunito:wght@600;800;900&amp;display=swap">
+<style>
+body{margin:0;font-family:'Nunito',sans-serif}
+a{color:#FFB347}a:hover{color:#FFD08A}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #2A1F4F; color: #FFF6E5; font-family: 'Nunito', sans-serif; display: flex; flex-direction: column; padding: 24px 22px 30px; gap: 16px">
+  <div style="display: flex; align-items: center; gap: 12px">
+    <a href="Players.dc.html" aria-label="Back" style="width: 44px; height: 44px; border-radius: 14px; background: #FFF6E5; border: 3px solid #120C26; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 0 #120C26">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#120C26" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg>
+    </a>
+    <h1 style="margin: 0; font-family: 'Lilita One', sans-serif; font-weight: 400; font-size: 32px">Roll for order</h1>
+  </div>
+  <p style="margin: 0; font-size: 14px; color: #C9BDF2; font-weight: 700; line-height: 1.4">Highest roll plays first. Your roll is also your first move from START. After this, no more dice!</p>
+
+  <div style="display: flex; flex-direction: column; gap: 10px">
+    <sc-for list="{{ rows }}" as="r" hint-placeholder-count="4">
+      <div style="{{ r.box }}">
+        <span style="font-family: 'Lilita One', sans-serif; font-size: 20px; width: 34px">{{ r.rank }}</span>
+        <div style="width: 48px; height: 48px; border-radius: 50%; background: #2A1F4F; border: 3px solid #120C26; display: flex; align-items: center; justify-content: center">
+          <svg viewBox="0 0 100 100" width="40" height="40" aria-hidden="true">
+            <rect x="28" y="24" width="44" height="68" rx="22" fill="{{ r.color }}" stroke="#120C26" stroke-width="5"></rect>
+            <circle cx="41" cy="44" r="8" fill="#FFFFFF" stroke="#120C26" stroke-width="3"></circle>
+            <circle cx="59" cy="44" r="8" fill="#FFFFFF" stroke="#120C26" stroke-width="3"></circle>
+            <circle cx="43" cy="45" r="4" fill="#120C26"></circle>
+            <circle cx="57" cy="45" r="4" fill="#120C26"></circle>
+            <path d="M36 57 Q50 50 64 57 Q50 68 36 57 Z" fill="#FF8A1F" stroke="#120C26" stroke-width="3"></path>
+          </svg>
+        </div>
+        <div style="flex-grow: 1; display: flex; flex-direction: column">
+          <span style="font-weight: 900; font-size: 17px">{{ r.name }}</span>
+          <span style="font-size: 13px; font-weight: 800; opacity: 0.85">{{ r.note }}</span>
+        </div>
+        <div style="width: 48px; height: 48px; border-radius: 14px; background: #FFF6E5; color: #120C26; border: 3px solid #120C26; display: flex; align-items: center; justify-content: center; font-family: 'Lilita One', sans-serif; font-size: 26px">{{ r.roll }}</div>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="flex-grow: 1"></div>
+  <sc-if value="{{ notDone }}" hint-placeholder-val="{{ true }}">
+    <button type="button" onClick="{{ roll }}" style="padding: 16px; border-radius: 22px; background: #FF8A1F; color: #120C26; font-family: 'Lilita One', sans-serif; font-size: 24px; border: 4px solid #120C26; box-shadow: 0 7px 0 #120C26; cursor: pointer">{{ rollLabel }}</button>
+  </sc-if>
+  <sc-if value="{{ done }}" hint-placeholder-val="{{ false }}">
+    <a href="Turn.dc.html" style="display: block; text-align: center; text-decoration: none; padding: 16px; border-radius: 22px; background: #FF8A1F; color: #120C26; font-family: 'Lilita One', sans-serif; font-size: 24px; border: 4px solid #120C26; box-shadow: 0 7px 0 #120C26">START THE GAME</a>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { rolls: [5, null, null, null] };
+  }
+  renderVals() {
+    const base = [
+      { name: 'Guillaume', color: '#9FD6FF' },
+      { name: 'Ziad', color: '#FFFFFF' },
+      { name: 'Mikael', color: '#FFD23F' },
+      { name: 'Chiara', color: '#FF7EC2' }
+    ];
+    const rolls = this.state.rolls;
+    const next = rolls.indexOf(null);
+    const done = next === -1;
+    let list = base.map((p, i) => ({ ...p, r: rolls[i], i }));
+    if (done) list = list.slice().sort((a, b) => b.r - a.r);
+    const rows = list.map((p, idx) => {
+      const waiting = p.r === null;
+      const first = done && idx === 0;
+      return {
+        name: p.name, color: p.color,
+        rank: done ? (idx + 1) + '.' : '',
+        roll: waiting ? '–' : String(p.r),
+        note: waiting ? (p.i === next ? 'Your turn to roll' : 'Waiting…') : 'Starts on space ' + p.r,
+        box: 'display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 20px; border: 4px solid #120C26; box-shadow: 0 5px 0 #120C26; background: ' + (first ? '#FF8A1F' : '#3A2C72') + '; color: ' + (first ? '#120C26' : '#FFF6E5')
+      };
+    });
+    return {
+      rows, done, notDone: !done,
+      rollLabel: done ? '' : 'ROLL FOR ' + base[next].name.toUpperCase(),
+      roll: () => {
+        const r = rolls.slice();
+        r[next] = 1 + Math.floor(Math.random() * 6);
+        this.setState({ rolls: r });
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Goose Jumps – Battle</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lilita+One&amp;family=Nunito:wght@600;800;900&amp;display=swap">
+<style>
+body{margin:0;font-family:'Nunito',sans-serif}
+a{color:#FFB347}a:hover{color:#FFD08A}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #120C26; color: #FFF6E5; font-family: 'Nunito', sans-serif; display: flex; flex-direction: column; padding: 22px 22px 30px; gap: 16px; position: relative; overflow: hidden">
+  <div style="position: absolute; left: -80px; top: 240px; width: 260px; height: 260px; border-radius: 50%; background: #2A1F4F"></div>
+  <div style="position: absolute; right: -90px; top: 380px; width: 240px; height: 240px; border-radius: 50%; background: #2A1F4F"></div>
+
+  <div style="display: flex; align-items: center; justify-content: space-between; position: relative">
+    <a href="Turn.dc.html" aria-label="Back to turn" style="width: 44px; height: 44px; border-radius: 14px; background: #FFF6E5; border: 3px solid #120C26; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 0 #FF8A1F">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#120C26" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg>
+    </a>
+    <span style="font-family: 'Lilita One', sans-serif; font-size: 26px; letter-spacing: 2px; color: #FF8A1F">BATTLE!</span>
+    <span style="font-size: 13px; font-weight: 900; color: #C9BDF2; width: 44px; text-align: right">{{ stepLabel }}</span>
+  </div>
+
+  <div style="display: flex; align-items: center; justify-content: center; gap: 14px; position: relative">
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; width: 110px">
+      <div style="width: 84px; height: 84px; border-radius: 50%; background: #2A1F4F; border: 4px solid #FF8A1F; display: flex; align-items: center; justify-content: center">
+        <svg viewBox="0 0 100 100" width="70" height="70" aria-hidden="true">
+          <rect x="28" y="24" width="44" height="68" rx="22" fill="#FFFFFF" stroke="#120C26" stroke-width="4"></rect>
+          <circle cx="41" cy="44" r="9" fill="#FFFFFF" stroke="#120C26" stroke-width="3"></circle>
+          <circle cx="59" cy="44" r="9" fill="#FFFFFF" stroke="#120C26" stroke-width="3"></circle>
+          <circle cx="45" cy="44" r="4" fill="#120C26"></circle>
+          <circle cx="63" cy="44" r="4" fill="#120C26"></circle>
+          <path d="M36 57 Q50 50 64 57 Q50 68 36 57 Z" fill="#FF8A1F" stroke="#120C26" stroke-width="3" stroke-linejoin="round"></path>
+          <rect x="35" y="5" width="30" height="18" rx="3" fill="#120C26" stroke="#FFF6E5" stroke-width="2"></rect>
+          <rect x="35" y="16" width="30" height="4" fill="#FF8A1F"></rect>
+          <rect x="25" y="21" width="50" height="5" rx="2.5" fill="#120C26" stroke="#FFF6E5" stroke-width="2"></rect>
+        </svg>
+      </div>
+      <span style="font-weight: 900; font-size: 15px">Ziad</span>
+    </div>
+    <span style="font-family: 'Lilita One', sans-serif; font-size: 44px; color: #FF8A1F; -webkit-text-stroke: 3px #FFF6E5; paint-order: stroke fill; transform: rotate(-8deg)">VS</span>
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; width: 110px">
+      <div style="width: 84px; height: 84px; border-radius: 50%; background: #2A1F4F; border: 4px dashed #6A5BB0; display: flex; align-items: center; justify-content: center">
+        <sc-if value="{{ hasOpp }}" hint-placeholder-val="{{ false }}">
+          <svg viewBox="0 0 100 100" width="70" height="70" aria-hidden="true">
+            <rect x="28" y="24" width="44" height="68" rx="22" fill="{{ oppColor }}" stroke="#120C26" stroke-width="4"></rect>
+            <circle cx="41" cy="44" r="9" fill="#FFFFFF" stroke="#120C26" stroke-width="3"></circle>
+            <circle cx="59" cy="44" r="9" fill="#FFFFFF" stroke="#120C26" stroke-width="3"></circle>
+            <circle cx="37" cy="44" r="4" fill="#120C26"></circle>
+            <circle cx="55" cy="44" r="4" fill="#120C26"></circle>
+            <path d="M36 57 Q50 50 64 57 Q50 68 36 57 Z" fill="#FF8A1F" stroke="#120C26" stroke-width="3" stroke-linejoin="round"></path>
+          </svg>
+        </sc-if>
+        <sc-if value="{{ noOpp }}" hint-placeholder-val="{{ true }}">
+          <span style="font-family: 'Lilita One', sans-serif; font-size: 40px; color: #6A5BB0">?</span>
+        </sc-if>
+      </div>
+      <span style="font-weight: 900; font-size: 15px">{{ oppName }}</span>
+    </div>
+  </div>
+
+  <sc-if value="{{ isOpponent }}" hint-placeholder-val="{{ true }}">
+    <div style="display: flex; flex-direction: column; gap: 12px; position: relative">
+      <h1 style="margin: 0; font-family: 'Lilita One', sans-serif; font-weight: 400; font-size: 28px; line-height: 1.1">Ziad, who do you challenge?</h1>
+      <sc-for list="{{ rivals }}" as="r" hint-placeholder-count="3">
+        <button type="button" onClick="{{ r.pick }}" style="display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; border-radius: 20px; background: #FFF6E5; color: #120C26; border: 4px solid #120C26; box-shadow: 0 6px 0 #FF8A1F; cursor: pointer; font-family: 'Nunito', sans-serif">
+          <span style="font-weight: 900; font-size: 18px">{{ r.name }}</span>
+          <span style="font-size: 14px; font-weight: 800">{{ r.spaceLabel }}</span>
+        </button>
+      </sc-for>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isTheme }}" hint-placeholder-val="{{ false }}">
+    <div style="display: flex; flex-direction: column; gap: 12px; position: relative">
+      <h1 style="margin: 0; font-family: 'Lilita One', sans-serif; font-weight: 400; font-size: 28px; line-height: 1.1">Pick the battle theme</h1>
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+        <sc-for list="{{ themes }}" as="t" hint-placeholder-count="4">
+          <button type="button" onClick="{{ t.pick }}" style="{{ t.style }}">{{ t.label }}</button>
+        </sc-for>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ showQuestion }}" hint-placeholder-val="{{ false }}">
+    <div style="{{ cardStyle }}">
+      <div style="display: flex; justify-content: space-between; align-items: center">
+        <span style="padding: 6px 14px; border-radius: 999px; background: #120C26; color: #FFF6E5; font-weight: 900; font-size: 13px; letter-spacing: 1.5px">{{ themeLabel }}</span>
+        <span style="font-size: 13px; font-weight: 900">SPEED QUESTION</span>
+      </div>
+      <p style="margin: 0; font-family: 'Lilita One', sans-serif; font-size: 28px; line-height: 1.15">{{ q.q }}</p>
+      <sc-if value="{{ isWinner }}" hint-placeholder-val="{{ false }}">
+        <div style="background: #FFF6E5; border: 3px solid #120C26; border-radius: 16px; padding: 12px">
+          <span style="display: block; font-size: 12px; font-weight: 900; letter-spacing: 1.5px">ANSWER</span>
+          <span style="font-size: 17px; font-weight: 800">{{ q.a }}</span>
+        </div>
+      </sc-if>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isResult }}" hint-placeholder-val="{{ false }}">
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; padding: 28px 20px; border-radius: 28px; background: #FF8A1F; color: #120C26; border: 4px solid #FFF6E5; position: relative">
+      <span style="font-family: 'Lilita One', sans-serif; font-size: 36px; line-height: 1.05">{{ resTitle }}</span>
+      <span style="font-size: 17px; font-weight: 900">{{ resMove }}</span>
+      <span style="font-size: 14px; font-weight: 800">{{ resStay }}</span>
+    </div>
+  </sc-if>
+
+  <div style="flex-grow: 1"></div>
+
+  <sc-if value="{{ isQuestion }}" hint-placeholder-val="{{ false }}">
+    <div style="display: flex; flex-direction: column; gap: 8px; position: relative">
+      <span style="text-align: center; font-size: 14px; font-weight: 800; color: #C9BDF2">First to shout the right answer in English wins!</span>
+      <button type="button" onClick="{{ reveal }}" style="padding: 16px; border-radius: 22px; background: #FFF6E5; color: #120C26; font-family: 'Lilita One', sans-serif; font-size: 22px; border: 4px solid #120C26; box-shadow: 0 7px 0 #FF8A1F; cursor: pointer">SHOW ANSWER</button>
+    </div>
+  </sc-if>
+  <sc-if value="{{ isWinner }}" hint-placeholder-val="{{ false }}">
+    <div style="display: flex; flex-direction: column; gap: 10px; position: relative">
+      <span style="text-align: center; font-size: 14px; font-weight: 800; color: #C9BDF2">Who gave the right answer first?</span>
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+        <button type="button" onClick="{{ meWins }}" style="padding: 14px 8px; border-radius: 20px; background: #FF8A1F; color: #120C26; font-family: 'Lilita One', sans-serif; font-size: 22px; border: 4px solid #FFF6E5; cursor: pointer">Ziad</button>
+        <button type="button" onClick="{{ oppWins }}" style="padding: 14px 8px; border-radius: 20px; background: #FF8A1F; color: #120C26; font-family: 'Lilita One', sans-serif; font-size: 22px; border: 4px solid #FFF6E5; cursor: pointer">{{ oppName }}</button>
+      </div>
+      <button type="button" onClick="{{ nobody }}" style="padding: 10px; border-radius: 16px; background: transparent; color: #C9BDF2; border: 3px solid #6A5BB0; font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 15px; cursor: pointer">Nobody got it</button>
+    </div>
+  </sc-if>
+  <sc-if value="{{ isResult }}" hint-placeholder-val="{{ false }}">
+    <div style="display: flex; flex-direction: column; gap: 10px; position: relative">
+      <a href="Turn.dc.html" style="display: block; text-align: center; text-decoration: none; padding: 16px; border-radius: 22px; background: #FFF6E5; color: #120C26; font-family: 'Lilita One', sans-serif; font-size: 22px; border: 4px solid #120C26; box-shadow: 0 7px 0 #FF8A1F">NEXT PLAYER</a>
+      <button type="button" onClick="{{ restart }}" style="padding: 10px; background: transparent; border: none; color: #C9BDF2; font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 14px; cursor: pointer">Replay this demo</button>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    // phase: opponent → theme → question → winner → result
+    this.state = { phase: 'opponent', opp: null, theme: null, qi: 0, winner: null };
+  }
+  renderVals() {
+    const s = this.state;
+    const me = { name: 'Ziad', space: 14 };
+    const players = [
+      { name: 'Guillaume', color: '#9FD6FF', space: 22 },
+      { name: 'Mikael', color: '#FFD23F', space: 18 },
+      { name: 'Chiara', color: '#FF7EC2', space: 9 }
+    ];
+    // Speed questions: very easy, anyone can answer with a little thinking.
+    const bank = {
+      web: { label: 'Web', color: '#4C8DFF', qs: [
+        { q: 'What do the letters "www" stand for?', a: 'World Wide Web' },
+        { q: 'Chrome or Word: which one is a web browser?', a: 'Chrome' },
+        { q: 'What do you click on a web page to go to another page?', a: 'A link' }
+      ]},
+      cyber: { label: 'Cyber', color: '#2FD3B0', qs: [
+        { q: 'Is "123456" a strong or a weak password?', a: 'Weak' },
+        { q: 'Should you give your password to a stranger? Yes or no?', a: 'No!' },
+        { q: 'What software protects your computer from viruses? Anti…', a: 'Antivirus' }
+      ]},
+      design: { label: 'Design', color: '#FF7EC2', qs: [
+        { q: 'What colour do you get when you mix blue and yellow?', a: 'Green' },
+        { q: 'On a white page, which is easier to read: black text or yellow text?', a: 'Black text' },
+        { q: 'What do we call the little picture that represents a brand?', a: 'A logo' }
+      ]},
+      marketing: { label: 'Marketing', color: '#FFD23F', qs: [
+        { q: 'A shirt costs 20 euros with "-50%". How much do you pay?', a: '10 euros' },
+        { q: 'What do we call a person who buys a product?', a: 'A customer (or client)' },
+        { q: 'Where can a brand post photos for young people: Instagram or a fax machine?', a: 'Instagram' }
+      ]}
+    };
+    const opp = s.opp !== null ? players[s.opp] : null;
+    const th = s.theme ? bank[s.theme] : bank.web;
+    const winnerName = s.winner === 'me' ? me.name : s.winner === 'opp' && opp ? opp.name : null;
+    const loser = s.winner === 'me' ? (opp ? opp : me) : me;
+    const steps = { opponent: '1/3', theme: '2/3', question: '3/3', winner: '3/3', result: '' };
+    return {
+      stepLabel: steps[s.phase],
+      isOpponent: s.phase === 'opponent', isTheme: s.phase === 'theme',
+      isQuestion: s.phase === 'question', isWinner: s.phase === 'winner', isResult: s.phase === 'result',
+      showQuestion: s.phase === 'question' || s.phase === 'winner',
+      hasOpp: !!opp, noOpp: !opp,
+      oppName: opp ? opp.name : 'Rival',
+      oppColor: opp ? opp.color : '#FFFFFF',
+      rivals: players.map((p, i) => ({ name: p.name, spaceLabel: 'Space ' + p.space, pick: () => this.setState({ opp: i, phase: 'theme' }) })),
+      themes: Object.keys(bank).map((k) => ({
+        label: bank[k].label,
+        pick: () => this.setState({ theme: k, qi: Math.floor(Math.random() * bank[k].qs.length), phase: 'question' }),
+        style: 'padding: 22px 8px; border-radius: 20px; cursor: pointer; font-family: Nunito, sans-serif; font-weight: 900; font-size: 18px; color: #120C26; border: 4px solid #120C26; box-shadow: 0 6px 0 #FF8A1F; background: ' + bank[k].color
+      })),
+      themeLabel: th.label.toUpperCase(),
+      q: th.qs[s.qi],
+      cardStyle: 'position: relative; display: flex; flex-direction: column; gap: 14px; padding: 20px; border-radius: 28px; color: #120C26; border: 4px solid #FFF6E5; box-shadow: 0 8px 0 #FF8A1F; background: ' + th.color,
+      resTitle: winnerName ? winnerName + ' wins the battle!' : 'No winner this time',
+      resMove: winnerName ? winnerName + ' moves forward 1 space.' : 'Nobody moves.',
+      resStay: winnerName ? loser.name + ' stays on space ' + loser.space + '.' : 'Ziad and ' + (opp ? opp.name : 'the rival') + ' stay where they are.',
+      reveal: () => this.setState({ phase: 'winner' }),
+      meWins: () => this.setState({ winner: 'me', phase: 'result' }),
+      oppWins: () => this.setState({ winner: 'opp', phase: 'result' }),
+      nobody: () => this.setState({ winner: null, phase: 'result' }),
+      restart: () => this.setState({ phase: 'opponent', opp: null, theme: null, winner: null })
+    };
+  }
+}
+</script>
+</body>
+</html>

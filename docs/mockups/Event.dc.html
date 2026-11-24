@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Goose Jumps – Chance and Special cards</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lilita+One&amp;family=Nunito:wght@600;800;900&amp;display=swap">
+<style>
+body{margin:0;font-family:'Nunito',sans-serif}
+a{color:#FFB347}a:hover{color:#FFD08A}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #2A1F4F; color: #FFF6E5; font-family: 'Nunito', sans-serif; display: flex; flex-direction: column; padding: 22px 22px 30px; gap: 16px">
+  <div style="display: flex; align-items: center; justify-content: space-between">
+    <a href="Turn.dc.html" aria-label="Back to turn" style="width: 44px; height: 44px; border-radius: 14px; background: #FFF6E5; border: 3px solid #120C26; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 0 #120C26">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#120C26" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg>
+    </a>
+    <div style="display: flex; gap: 6px; background: #3A2C72; padding: 4px; border-radius: 16px; border: 3px solid #120C26">
+      <button type="button" onClick="{{ toChance }}" style="{{ tabChance }}">Chance</button>
+      <button type="button" onClick="{{ toSpecial }}" style="{{ tabSpecial }}">Special</button>
+    </div>
+  </div>
+
+  <h1 style="margin: 0; font-family: 'Lilita One', sans-serif; font-weight: 400; font-size: 32px; line-height: 1.05">{{ heading }}</h1>
+
+  <sc-if value="{{ hidden }}" hint-placeholder-val="{{ true }}">
+    <button type="button" onClick="{{ draw }}" style="{{ backStyle }}">
+      <span style="font-family: 'Lilita One', sans-serif; font-size: 140px; line-height: 1; -webkit-text-stroke: 5px #120C26; paint-order: stroke fill; color: #FFF6E5">{{ mark }}</span>
+      <span style="font-family: 'Lilita One', sans-serif; font-size: 24px; color: #120C26">TAP TO DRAW</span>
+    </button>
+  </sc-if>
+
+  <sc-if value="{{ shown }}" hint-placeholder-val="{{ false }}">
+    <div style="{{ frontStyle }}">
+      <div style="display: flex; justify-content: space-between; align-items: center">
+        <span style="padding: 6px 14px; border-radius: 999px; background: #120C26; color: #FFF6E5; font-weight: 900; font-size: 13px; letter-spacing: 1.5px">{{ kindLabel }}</span>
+        <span style="font-family: 'Lilita One', sans-serif; font-size: 34px">{{ mark }}</span>
+      </div>
+      <span style="font-family: 'Lilita One', sans-serif; font-size: 34px; line-height: 1.05">{{ card.title }}</span>
+      <span style="font-size: 18px; font-weight: 800; line-height: 1.4">{{ card.text }}</span>
+      <div style="flex-grow: 1"></div>
+      <span style="font-size: 12px; font-weight: 900; letter-spacing: 1px; opacity: 0.7">EXAMPLE CARD · REAL CARDS TO COME</span>
+    </div>
+  </sc-if>
+
+  <div style="flex-grow: 1"></div>
+  <sc-if value="{{ shown }}" hint-placeholder-val="{{ false }}">
+    <div style="display: flex; flex-direction: column; gap: 10px">
+      <a href="Turn.dc.html" style="display: block; text-align: center; text-decoration: none; padding: 16px; border-radius: 22px; background: #FF8A1F; color: #120C26; font-family: 'Lilita One', sans-serif; font-size: 22px; border: 4px solid #120C26; box-shadow: 0 7px 0 #120C26">DONE · NEXT PLAYER</a>
+      <button type="button" onClick="{{ draw }}" style="padding: 10px; background: transparent; border: none; color: #C9BDF2; font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 14px; cursor: pointer">Draw another example</button>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { kind: 'chance', idx: -1 };
+  }
+  renderVals() {
+    const decks = {
+      chance: [
+        { title: 'Tailwind!', text: 'A gust of wind lifts your feathers. Move forward 2 spaces.' },
+        { title: 'Wi-Fi down', text: 'Your connection dropped. Move back 1 space.' },
+        { title: 'Bonus round', text: 'Answer a Hard question from any category. Right: +4 spaces. Wrong: stay where you are.' },
+        { title: 'Lucky egg', text: 'Keep this card. Use it once to cancel a move back.' }
+      ],
+      special: [
+        { title: 'Swap!', text: 'Swap places with the player of your choice.' },
+        { title: 'Goose nap', text: 'You fell asleep on the job. Skip your next turn.' },
+        { title: 'Honk attack', text: 'Every other player moves back 1 space.' },
+        { title: 'Teach me', text: 'Explain a web word in English to the group in 20 seconds. Success: +2 spaces.' }
+      ]
+    };
+    const chance = this.state.kind === 'chance';
+    const bg = chance ? '#B89CFF' : '#FFF6E5';
+    const tab = (on) => 'min-height: 40px; padding: 6px 14px; border-radius: 12px; border: none; cursor: pointer; font-family: Nunito, sans-serif; font-weight: 900; font-size: 14px; background: ' + (on ? '#FF8A1F' : 'transparent') + '; color: ' + (on ? '#120C26' : '#FFF6E5');
+    const deck = decks[this.state.kind];
+    const shown = this.state.idx >= 0;
+    const box = 'box-sizing: border-box; width: 100%; height: 440px; border-radius: 30px; border: 5px solid #120C26; box-shadow: 0 9px 0 #120C26; color: #120C26; background: ' + bg;
+    return {
+      heading: chance ? 'Ziad landed on Chance' : 'Ziad landed on Special',
+      kindLabel: chance ? 'CHANCE' : 'SPECIAL',
+      mark: chance ? '?' : '!',
+      hidden: !shown, shown,
+      card: shown ? deck[this.state.idx] : deck[0],
+      backStyle: box + '; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; font-family: Nunito, sans-serif',
+      frontStyle: box + '; padding: 24px; display: flex; flex-direction: column; gap: 16px',
+      tabChance: tab(chance), tabSpecial: tab(!chance),
+      toChance: () => this.setState({ kind: 'chance', idx: -1 }),
+      toSpecial: () => this.setState({ kind: 'special', idx: -1 }),
+      draw: () => {
+        let n = Math.floor(Math.random() * deck.length);
+        if (n === this.state.idx) n = (n + 1) % deck.length;
+        this.setState({ idx: n });
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

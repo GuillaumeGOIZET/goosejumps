@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Goose Jumps – Leaderboard</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lilita+One&amp;family=Nunito:wght@600;800;900&amp;display=swap">
+<style>
+body{margin:0;font-family:'Nunito',sans-serif}
+a{color:#FFB347}a:hover{color:#FFD08A}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #2A1F4F; color: #FFF6E5; font-family: 'Nunito', sans-serif; display: flex; flex-direction: column; padding: 24px 22px 30px; gap: 18px">
+  <div style="display: flex; align-items: center; gap: 12px">
+    <a href="Turn.dc.html" aria-label="Back to the game" style="width: 44px; height: 44px; border-radius: 14px; background: #FFF6E5; border: 3px solid #120C26; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 0 #120C26">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#120C26" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg>
+    </a>
+    <h1 style="margin: 0; font-family: 'Lilita One', sans-serif; font-weight: 400; font-size: 32px">Leaderboard</h1>
+  </div>
+
+  <div style="display: flex; align-items: flex-end; justify-content: center; gap: 10px; height: 230px">
+    <sc-for list="{{ podium }}" as="p" hint-placeholder-count="3">
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; width: 104px">
+        <svg viewBox="0 0 100 100" width="64" height="64" aria-hidden="true">
+          <rect x="28" y="24" width="44" height="68" rx="22" fill="{{ p.color }}" stroke="#120C26" stroke-width="4"></rect>
+          <circle cx="41" cy="44" r="9" fill="#FFFFFF" stroke="#120C26" stroke-width="3"></circle>
+          <circle cx="59" cy="44" r="9" fill="#FFFFFF" stroke="#120C26" stroke-width="3"></circle>
+          <circle cx="43" cy="44" r="4" fill="#120C26"></circle>
+          <circle cx="57" cy="44" r="4" fill="#120C26"></circle>
+          <path d="M36 57 Q50 50 64 57 Q50 68 36 57 Z" fill="#FF8A1F" stroke="#120C26" stroke-width="3" stroke-linejoin="round"></path>
+        </svg>
+        <span style="font-weight: 900; font-size: 15px">{{ p.name }}</span>
+        <div style="{{ p.block }}">
+          <span style="font-family: 'Lilita One', sans-serif; font-size: 34px; color: #120C26">{{ p.rank }}</span>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 10px">
+    <sc-for list="{{ rows }}" as="r" hint-placeholder-count="4">
+      <div style="display: flex; flex-direction: column; gap: 8px; padding: 12px 14px; border-radius: 20px; background: #3A2C72; border: 4px solid #120C26">
+        <div style="display: flex; align-items: center; gap: 10px">
+          <span style="font-family: 'Lilita One', sans-serif; font-size: 20px; width: 28px">{{ r.rank }}</span>
+          <span style="flex-grow: 1; font-weight: 900; font-size: 16px">{{ r.name }}</span>
+          <span style="font-size: 13px; font-weight: 800; color: #C9BDF2">{{ r.left }}</span>
+          <span style="font-family: 'Lilita One', sans-serif; font-size: 20px; min-width: 40px; text-align: right">{{ r.space }}</span>
+        </div>
+        <div style="height: 12px; border-radius: 999px; background: #2A1F4F; border: 2px solid #120C26; overflow: hidden">
+          <div style="{{ r.bar }}"></div>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+  <p style="margin: 0; text-align: center; font-size: 13px; font-weight: 800; color: #C9BDF2">Ranked by space on the board · FINISH is space 52</p>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const players = [
+      { name: 'Guillaume', color: '#9FD6FF', space: 22 },
+      { name: 'Mikael', color: '#FFD23F', space: 18 },
+      { name: 'Ziad', color: '#FFFFFF', space: 14 },
+      { name: 'Chiara', color: '#FF7EC2', space: 9 }
+    ];
+    const medal = ['#FFD23F', '#FFF6E5', '#FF8A1F'];
+    const heights = [130, 96, 70];
+    // podium order on screen: 2nd, 1st, 3rd
+    const podium = [1, 0, 2].map((i) => ({
+      name: players[i].name, color: players[i].color, rank: String(i + 1),
+      block: 'width: 100%; height: ' + heights[i] + 'px; border-radius: 18px 18px 6px 6px; border: 4px solid #120C26; display: flex; justify-content: center; padding-top: 8px; box-sizing: border-box; background: ' + medal[i]
+    }));
+    const rows = players.map((p, i) => ({
+      rank: (i + 1) + '.', name: p.name, space: String(p.space),
+      left: (52 - p.space) + ' to go',
+      bar: 'height: 100%; border-radius: 999px; background: ' + p.color + '; width: ' + Math.round((p.space / 52) * 100) + '%'
+    }));
+    return { podium, rows };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,826 @@
+{
+  "design": {
+    "easy": [
+      {
+        "id": "design-easy-01",
+        "question": "What does UI mean?",
+        "answer": "User Interface: everything the user sees and touches on a screen (buttons, menus, colours, text)."
+      },
+      {
+        "id": "design-easy-02",
+        "question": "What does UX mean?",
+        "answer": "User Experience: how easy and pleasant it feels to use a product, from start to finish."
+      },
+      {
+        "id": "design-easy-03",
+        "question": "What do we call the letters' style and shape?",
+        "answer": "Typography: the choice of fonts, sizes, weights and spacing of text."
+      },
+      {
+        "id": "design-easy-04",
+        "question": "What does \"responsive\" mean?",
+        "answer": "A responsive design adapts to different screen sizes: phone, tablet and computer."
+      },
+      {
+        "id": "design-easy-05",
+        "question": "What do we call a button that encourages users to act?",
+        "answer": "A CTA (Call To Action), for example \"Buy now\" or \"Sign up\"."
+      },
+      {
+        "id": "design-easy-06",
+        "question": "Which colour is often used to show success?",
+        "answer": "Green, as in \"Your message has been sent\"."
+      },
+      {
+        "id": "design-easy-07",
+        "question": "Which tool is widely used to create UI designs and prototypes?",
+        "answer": "Figma, a collaborative design tool that runs in the browser."
+      },
+      {
+        "id": "design-easy-08",
+        "question": "Which software is mainly used to create vector illustrations?",
+        "answer": "Adobe Illustrator."
+      },
+      {
+        "id": "design-easy-09",
+        "question": "What do you call the first page of a website?",
+        "answer": "The homepage."
+      },
+      {
+        "id": "design-easy-10",
+        "question": "What is the name of the menu at the top of a website?",
+        "answer": "The navigation bar (or navbar)."
+      },
+      {
+        "id": "design-easy-11",
+        "question": "What do we call a symbol used to represent an action?",
+        "answer": "An icon, for example a magnifying glass for \"search\"."
+      },
+      {
+        "id": "design-easy-12",
+        "question": "What is a clickable element that takes users to another page called?",
+        "answer": "A link (or hyperlink)."
+      },
+      {
+        "id": "design-easy-13",
+        "question": "What do we call a brand's symbol or graphic mark?",
+        "answer": "A logo."
+      },
+      {
+        "id": "design-easy-14",
+        "question": "What file format is best for a logo with a transparent background?",
+        "answer": "SVG: a vector format that stays sharp at any size and supports transparency (PNG also works)."
+      },
+      {
+        "id": "design-easy-15",
+        "question": "What is the name of the small window that appears on top of a page?",
+        "answer": "A pop-up (or modal window)."
+      },
+      {
+        "id": "design-easy-16",
+        "question": "What format is commonly used for animated images?",
+        "answer": "GIF."
+      },
+      {
+        "id": "design-easy-17",
+        "question": "What do we call the section at the bottom of a website?",
+        "answer": "The footer: it usually holds contact info, legal links and social media."
+      },
+      {
+        "id": "design-easy-18",
+        "question": "What colour is often used for warning messages?",
+        "answer": "Orange (or yellow): it says \"be careful\" without meaning \"error\"."
+      },
+      {
+        "id": "design-easy-19",
+        "question": "What document explains how a brand should look?",
+        "answer": "Brand guidelines (or a brand style guide): logo, colours, fonts and tone of voice."
+      },
+      {
+        "id": "design-easy-20",
+        "question": "How many seconds do users usually wait before losing patience with a slow website?",
+        "answer": "About 3 seconds. After that, many visitors leave."
+      }
+    ],
+    "hard": [
+      {
+        "id": "design-hard-01",
+        "question": "What is the space inside an element, between its content and its border, called?",
+        "answer": "Padding. (The space outside the border is the margin.)"
+      },
+      {
+        "id": "design-hard-02",
+        "question": "What is the practice of making a website usable for everyone called?",
+        "answer": "Accessibility: designing for all users, including people with disabilities (contrast, keyboard use, screen readers)."
+      },
+      {
+        "id": "design-hard-03",
+        "question": "What type of image can be resized without losing quality?",
+        "answer": "A vector image: it is made of shapes and maths, not pixels."
+      },
+      {
+        "id": "design-hard-04",
+        "question": "What is the UX method of comparing two versions to see which works better?",
+        "answer": "A/B testing: version A and version B are shown to different users and the results are compared."
+      },
+      {
+        "id": "design-hard-05",
+        "question": "What theory explains why we see nearby elements as a group?",
+        "answer": "The Gestalt principle of proximity: elements that are close together look related."
+      },
+      {
+        "id": "design-hard-06",
+        "question": "What colour mode is mainly used for printing?",
+        "answer": "CMYK: Cyan, Magenta, Yellow and Key (black). In French: CMJN."
+      },
+      {
+        "id": "design-hard-07",
+        "question": "What colour mode is used for digital screens?",
+        "answer": "RGB: Red, Green, Blue. In French: RVB."
+      },
+      {
+        "id": "design-hard-08",
+        "question": "What do we call a fictional profile of a target user?",
+        "answer": "A persona: a made-up person with a name, goals and frustrations, based on real research."
+      },
+      {
+        "id": "design-hard-09",
+        "question": "Which Figma feature automatically organises elements and adjusts spacing?",
+        "answer": "Auto layout: it works a bit like CSS Flexbox."
+      },
+      {
+        "id": "design-hard-10",
+        "question": "What do you call the clickable version of a design used to test navigation?",
+        "answer": "An interactive prototype."
+      },
+      {
+        "id": "design-hard-11",
+        "question": "What do you call the visual change when you move the mouse over an element?",
+        "answer": "A hover effect, for example a button that changes colour."
+      },
+      {
+        "id": "design-hard-12",
+        "question": "What do we call the large introductory section at the top of a website?",
+        "answer": "The hero section: a big title, an image and usually a CTA."
+      },
+      {
+        "id": "design-hard-13",
+        "question": "What is the 60-30-10 rule used for when designing a website?",
+        "answer": "Colour balance: 60% main colour, 30% secondary colour, 10% accent colour."
+      },
+      {
+        "id": "design-hard-14",
+        "question": "What do we call the top section containing the logo and the navigation?",
+        "answer": "The header."
+      },
+      {
+        "id": "design-hard-15",
+        "question": "How many main colours should a brand palette ideally have to stay consistent?",
+        "answer": "Between 3 and 5 main colours."
+      },
+      {
+        "id": "design-hard-16",
+        "question": "What is the recommended minimum font size for body text on a website?",
+        "answer": "16px."
+      },
+      {
+        "id": "design-hard-17",
+        "question": "Which CSS unit is commonly used to make font sizes responsive?",
+        "answer": "rem: it is relative to the root font size (1rem = 16px by default)."
+      },
+      {
+        "id": "design-hard-18",
+        "question": "Which attribute describes an image for screen readers?",
+        "answer": "The alt attribute (alt text), for example alt=\"A goose wearing a top hat\"."
+      },
+      {
+        "id": "design-hard-19",
+        "question": "Which Figma feature lets you create different versions of a component?",
+        "answer": "Variants, for example a button in primary, secondary and disabled versions."
+      },
+      {
+        "id": "design-hard-20",
+        "question": "What do we call the empty space around and between elements in a design?",
+        "answer": "White space (or negative space): it lets the design breathe and improves readability."
+      }
+    ]
+  },
+  "cyber": {
+    "easy": [
+      {
+        "id": "cyber-easy-01",
+        "question": "What do you need to unlock your phone or your computer?",
+        "answer": "A password or a PIN code (or your fingerprint / face)."
+      },
+      {
+        "id": "cyber-easy-02",
+        "question": "Should you share your password with your friends?",
+        "answer": "No. A password is personal and should never be shared, even with friends."
+      },
+      {
+        "id": "cyber-easy-03",
+        "question": "What do we call unwanted emails, often advertising?",
+        "answer": "Spam."
+      },
+      {
+        "id": "cyber-easy-04",
+        "question": "What does Wi-Fi give you access to?",
+        "answer": "The Internet, without a cable."
+      },
+      {
+        "id": "cyber-easy-05",
+        "question": "Is \"123456\" a good password?",
+        "answer": "No! It is one of the most used passwords in the world and is cracked instantly."
+      },
+      {
+        "id": "cyber-easy-06",
+        "question": "What should you do when you leave your computer?",
+        "answer": "Lock it (Windows + L on a PC, Ctrl + Cmd + Q on a Mac)."
+      },
+      {
+        "id": "cyber-easy-07",
+        "question": "What do we call a fake website that looks like a real one?",
+        "answer": "A phishing website: it copies a real site to steal your login or bank details."
+      },
+      {
+        "id": "cyber-easy-08",
+        "question": "What do we call a bad program that can damage your computer?",
+        "answer": "Malware (for example a virus)."
+      },
+      {
+        "id": "cyber-easy-09",
+        "question": "What should you do if you receive a suspicious email?",
+        "answer": "Don't click anything. Delete it or report it."
+      },
+      {
+        "id": "cyber-easy-10",
+        "question": "What do we call the name you use to log in?",
+        "answer": "Your username (or login)."
+      },
+      {
+        "id": "cyber-easy-11",
+        "question": "What do you do to enter your account on a website?",
+        "answer": "You log in (or sign in)."
+      },
+      {
+        "id": "cyber-easy-12",
+        "question": "What do you do to leave your account on a website?",
+        "answer": "You log out (or sign out)."
+      },
+      {
+        "id": "cyber-easy-13",
+        "question": "What do we call information about you, like your name or address?",
+        "answer": "Personal data."
+      },
+      {
+        "id": "cyber-easy-14",
+        "question": "What do we call a code sent by SMS to confirm your identity?",
+        "answer": "A verification code (or one-time code)."
+      },
+      {
+        "id": "cyber-easy-15",
+        "question": "Can a real website ask for your password by email?",
+        "answer": "No, never. If an email asks for your password, it is a scam."
+      },
+      {
+        "id": "cyber-easy-16",
+        "question": "What do we call a program that protects your computer against viruses?",
+        "answer": "An antivirus."
+      },
+      {
+        "id": "cyber-easy-17",
+        "question": "What should you check before clicking on a link?",
+        "answer": "The URL (the real address of the link): is it the official website?"
+      },
+      {
+        "id": "cyber-easy-18",
+        "question": "What do we call fake prizes online, like \"You won an iPhone!\"?",
+        "answer": "A scam."
+      },
+      {
+        "id": "cyber-easy-19",
+        "question": "What should a strong password contain?",
+        "answer": "Upper and lower case letters, numbers and symbols, and at least 12 characters."
+      },
+      {
+        "id": "cyber-easy-20",
+        "question": "Who should you call if your computer is hacked at work?",
+        "answer": "The IT team (IT support), right away."
+      }
+    ],
+    "hard": [
+      {
+        "id": "cyber-hard-01",
+        "question": "What is phishing?",
+        "answer": "A trick where attackers send fake messages (email, SMS) that look real, to steal passwords or bank details."
+      },
+      {
+        "id": "cyber-hard-02",
+        "question": "What is two-factor authentication (2FA)?",
+        "answer": "Logging in with two proofs: something you know (password) plus something you have (a code on your phone)."
+      },
+      {
+        "id": "cyber-hard-03",
+        "question": "What does HTTPS add compared to HTTP?",
+        "answer": "Encryption (TLS): data between the browser and the website cannot be read or changed by others."
+      },
+      {
+        "id": "cyber-hard-04",
+        "question": "What is ransomware?",
+        "answer": "Malware that locks or encrypts your files and asks for money to unlock them."
+      },
+      {
+        "id": "cyber-hard-05",
+        "question": "What is the difference between symmetric and asymmetric encryption?",
+        "answer": "Symmetric uses one shared key. Asymmetric uses a public key to encrypt and a private key to decrypt."
+      },
+      {
+        "id": "cyber-hard-06",
+        "question": "What is a firewall?",
+        "answer": "A security system that filters network traffic and blocks unwanted connections."
+      },
+      {
+        "id": "cyber-hard-07",
+        "question": "What is a VPN used for?",
+        "answer": "To create an encrypted tunnel for your Internet connection and hide your real IP address, for example on public Wi-Fi."
+      },
+      {
+        "id": "cyber-hard-08",
+        "question": "What is a brute-force attack?",
+        "answer": "Trying every possible password combination until the right one is found."
+      },
+      {
+        "id": "cyber-hard-09",
+        "question": "What is an SQL injection?",
+        "answer": "An attack where malicious SQL code is typed into a form to read or change a website's database."
+      },
+      {
+        "id": "cyber-hard-10",
+        "question": "What is XSS (cross-site scripting)?",
+        "answer": "An attack that injects malicious JavaScript into a web page, which then runs in other users' browsers."
+      },
+      {
+        "id": "cyber-hard-11",
+        "question": "What is a DDoS attack?",
+        "answer": "Distributed Denial of Service: thousands of machines flood a server with requests until it crashes."
+      },
+      {
+        "id": "cyber-hard-12",
+        "question": "Why should passwords be hashed in a database?",
+        "answer": "So that even if the database is stolen, the real passwords cannot be read. A hash cannot be reversed."
+      },
+      {
+        "id": "cyber-hard-13",
+        "question": "What is social engineering?",
+        "answer": "Manipulating people (not computers) to get information, for example pretending to be IT support on the phone."
+      },
+      {
+        "id": "cyber-hard-14",
+        "question": "What is a zero-day vulnerability?",
+        "answer": "A security flaw that is not known by the developer yet, so there is no fix (patch) for it."
+      },
+      {
+        "id": "cyber-hard-15",
+        "question": "What is the principle of least privilege?",
+        "answer": "Each user or program gets only the access it really needs, nothing more."
+      },
+      {
+        "id": "cyber-hard-16",
+        "question": "What does the GDPR protect?",
+        "answer": "The personal data of people in the European Union (RGPD in French)."
+      },
+      {
+        "id": "cyber-hard-17",
+        "question": "What is a backdoor?",
+        "answer": "A hidden way into a system that bypasses normal login and security."
+      },
+      {
+        "id": "cyber-hard-18",
+        "question": "What is the 3-2-1 backup rule?",
+        "answer": "3 copies of your data, on 2 different types of storage, with 1 copy kept off-site."
+      },
+      {
+        "id": "cyber-hard-19",
+        "question": "What is a botnet?",
+        "answer": "A network of infected computers controlled by a hacker, often used for DDoS attacks or spam."
+      },
+      {
+        "id": "cyber-hard-20",
+        "question": "What is a CAPTCHA used for?",
+        "answer": "To check that the user is a human and not a bot, for example \"select all images with traffic lights\"."
+      }
+    ]
+  },
+  "marketing": {
+    "easy": [
+      {
+        "id": "marketing-easy-01",
+        "question": "What does SEO stand for?",
+        "answer": "Search Engine Optimisation: improving a website so it ranks higher in Google's free results."
+      },
+      {
+        "id": "marketing-easy-02",
+        "question": "What does CTR stand for?",
+        "answer": "Click-Through Rate: the percentage of people who click after seeing an ad or a link."
+      },
+      {
+        "id": "marketing-easy-03",
+        "question": "What is a backlink?",
+        "answer": "A link from another website to yours. Good backlinks help your SEO."
+      },
+      {
+        "id": "marketing-easy-04",
+        "question": "What is retargeting?",
+        "answer": "Showing ads to people who have already visited your website, to bring them back."
+      },
+      {
+        "id": "marketing-easy-05",
+        "question": "What is a conversion?",
+        "answer": "When a visitor does the action you want: buying, signing up, downloading..."
+      },
+      {
+        "id": "marketing-easy-06",
+        "question": "What is a landing page?",
+        "answer": "A page built for one campaign, with one single goal (one CTA)."
+      },
+      {
+        "id": "marketing-easy-07",
+        "question": "What is a lead?",
+        "answer": "A potential customer who has shown interest, for example by leaving their email."
+      },
+      {
+        "id": "marketing-easy-08",
+        "question": "What is a keyword?",
+        "answer": "A word or phrase people type into a search engine, like \"cheap running shoes\"."
+      },
+      {
+        "id": "marketing-easy-09",
+        "question": "What is a newsletter?",
+        "answer": "A regular email sent to subscribers with news, content or offers."
+      },
+      {
+        "id": "marketing-easy-10",
+        "question": "What is influencer marketing?",
+        "answer": "Working with content creators to promote a brand to their audience."
+      },
+      {
+        "id": "marketing-easy-11",
+        "question": "What is organic traffic?",
+        "answer": "Visitors who come from unpaid search results (not from ads)."
+      },
+      {
+        "id": "marketing-easy-12",
+        "question": "What is cart abandonment?",
+        "answer": "When a visitor leaves a website with products still in their shopping cart, without buying."
+      },
+      {
+        "id": "marketing-easy-13",
+        "question": "What is an upsell?",
+        "answer": "Offering the customer a better, more expensive version of what they want to buy."
+      },
+      {
+        "id": "marketing-easy-14",
+        "question": "What is a hashtag used for?",
+        "answer": "Grouping posts on the same topic so people can find them, like #design."
+      },
+      {
+        "id": "marketing-easy-15",
+        "question": "What does SEA stand for?",
+        "answer": "Search Engine Advertising: paid ads in search engines, like Google Ads."
+      },
+      {
+        "id": "marketing-easy-16",
+        "question": "What is a testimonial?",
+        "answer": "A customer's opinion about a product or a brand, used to build trust."
+      },
+      {
+        "id": "marketing-easy-17",
+        "question": "What is Google Analytics used for?",
+        "answer": "Measuring a website's traffic: how many visitors, where they come from, what they do."
+      },
+      {
+        "id": "marketing-easy-18",
+        "question": "What are impressions in advertising?",
+        "answer": "The number of times an ad is shown on screen."
+      },
+      {
+        "id": "marketing-easy-19",
+        "question": "What does B2C mean?",
+        "answer": "Business to Consumer: a company that sells directly to individuals."
+      },
+      {
+        "id": "marketing-easy-20",
+        "question": "What does \"viral\" mean for content?",
+        "answer": "Content that is shared massively and very quickly."
+      }
+    ],
+    "hard": [
+      {
+        "id": "marketing-hard-01",
+        "question": "What is the difference between SEO, SEA and SEM?",
+        "answer": "SEO = free (organic) results, SEA = paid search ads, SEM = Search Engine Marketing, which covers both."
+      },
+      {
+        "id": "marketing-hard-02",
+        "question": "How do you calculate the CPC?",
+        "answer": "Cost Per Click = total ad cost ÷ number of clicks."
+      },
+      {
+        "id": "marketing-hard-03",
+        "question": "An ad gets 20,000 impressions and 400 clicks. What is its CTR?",
+        "answer": "2% (400 ÷ 20,000 × 100)."
+      },
+      {
+        "id": "marketing-hard-04",
+        "question": "Name the four steps of the AIDA model.",
+        "answer": "Attention, Interest, Desire, Action."
+      },
+      {
+        "id": "marketing-hard-05",
+        "question": "What is a long-tail keyword?",
+        "answer": "A longer, very specific search phrase, like \"red running shoes for women size 38\": less traffic, but visitors who convert better."
+      },
+      {
+        "id": "marketing-hard-06",
+        "question": "What is a KPI?",
+        "answer": "A Key Performance Indicator: a number used to measure if a goal is reached, like conversion rate or number of leads."
+      },
+      {
+        "id": "marketing-hard-07",
+        "question": "A site has 5,000 visitors and 100 sales. What is its conversion rate?",
+        "answer": "2% (100 ÷ 5,000 × 100)."
+      },
+      {
+        "id": "marketing-hard-08",
+        "question": "What do TOFU, MOFU and BOFU mean?",
+        "answer": "Top, Middle and Bottom Of the FUnnel: discovering, considering, then buying."
+      },
+      {
+        "id": "marketing-hard-09",
+        "question": "What is a lead magnet?",
+        "answer": "A free offer (ebook, checklist, discount) given in exchange for contact details."
+      },
+      {
+        "id": "marketing-hard-10",
+        "question": "What does AARRR stand for?",
+        "answer": "Acquisition, Activation, Retention, Referral, Revenue: the \"pirate metrics\" funnel."
+      },
+      {
+        "id": "marketing-hard-11",
+        "question": "What is ROAS?",
+        "answer": "Return On Ad Spend: revenue from ads ÷ cost of the ads."
+      },
+      {
+        "id": "marketing-hard-12",
+        "question": "What does CPM mean?",
+        "answer": "Cost Per Mille: the cost for 1,000 ad impressions."
+      },
+      {
+        "id": "marketing-hard-13",
+        "question": "What is the difference between upselling and cross-selling?",
+        "answer": "Upselling offers a better version. Cross-selling offers a complementary product (fries with your burger)."
+      },
+      {
+        "id": "marketing-hard-14",
+        "question": "What is customer lifetime value (CLV)?",
+        "answer": "The total revenue a customer brings to a company over the whole relationship."
+      },
+      {
+        "id": "marketing-hard-15",
+        "question": "What is social proof?",
+        "answer": "Showing that other people trust you: reviews, testimonials, number of customers."
+      },
+      {
+        "id": "marketing-hard-16",
+        "question": "What is a heatmap used for?",
+        "answer": "Seeing where users click, move their mouse and scroll on a page."
+      },
+      {
+        "id": "marketing-hard-17",
+        "question": "What is the difference between owned, paid and earned media?",
+        "answer": "Owned = your own channels (site, socials). Paid = ads. Earned = free coverage (press, shares, word of mouth)."
+      },
+      {
+        "id": "marketing-hard-18",
+        "question": "What is a lookalike audience?",
+        "answer": "New people who look like your current customers, targeted by an ad platform."
+      },
+      {
+        "id": "marketing-hard-19",
+        "question": "1,000 people see a product and 200 add it to their cart. What is the drop-off rate?",
+        "answer": "80% (800 people out of 1,000 did not add it)."
+      },
+      {
+        "id": "marketing-hard-20",
+        "question": "What does CRO stand for?",
+        "answer": "Conversion Rate Optimisation: improving a site so more visitors take action."
+      }
+    ]
+  },
+  "web": {
+    "easy": [
+      {
+        "id": "web-easy-01",
+        "question": "What does HTML stand for?",
+        "answer": "HyperText Markup Language: the language that structures the content of a web page."
+      },
+      {
+        "id": "web-easy-02",
+        "question": "What does CSS stand for?",
+        "answer": "Cascading Style Sheets: the language that styles a web page (colours, fonts, layout)."
+      },
+      {
+        "id": "web-easy-03",
+        "question": "Which HTML tag is used for the main title of a page?",
+        "answer": "<h1>."
+      },
+      {
+        "id": "web-easy-04",
+        "question": "Which HTML tag creates a link?",
+        "answer": "<a>, with the href attribute: <a href=\"...\">."
+      },
+      {
+        "id": "web-easy-05",
+        "question": "Which HTML tag displays an image?",
+        "answer": "<img>, with the src and alt attributes."
+      },
+      {
+        "id": "web-easy-06",
+        "question": "Which HTML tag creates a paragraph?",
+        "answer": "<p>."
+      },
+      {
+        "id": "web-easy-07",
+        "question": "Which CSS property changes the colour of the text?",
+        "answer": "color."
+      },
+      {
+        "id": "web-easy-08",
+        "question": "Which CSS property changes the background colour?",
+        "answer": "background-color."
+      },
+      {
+        "id": "web-easy-09",
+        "question": "Which language makes a web page interactive?",
+        "answer": "JavaScript."
+      },
+      {
+        "id": "web-easy-10",
+        "question": "What is a web browser?",
+        "answer": "A program used to visit websites, like Chrome, Firefox or Safari."
+      },
+      {
+        "id": "web-easy-11",
+        "question": "What does URL stand for?",
+        "answer": "Uniform Resource Locator: the address of a web page."
+      },
+      {
+        "id": "web-easy-12",
+        "question": "What is a domain name?",
+        "answer": "The readable name of a website, like google.com."
+      },
+      {
+        "id": "web-easy-13",
+        "question": "What is a database?",
+        "answer": "An organised collection of data, stored so it can be easily searched and updated."
+      },
+      {
+        "id": "web-easy-14",
+        "question": "In a database table, what do we call one row?",
+        "answer": "A record (one line of data, for example one user)."
+      },
+      {
+        "id": "web-easy-15",
+        "question": "In a database table, what do we call one column?",
+        "answer": "A field (one type of information, for example \"email\")."
+      },
+      {
+        "id": "web-easy-16",
+        "question": "What does SQL stand for?",
+        "answer": "Structured Query Language: the language used to talk to relational databases."
+      },
+      {
+        "id": "web-easy-17",
+        "question": "Which SQL command is used to read data from a table?",
+        "answer": "SELECT, for example SELECT * FROM users;"
+      },
+      {
+        "id": "web-easy-18",
+        "question": "What is an algorithm?",
+        "answer": "A list of step-by-step instructions to solve a problem, like a cooking recipe."
+      },
+      {
+        "id": "web-easy-19",
+        "question": "What is a bug?",
+        "answer": "An error in a program that makes it behave in the wrong way."
+      },
+      {
+        "id": "web-easy-20",
+        "question": "What does \"front-end\" mean?",
+        "answer": "The part of a website the user sees and interacts with (HTML, CSS, JavaScript)."
+      }
+    ],
+    "hard": [
+      {
+        "id": "web-hard-01",
+        "question": "What is the difference between a class and an id in CSS?",
+        "answer": "A class (.name) can be used on many elements. An id (#name) must be unique on the page."
+      },
+      {
+        "id": "web-hard-02",
+        "question": "What is the CSS box model?",
+        "answer": "Every element is a box made of content, padding, border and margin."
+      },
+      {
+        "id": "web-hard-03",
+        "question": "Name the two main CSS layout systems used to align elements.",
+        "answer": "Flexbox (one direction: row or column) and Grid (two directions: rows and columns)."
+      },
+      {
+        "id": "web-hard-04",
+        "question": "What is a media query?",
+        "answer": "A CSS rule that applies styles only for some screen sizes, for example @media (max-width: 768px)."
+      },
+      {
+        "id": "web-hard-05",
+        "question": "What does \"semantic HTML\" mean?",
+        "answer": "Using tags that describe their meaning, like <header>, <nav>, <article>, <footer>, instead of only <div>."
+      },
+      {
+        "id": "web-hard-06",
+        "question": "What is the DOM?",
+        "answer": "Document Object Model: the tree of HTML elements that JavaScript can read and change."
+      },
+      {
+        "id": "web-hard-07",
+        "question": "What is the difference between GET and POST?",
+        "answer": "GET asks for data (visible in the URL). POST sends data to the server (in the request body), for example a form."
+      },
+      {
+        "id": "web-hard-08",
+        "question": "What does a 404 status code mean?",
+        "answer": "Not Found: the page you asked for does not exist on the server."
+      },
+      {
+        "id": "web-hard-09",
+        "question": "What is an API?",
+        "answer": "Application Programming Interface: a way for two programs to talk to each other and exchange data."
+      },
+      {
+        "id": "web-hard-10",
+        "question": "What is the difference between front-end and back-end?",
+        "answer": "Front-end runs in the browser (what users see). Back-end runs on the server (logic, database)."
+      },
+      {
+        "id": "web-hard-11",
+        "question": "What is a primary key?",
+        "answer": "A column that uniquely identifies each row of a table, often an id."
+      },
+      {
+        "id": "web-hard-12",
+        "question": "What is a foreign key?",
+        "answer": "A column that refers to the primary key of another table, to link the two tables."
+      },
+      {
+        "id": "web-hard-13",
+        "question": "What is a JOIN in SQL?",
+        "answer": "A command that combines rows from two tables using a related column."
+      },
+      {
+        "id": "web-hard-14",
+        "question": "Which SQL clause is used to filter rows?",
+        "answer": "WHERE, for example SELECT * FROM users WHERE age > 18;"
+      },
+      {
+        "id": "web-hard-15",
+        "question": "What does CRUD stand for?",
+        "answer": "Create, Read, Update, Delete: the four basic operations on data (INSERT, SELECT, UPDATE, DELETE in SQL)."
+      },
+      {
+        "id": "web-hard-16",
+        "question": "Give an example of a one-to-many relationship in a database.",
+        "answer": "One customer can have many orders, but each order belongs to one customer."
+      },
+      {
+        "id": "web-hard-17",
+        "question": "What is a loop in an algorithm?",
+        "answer": "A block of instructions repeated several times, for example a for or while loop."
+      },
+      {
+        "id": "web-hard-18",
+        "question": "What is a condition in an algorithm?",
+        "answer": "An if / else test: the program does something different depending on whether it is true or false."
+      },
+      {
+        "id": "web-hard-19",
+        "question": "What is the difference between a linear search and a binary search?",
+        "answer": "Linear checks items one by one. Binary works on a sorted list and cuts it in half at each step, so it is much faster."
+      },
+      {
+        "id": "web-hard-20",
+        "question": "What is a function in programming?",
+        "answer": "A reusable block of code with a name, which can take parameters and return a result."
+      }
+    ]
+  }
+}

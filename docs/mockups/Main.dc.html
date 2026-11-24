@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Goose Jumps – Home</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lilita+One&amp;family=Nunito:wght@600;800;900&amp;display=swap">
+<style>
+body{margin:0;font-family:'Nunito',sans-serif}
+a{color:#FFB347}a:hover{color:#FFD08A}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #2A1F4F; color: #FFF6E5; font-family: 'Nunito', sans-serif; display: flex; flex-direction: column; align-items: center; padding: 56px 28px 36px; gap: 20px; position: relative; overflow: hidden">
+  <div style="position: absolute; top: -60px; right: -70px; width: 220px; height: 220px; border-radius: 50%; background: #35286A"></div>
+  <div style="position: absolute; bottom: 120px; left: -90px; width: 200px; height: 200px; border-radius: 50%; background: #35286A"></div>
+
+  <p style="margin: 0; font-size: 13px; font-weight: 800; letter-spacing: 2px; color: #C9BDF2; position: relative">ENGLISH GAME · 2026</p>
+
+  <div style="display: flex; flex-direction: column; align-items: center; position: relative; line-height: 0.9">
+    <h1 style="margin: 0; font-family: 'Lilita One', sans-serif; font-weight: 400; font-size: 76px; color: {{accent}}; -webkit-text-stroke: 4px #120C26; paint-order: stroke fill; transform: rotate(-4deg)">GOOSE</h1>
+    <h1 style="margin: 0; font-family: 'Lilita One', sans-serif; font-weight: 400; font-size: 76px; color: #FFF6E5; -webkit-text-stroke: 4px #120C26; paint-order: stroke fill; transform: rotate(3deg)">JUMPS</h1>
+  </div>
+
+  <svg viewBox="0 0 100 100" width="200" height="200" aria-hidden="true" style="position: relative; margin-top: 4px">
+    <ellipse cx="50" cy="94" rx="26" ry="4" fill="#120C26" opacity="0.4"></ellipse>
+    <path d="M38 88 L34 94 L42 94 Z M62 88 L58 94 L66 94 Z" fill="#FF8A1F" stroke="#120C26" stroke-width="3" stroke-linejoin="round"></path>
+    <rect x="28" y="22" width="44" height="68" rx="22" fill="#FFFFFF" stroke="#120C26" stroke-width="4"></rect>
+    <path d="M28 64 Q18 58 20 48 Q28 54 32 56 Z" fill="#E9E3F7" stroke="#120C26" stroke-width="3" stroke-linejoin="round"></path>
+    <circle cx="41" cy="42" r="9" fill="#FFFFFF" stroke="#120C26" stroke-width="3"></circle>
+    <circle cx="59" cy="42" r="9" fill="#FFFFFF" stroke="#120C26" stroke-width="3"></circle>
+    <circle cx="43" cy="43" r="4" fill="#120C26"></circle>
+    <circle cx="57" cy="43" r="4" fill="#120C26"></circle>
+    <path d="M36 55 Q50 48 64 55 Q50 66 36 55 Z" fill="#FF8A1F" stroke="#120C26" stroke-width="3" stroke-linejoin="round"></path>
+    <rect x="35" y="4" width="30" height="18" rx="3" fill="#120C26"></rect>
+    <rect x="35" y="15" width="30" height="4" fill="#FF8A1F"></rect>
+    <rect x="25" y="20" width="50" height="5" rx="2.5" fill="#120C26"></rect>
+  </svg>
+
+  <div style="display: flex; gap: 8px; position: relative">
+    <span style="padding: 6px 12px; border-radius: 999px; background: #4C8DFF; color: #120C26; font-weight: 900; font-size: 12px; border: 3px solid #120C26">WEB</span>
+    <span style="padding: 6px 12px; border-radius: 999px; background: #2FD3B0; color: #120C26; font-weight: 900; font-size: 12px; border: 3px solid #120C26">CYBER</span>
+    <span style="padding: 6px 12px; border-radius: 999px; background: #FF7EC2; color: #120C26; font-weight: 900; font-size: 12px; border: 3px solid #120C26">DESIGN</span>
+    <span style="padding: 6px 12px; border-radius: 999px; background: #FFD23F; color: #120C26; font-weight: 900; font-size: 12px; border: 3px solid #120C26">MARKETING</span>
+  </div>
+
+  <div style="flex-grow: 1"></div>
+
+  <div style="display: flex; flex-direction: column; gap: 16px; width: 100%; position: relative">
+    <a href="Players.dc.html" style="display: block; text-align: center; text-decoration: none; padding: 18px; border-radius: 22px; background: {{accent}}; color: #120C26; font-family: 'Lilita One', sans-serif; font-size: 30px; letter-spacing: 1px; border: 4px solid #120C26; box-shadow: 0 7px 0 #120C26">PLAY</a>
+    <button type="button" style="padding: 16px; border-radius: 22px; background: #FFF6E5; color: #120C26; font-family: 'Lilita One', sans-serif; font-size: 24px; letter-spacing: 1px; border: 4px solid #120C26; box-shadow: 0 7px 0 #120C26; cursor: pointer">RULES</button>
+  </div>
+  <p style="margin: 6px 0 0; font-size: 12px; color: #C9BDF2; position: relative">Guillaume · Ziad · Mikael · Chiara</p>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#FF8A1F","options":["#FF8A1F","#FFD23F","#FF7EC2","#4C8DFF"]},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { accent: this.props.accent ?? '#FF8A1F' };
+  }
+}
+</script>
+</body>
+</html>
