@@ -32,8 +32,8 @@ export const ICONS = {
 };
 
 /** Bouton retour carré. `action` = nom de l'action déclenchée au clic. */
-export function backButton(action = 'back', label = 'Back') {
-  return `<button type="button" class="icon-btn" data-action="${action}" aria-label="${esc(label)}">${ICONS.back}</button>`;
+export function backButton(action = 'back', label = 'Back', extraClass = '') {
+  return `<button type="button" class="icon-btn ${extraClass}" data-action="${action}" aria-label="${esc(label)}">${ICONS.back}</button>`;
 }
 
 /**
