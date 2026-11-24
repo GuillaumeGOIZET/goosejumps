@@ -14,6 +14,7 @@
 import { loadData } from './game.js';
 import { loadState, saveState, createState } from './state.js';
 import { enterScreen } from './motion.js';
+import { setScreen } from './sound.js';
 
 import * as home from './screens/home.js';
 import * as rules from './screens/rules.js';
@@ -43,6 +44,7 @@ export const app = {
     const screen = SCREENS[name];
     if (!screen) throw new Error(`Unknown screen: ${name}`);
     app.current = name;
+    setScreen(name); // musique d'ambiance de l'écran (js/sound.js)
     root.onclick = null;
     root.innerHTML = '';
     cleanup = screen.render(root, app, params);

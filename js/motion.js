@@ -10,6 +10,8 @@
    boutons créés plus tard par les écrans.
    ========================================================= */
 
+import { sfx } from './sound.js';
+
 // Boutons qui reçoivent l'onde (ils ont overflow: hidden dans motion.css)
 const RIPPLE_TARGETS = '.btn, .icon-btn, .type-btn, .level-btn, .pick-btn, .theme-btn, .winner-btn, .chip, .cat-btn, .tab, .dashed-btn';
 
@@ -42,6 +44,10 @@ function jump(element) {
 }
 
 document.addEventListener('pointerdown', (event) => {
+  // Une oie touchée crie (même si les animations sont réduites)
+  const touchedGoose = event.target.closest(JUMP_TARGETS);
+  if (touchedGoose) sfx.honk();
+
   if (reduceMotion.matches) return;
 
   const button = event.target.closest(RIPPLE_TARGETS);

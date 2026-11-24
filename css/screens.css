@@ -10,6 +10,13 @@
   gap: 20px;
 }
 
+/* Bouton son, en haut à droite de l'accueil */
+.screen > .home__sound {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+
 .home__kicker {
   font-size: 13px;
   font-weight: 800;

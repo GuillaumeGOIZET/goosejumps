@@ -8,6 +8,7 @@
 import { avatar } from '../goose.js';
 import { rollDie, nextRoller, isTied, orderFromRolls } from '../game.js';
 import { esc, backButton, bindActions } from '../ui.js';
+import { sfx } from '../sound.js';
 
 const ROLL_ANIMATION_MS = 700;
 
@@ -130,10 +131,12 @@ export function render(root, app) {
           rolling = false;
           shownValue = value;
           draw();
+          sfx.dieLand();
           return;
         }
         shownValue = 1 + Math.floor(Math.random() * 6);
         draw();
+        sfx.dieTick();
       }, 90);
     },
     start() {
@@ -149,6 +152,7 @@ export function render(root, app) {
       state.winnerId = null;
       state.phase = 'playing';
       app.save();
+      sfx.start();
       app.go('turn');
     }
   });

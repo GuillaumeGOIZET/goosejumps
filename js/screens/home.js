@@ -6,6 +6,7 @@
 import { gooseSVG } from '../goose.js';
 import { bindActions } from '../ui.js';
 import { hasGameInProgress } from '../state.js';
+import { soundButton } from '../sound.js';
 
 export function render(root, app) {
   const inProgress = hasGameInProgress(app.state);
@@ -14,6 +15,7 @@ export function render(root, app) {
   <section class="screen home">
     <div class="deco" style="top:-60px;right:-70px;width:220px;height:220px"></div>
     <div class="deco" style="bottom:120px;left:-90px;width:200px;height:200px"></div>
+    ${soundButton('home__sound')}
 
     <p class="home__kicker">ENGLISH GAME · 2026</p>
 

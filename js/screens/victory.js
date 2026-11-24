@@ -6,6 +6,7 @@ import { gooseSVG } from '../goose.js';
 import { getPlayer, ranking } from '../game.js';
 import { esc, bindActions } from '../ui.js';
 import { rankingList } from './ranking.js';
+import { sfx } from '../sound.js';
 
 // Confettis décoratifs : [gauche %, haut px, couleur, rotation]
 const CONFETTI = [
@@ -45,6 +46,8 @@ export function render(root, app) {
       <button type="button" class="btn btn--cream btn--sm" data-action="home">HOME</button>
     </div>
   </section>`;
+
+  sfx.victory(); // fanfare !
 
   bindActions(root, {
     newGame() {

@@ -19,6 +19,7 @@ import {
   currentPlayer, otherPlayers, drawCard, movePlayer, setPosition, nextTurn
 } from '../game.js';
 import { esc, backButton, bindActions, moveSentence, fromTo, spaceName } from '../ui.js';
+import { sfx } from '../sound.js';
 
 export function render(root, app, params) {
   const state = app.state;
@@ -156,9 +157,12 @@ export function render(root, app, params) {
       justDrawn = true;
       app.save(); // la carte est marquée comme tirée
       draw();
+      sfx.cardFlip();
     },
     applyMove() {
       const { from, to } = movePlayer(state, player.id, card.effect.value);
+      if (to >= from) sfx.moveUp();
+      else sfx.moveDown();
       finishWith([moveLines(player, from, to)]);
     },
     applyMoveOthers() {
@@ -166,6 +170,8 @@ export function render(root, app, params) {
         const { from, to } = movePlayer(state, p.id, card.effect.value);
         return moveLines(p, from, to);
       });
+      if (card.effect.value >= 0) sfx.moveUp();
+      else sfx.moveDown();
       finishWith(lines);
     },
     applySwap({ id }) {
@@ -174,6 +180,7 @@ export function render(root, app, params) {
       const theirs = other.position;
       setPosition(state, player.id, theirs);
       setPosition(state, other.id, mine);
+      sfx.swap();
       finishWith([
         `${name} and ${esc(other.name)} swap places!`,
         `<span class="outcome__space">${name}: ${spaceName(mine)} → ${spaceName(theirs)}</span>`,
@@ -182,11 +189,14 @@ export function render(root, app, params) {
     },
     applySkip() {
       player.skipTurns += 1;
+      sfx.snore();
       finishWith([`${name} will skip their next turn.`]);
     },
     applyJudged({ value }) {
       const delta = value === 'right' ? card.effect.right : -(card.effect.wrong || 0);
       const { from, to } = movePlayer(state, player.id, delta);
+      if (value === 'right') sfx.correct();
+      else sfx.wrong();
       finishWith([`${value === 'right' ? 'Well done!' : 'Not this time.'} ${moveLines(player, from, to)}`]);
     },
     bonus() {

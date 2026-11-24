@@ -11,6 +11,7 @@ import {
   currentPlayer, otherPlayers, getPlayer, drawBattleQuestion, movePlayer, nextTurn
 } from '../game.js';
 import { esc, backButton, bindActions, moveSentence, spaceName } from '../ui.js';
+import { sfx } from '../sound.js';
 
 const STEPS = { opponent: '1/3', theme: '2/3', question: '3/3', winner: '3/3', result: '' };
 
@@ -166,10 +167,12 @@ export function render(root, app) {
       app.save();
       phase = 'question';
       draw();
+      sfx.start();
     },
     reveal() {
       phase = 'winner';
       draw();
+      sfx.reveal();
     },
     win({ id }) {
       if (id) {
@@ -177,8 +180,10 @@ export function render(root, app) {
         const loser = winner === me ? opponent : me;
         const { from, to } = movePlayer(state, winner.id, BATTLE_WIN_MOVE);
         result = { winner, loser, from, to };
+        sfx.battleWin();
       } else {
         result = { winner: null };
+        sfx.nobody();
       }
       if (state.phase !== 'finished') nextTurn(state);
       app.save();
@@ -194,4 +199,5 @@ export function render(root, app) {
   });
 
   draw();
+  sfx.battle(); // roulement de tambour à l'arrivée sur l'écran
 }

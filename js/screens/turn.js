@@ -7,6 +7,11 @@
 import { avatar, gooseSVG } from '../goose.js';
 import { FINISH, SPACE_TYPES, currentPlayer, nextTurn, spaceTypeAt } from '../game.js';
 import { esc, bindActions, ICONS } from '../ui.js';
+import { sfx, soundButton } from '../sound.js';
+
+// Pour ne jouer le « ding-dong » qu'au début d'un nouveau tour
+// (et pas en revenant du classement ou des règles)
+let lastTurnKey = '';
 
 // Ordre des boutons de type de case (Battle prend toute la largeur)
 const TYPE_BUTTONS = ['web', 'cyber', 'design', 'marketing', 'chance', 'special', 'battle'];
@@ -65,6 +70,7 @@ export function render(root, app) {
       <div class="topbar__actions">
         <button type="button" class="icon-btn icon-btn--yellow" data-action="ranking" aria-label="Leaderboard">${ICONS.leaderboard}</button>
         <button type="button" class="icon-btn" data-action="rules" aria-label="Rules">?</button>
+        ${soundButton()}
       </div>
     </div>
 
@@ -99,6 +105,14 @@ export function render(root, app) {
       </div>
     `}
   </section>`;
+
+  // Nouveau tour : ding-dong (ou ronflement si l'oie fait la sieste)
+  const turnKey = JSON.stringify([state.round, state.current, state.players.map((p) => p.position)]);
+  if (turnKey !== lastTurnKey) {
+    lastTurnKey = turnKey;
+    if (napping) sfx.snore();
+    else sfx.turn();
+  }
 
   bindActions(root, {
     home() {

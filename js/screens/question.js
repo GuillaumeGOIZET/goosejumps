@@ -11,6 +11,7 @@ import {
   currentPlayer, drawQuestion, movePlayer, nextTurn
 } from '../game.js';
 import { esc, backButton, bindActions, ICONS, spaces, moveSentence, fromTo } from '../ui.js';
+import { sfx } from '../sound.js';
 
 const STEPS = {
   choose: 'Step 1 of 3 · Level',
@@ -171,7 +172,10 @@ export function render(root, app, params) {
     // et du chiffre se rejouent ainsi une fois par seconde)
     const slot = root.querySelector('.timer-slot');
     if (slot && timeLeft !== before) slot.innerHTML = timerHTML();
+    // Tic-tac pendant les 10 dernières secondes
+    if (timeLeft !== before && timeLeft > 0 && timeLeft <= 10) sfx.clock(timeLeft);
     if (timeLeft === 0) {
+      sfx.timeUp();
       if (navigator.vibrate) navigator.vibrate(300);
       showAnswer();
     }
@@ -204,9 +208,11 @@ export function render(root, app, params) {
       timeLeft = TIMER_SECONDS;
       deadline = Date.now() + TIMER_SECONDS * 1000;
       draw();
+      sfx.start();
       ticker = setInterval(tick, 250);
     },
     reveal() {
+      sfx.reveal();
       showAnswer();
     },
     judge({ value }) {
@@ -215,6 +221,8 @@ export function render(root, app, params) {
       const delta = right ? pts.right : -pts.wrong;
       const { from, to } = movePlayer(state, player.id, delta);
       result = { right, from, to };
+      if (right) sfx.correct();
+      else sfx.wrong();
       if (state.phase !== 'finished') nextTurn(state);
       app.save();
       phase = 'result';

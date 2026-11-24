@@ -7,6 +7,7 @@ import { FEATHERS, HATS, gooseSVG, avatar } from '../goose.js';
 import { MIN_PLAYERS, MAX_PLAYERS } from '../game.js';
 import { makePlayer } from '../state.js';
 import { esc, backButton, bindActions, ICONS } from '../ui.js';
+import { sfx } from '../sound.js';
 
 export function render(root, app) {
   const state = app.state;
@@ -135,6 +136,7 @@ export function render(root, app) {
       selectedId = player.id;
       app.save();
       draw();
+      sfx.pop();
       root.querySelector('#player-name').focus();
     },
     remove() {
@@ -142,6 +144,7 @@ export function render(root, app) {
       selectedId = state.players[0].id;
       app.save();
       draw();
+      sfx.remove();
     },
     roll() {
       cleanNames();

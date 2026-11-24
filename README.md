@@ -30,6 +30,7 @@ Puis ouvrir http://localhost:8080 et passer en vue mobile dans les DevTools (390
 | Modifier un écran                                | `js/screens/<écran>.js` + `css/screens.css` |
 | Ajouter une couleur de plumes ou un chapeau      | `js/goose.js` |
 | Régler ou retirer les animations (hover, clic, entrées d'écran) | `css/motion.css` + `js/motion.js` |
+| Régler le volume, la musique ou un bruitage      | `js/sound.js` (volumes et musiques en haut du fichier, sons synthétisés : aucun fichier audio) |
 
 Effets de cartes reconnus (`effect.type`) : `move`, `moveOthers`, `swap`, `skipTurn`, `judged`, `bonusQuestion`, `manual`.
 Voir le commentaire en haut de `js/screens/event.js`.
