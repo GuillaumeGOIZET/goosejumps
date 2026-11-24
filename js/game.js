@@ -38,7 +38,7 @@ export const SPACE_TYPES = {
   marketing: { label: 'Marketing', color: 'var(--marketing)' },
   chance: { label: 'Chance', color: 'var(--chance)', border: 'var(--chance-border)' },
   special: { label: 'Special', color: 'var(--special)', border: 'var(--special-border)' },
-  battle: { label: 'Battle', color: 'var(--ink)' }
+  battle: { label: 'Battle', color: 'var(--battle)', border: 'var(--battle-border)' }
 };
 
 // ---------- Données (questions, cartes, plateau) ----------

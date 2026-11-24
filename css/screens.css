@@ -1064,8 +1064,7 @@ body:has(.battle) {
 }
 
 .battle-card {
-  --c: var(--battle-card);
-  border-color: var(--battle-card-border);
+  border-color: var(--text);
   box-shadow: 0 8px 0 var(--accent);
 }
 

@@ -236,9 +236,7 @@
 
 .type-btn--battle {
   grid-column: span 2;
-  background: var(--ink);
-  color: var(--accent);
-  border-color: var(--accent);
+  color: var(--battle-border); /* fond et contour : --c et --bd, comme les autres cases */
   font-family: var(--font-title);
   font-weight: 400;
   font-size: 20px;
