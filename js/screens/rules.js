@@ -9,6 +9,9 @@ import { backButton, bindActions, spaces } from '../ui.js';
 
 const signed = (n) => (n > 0 ? `+${n}` : `−${-n}`);
 
+// "1 minute", "2 minutes" ou "45 seconds"
+const duration = (s) => (s % 60 === 0 ? `${s / 60} minute${s === 60 ? '' : 's'}` : `${s} seconds`);
+
 const RULES = [
   {
     title: 'Get ready',
@@ -28,7 +31,7 @@ const RULES = [
   {
     title: 'Web · Cyber · Design · Marketing',
     color: 'var(--web)',
-    text: `Pick Easy or Hard. You have ${TIMER_SECONDS} seconds to answer out loud, in English. The other players judge your answer.
+    text: `Pick Easy or Hard. You have ${duration(TIMER_SECONDS)} to answer out loud, in English. The other players judge your answer.
       Easy: ${signed(MOVES.easy.right)} / ${signed(MOVES.easy.wrong)}. Hard: ${signed(MOVES.hard.right)} / ${signed(MOVES.hard.wrong)}.`
   },
   {

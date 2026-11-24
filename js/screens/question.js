@@ -49,12 +49,14 @@ export function render(root, app, params) {
 
   function timerHTML() {
     const percent = Math.round((timeLeft / TIMER_SECONDS) * 100);
-    const seconds = String(timeLeft).padStart(2, '0');
+    // Affichage minutes:secondes (1:00, 0:45, 0:09…)
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = String(timeLeft % 60).padStart(2, '0');
     return `
     <div class="timer${timeLeft <= 10 ? ' timer--low' : ''}" role="timer" aria-label="${timeLeft} seconds left">
       ${ICONS.hourglass}
       <div class="timer__track"><div class="timer__bar" style="width:${percent}%"></div></div>
-      <span class="timer__time">0:${seconds}</span>
+      <span class="timer__time">${minutes}:${seconds}</span>
     </div>`;
   }
 

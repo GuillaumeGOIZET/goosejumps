@@ -8,7 +8,7 @@
 export const FINISH = 52;          // numéro de la case FINISH
 export const MIN_PLAYERS = 2;
 export const MAX_PLAYERS = 5;
-export const TIMER_SECONDS = 30;   // durée du chrono des questions
+export const TIMER_SECONDS = 60;   // durée du chrono des questions (en secondes)
 
 // Déplacement après une question selon le niveau et le jugement
 export const MOVES = {
