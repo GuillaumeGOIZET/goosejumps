@@ -2,6 +2,8 @@
    Petits outils d'affichage partagés par tous les écrans
    ========================================================= */
 
+import { FINISH } from './game.js';
+
 /**
  * Protège un texte avant de l'insérer dans du HTML
  * (indispensable pour les prénoms tapés par les joueurs).
@@ -53,4 +55,24 @@ export function bindActions(root, actions) {
 export function spaces(n) {
   const abs = Math.abs(n);
   return abs + (abs === 1 ? ' space' : ' spaces');
+}
+
+/** Nom d'une case : "START", "FINISH" ou "space 14" */
+export function spaceName(position) {
+  if (position <= 0) return 'START';
+  if (position >= FINISH) return 'FINISH';
+  return `space ${position}`;
+}
+
+/** "Ziad moves forward 3 spaces." / "Ziad moves back 1 space." / "Ziad stays on space 14." */
+export function moveSentence(name, from, to) {
+  if (to > from) return `${name} moves forward ${spaces(to - from)}.`;
+  if (to < from) return `${name} moves back ${spaces(from - to)}.`;
+  return `${name} stays on ${spaceName(from)}.`;
+}
+
+/** "Space 14 → space 17" (avec majuscule), ou "Still on space 14" */
+export function fromTo(from, to) {
+  const text = from === to ? `Still on ${spaceName(from)}` : `${spaceName(from)} → ${spaceName(to)}`;
+  return text.charAt(0).toUpperCase() + text.slice(1);
 }
