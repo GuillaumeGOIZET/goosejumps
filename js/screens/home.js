@@ -7,6 +7,7 @@ import { gooseSVG } from '../goose.js';
 import { bindActions } from '../ui.js';
 import { hasGameInProgress } from '../state.js';
 import { soundButton } from '../sound.js';
+import { installButton } from '../install.js';
 
 export function render(root, app) {
   const inProgress = hasGameInProgress(app.state);
@@ -44,6 +45,7 @@ export function render(root, app) {
         : `<button type="button" class="btn home__play" data-action="play">PLAY</button>`}
       <button type="button" class="btn btn--cream" data-action="rules">RULES</button>
     </div>
+    ${installButton()}
     <p class="home__credits">Guillaume · Ziad · Mikael · Chiara</p>
   </section>`;
 

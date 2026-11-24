@@ -366,3 +366,123 @@
     transform: rotate(12deg) scale(1.08);
   }
 }
+
+/* ---------- Bouton « Install the app » (accueil, voir js/install.js) ---------- */
+.install-slot {
+  width: 100%;
+}
+
+/* Pas de bouton (app déjà installée…) : l'emplacement ne prend pas de place */
+.install-slot:empty {
+  display: none;
+}
+
+.install-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 16px;
+  border-radius: var(--r-md);
+  border: var(--b-thin) solid var(--ink);
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-weight: 900;
+  font-size: 15px;
+  box-shadow: 0 4px 0 var(--ink);
+}
+
+.install-btn:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 var(--ink);
+}
+
+.install-btn svg {
+  color: var(--accent);
+}
+
+/* Guide d'installation pour iPhone / iPad (panneau en bas de l'écran) */
+.install-sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(18, 12, 38, 0.75);
+  animation: sheet-fade 0.2s ease-out;
+}
+
+.install-sheet__panel {
+  width: 100%;
+  max-width: 448px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 22px 20px 20px;
+  border-radius: var(--r-xl);
+  border: var(--b) solid var(--ink);
+  background: var(--surface);
+  box-shadow: 0 8px 0 var(--ink);
+  animation: sheet-up 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.install-sheet__panel h2 {
+  font-size: 26px;
+  line-height: 1.1;
+}
+
+.install-sheet__steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.install-sheet__steps li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.install-sheet__num {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  border: var(--b-thin) solid var(--ink);
+  background: var(--accent);
+  color: var(--ink);
+  font-family: var(--font-title);
+  font-size: 18px;
+}
+
+.install-sheet__icon {
+  vertical-align: -5px;
+  color: var(--accent);
+}
+
+@keyframes sheet-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes sheet-up {
+  from {
+    translate: 0 60px;
+    opacity: 0;
+  }
+}

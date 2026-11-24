@@ -45,6 +45,7 @@ body {
 }
 
 /* Les petits boutons (pastilles, onglets…) : ils rétrécissent au clic */
+.install-btn,
 .swatch,
 .chip,
 .tab,
@@ -218,6 +219,12 @@ body {
 
   .winner-btn:hover:not(:active) {
     transform: scale(1.04);
+  }
+
+  .install-btn:hover:not(:active) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 0 var(--ink);
+    border-color: var(--accent);
   }
 
   .dashed-btn:hover {

@@ -15,6 +15,7 @@ import { loadData } from './game.js';
 import { loadState, saveState, createState } from './state.js';
 import { enterScreen } from './motion.js';
 import { setScreen } from './sound.js';
+import './install.js'; // bouton « Install the app » (écoute le navigateur dès le chargement)
 
 import * as home from './screens/home.js';
 import * as rules from './screens/rules.js';
