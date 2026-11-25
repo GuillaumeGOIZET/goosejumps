@@ -14,7 +14,7 @@
    ========================================================= */
 
 // ---------- Réglages faciles à modifier ----------
-const MUSIC_VOLUME = 0.13;   // volume de la musique (0 à 1) : bas, pour pouvoir parler
+const MUSIC_VOLUME = 0.17;   // volume de la musique (0 à 1) : assez bas pour pouvoir parler
 const SFX_VOLUME = 0.5;      // volume des bruitages (0 à 1)
 const SETTINGS_KEY = 'goose-jumps-sound';
 
