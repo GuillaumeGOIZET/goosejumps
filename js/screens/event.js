@@ -21,7 +21,7 @@
    ========================================================= */
 
 import {
-  SPACE_TYPES, SHOW_EXAMPLE_CARD_NOTICE, EFFECTS, BONUS_MOVE,
+  SPACE_TYPES, SHOW_EXAMPLE_CARD_NOTICE, EFFECTS, BONUS_MOVE, SPECIAL_BACK_CHANCE,
   currentPlayer, otherPlayers, getPlayer, drawCard, movePlayer, setPosition, nextTurn,
   setEffect, skipNextTurn, nextSpaceOfType
 } from '../game.js';
@@ -37,7 +37,7 @@ export function render(root, app, params) {
   let card = null;        // carte tirée
   let outcome = null;     // lignes de résultat une fois l'effet appliqué
   let justDrawn = false;  // pour n'animer la carte qu'une seule fois
-  let bonusMove = 0;      // cases en plus pour une carte qui ne fait pas bouger le joueur
+  let bonusMove = 0;      // cases en plus (> 0 : avance, < 0 : recule) pour une carte qui ne fait pas bouger le joueur
 
   // Effets qui ne font jamais bouger le joueur qui tire la carte
   // (move, moveWith, swap… le font déjà avancer ou reculer : pas de bonus)
@@ -54,13 +54,15 @@ export function render(root, app, params) {
   // Applique le bonus de cases (s'il y en a un) et renvoie la ligne de résultat
   function applyBonusMove() {
     if (!bonusMove) return [];
-    const { from, to } = movePlayer(state, player.id, bonusMove);
-    sfx.moveUp();
-    return [`Bonus! ${moveLines(player, from, to)}`];
+    const { from, to, saved } = movePlayer(state, player.id, bonusMove); // Lucky Break peut annuler un recul
+    if (bonusMove > 0) sfx.moveUp();
+    else sfx.moveDown();
+    if (saved) return [moveLines(player, from, to, saved)]; // « Lucky Break! … ignores the penalty »
+    return [`${bonusMove > 0 ? 'Bonus!' : 'Ouch!'} ${moveLines(player, from, to)}`];
   }
 
   // « + 2 SPACES » ajouté aux boutons
-  const bonusLabel = () => (bonusMove ? ` · +${bonusMove}` : '');
+  const bonusLabel = () => (bonusMove > 0 ? ` · +${bonusMove}` : bonusMove < 0 ? ` · −${-bonusMove}` : '');
 
   // Liste des autres joueurs à choisir (data-action = action déclenchée)
   function pickList(question, action) {
@@ -155,7 +157,8 @@ export function render(root, app, params) {
         </div>
         <h2 class="event-card__title">${esc(card.title)}</h2>
         <p class="event-card__text">${esc(card.text)}</p>
-        ${bonusMove ? `<p class="event-card__bonus">+ Move forward ${spaces(bonusMove)}!</p>` : ''}
+        ${bonusMove > 0 ? `<p class="event-card__bonus">+ Move forward ${spaces(bonusMove)}!</p>` : ''}
+        ${bonusMove < 0 ? `<p class="event-card__bonus event-card__bonus--back">− Move back ${spaces(bonusMove)}!</p>` : ''}
         <div class="spacer"></div>
         ${SHOW_EXAMPLE_CARD_NOTICE ? '<span class="event-card__notice">EXAMPLE CARD · REAL CARDS TO COME</span>' : ''}
       </div>`;
@@ -219,8 +222,10 @@ export function render(root, app, params) {
     draw() {
       card = drawCard(state, deck);
       justDrawn = true;
+      // Carte qui ne fait pas bouger : 1 à 3 cases en plus (en arrière 1 fois sur 2 pour une Special)
       const { min, max } = BONUS_MOVE;
       bonusMove = needsBonusMove() ? min + Math.floor(Math.random() * (max - min + 1)) : 0;
+      if (deck === 'special' && Math.random() < SPECIAL_BACK_CHANCE) bonusMove = -bonusMove;
       app.save(); // la carte est marquée comme tirée
       draw();
       sfx.cardFlip();

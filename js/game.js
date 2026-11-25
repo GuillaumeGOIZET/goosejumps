@@ -21,9 +21,12 @@ export const HELP_MOVE = 1;        // carte Help!! : l'aidant avance de 1 si la 
 
 // Carte Chance ou Special qui ne fait pas bouger le joueur qui la tire
 // (Lucky Break, Golden Shield, Help!!, Freeze!, Brain Swap!, Double Trouble!…) :
-// il avance en plus d'un nombre de cases tiré au hasard entre min et max,
+// il bouge en plus d'un nombre de cases tiré au hasard entre min et max,
 // pour ne pas rester bloqué sur la case.
+// - Chance : toujours en avant (que des bonus)
+// - Special : en avant ou en arrière (il y a aussi des malus)
 export const BONUS_MOVE = { min: 1, max: 3 };
+export const SPECIAL_BACK_CHANCE = 0.5; // Special : probabilité de reculer au lieu d'avancer (0.5 = 1 fois sur 2)
 
 // Affiche « EXAMPLE CARD · REAL CARDS TO COME » sur les cartes Chance / Special.
 // Les vraies cartes de l'équipe sont en place : false.

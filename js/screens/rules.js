@@ -37,7 +37,7 @@ const RULES = [
   {
     title: 'Chance & Special',
     color: 'var(--design)',
-    text: 'Draw a card and do what it says. Chance cards are always good news. Special cards can be tricky! If a card does not move you, you also move forward 1 to 3 spaces, so you never get stuck. Some cards are kept for later: they show under your name until they are used.'
+    text: 'Draw a card and do what it says. Chance cards are always good news. Special cards can be tricky! If a card does not move you, you also move 1 to 3 spaces, so you never get stuck: always forward with Chance, forward or back with Special. Some cards are kept for later: they show under your name until they are used.'
   },
   {
     title: 'Battle',

@@ -1020,7 +1020,7 @@
   line-height: 1.4;
 }
 
-/* Bonus de cases d'une carte Chance qui ne fait pas avancer */
+/* Cases en plus d'une carte qui ne fait pas bouger (avancer, ou reculer pour une Special) */
 .event-card__bonus {
   align-self: flex-start;
   padding: 6px 12px;
@@ -1030,6 +1030,11 @@
   font-size: 15px;
   font-weight: 900;
   animation: pop-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both;
+}
+
+.event-card__bonus--back {
+  border-color: var(--battle-border);
+  color: var(--battle-border);
 }
 
 .event-card__notice {
