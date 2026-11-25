@@ -8,6 +8,7 @@ import { bindActions } from '../ui.js';
 import { hasGameInProgress } from '../state.js';
 import { soundButton } from '../sound.js';
 import { installButton } from '../install.js';
+import { attachMascot } from '../mascot.js';
 
 export function render(root, app) {
   const inProgress = hasGameInProgress(app.state);
@@ -25,9 +26,14 @@ export function render(root, app) {
       <span class="home__jumps">JUMPS</span>
     </h1>
 
-    <div class="home__mascot">
+    <button type="button" class="home__mascot" aria-label="Poke Sir Honk" data-silent>
       ${gooseImg('sir-honk', 210)}
-    </div>
+      <span class="mascot__stars" aria-hidden="true">
+        <span class="mascot__star"><span><svg viewBox="0 0 24 24" width="20" height="20"><path d="M12 2 L14.9 8.6 L22 9.3 L16.6 14 L18.2 21 L12 17.3 L5.8 21 L7.4 14 L2 9.3 L9.1 8.6 Z" fill="#FFD23F" stroke="#120C26" stroke-width="2" stroke-linejoin="round"/></svg></span></span>
+        <span class="mascot__star"><span><svg viewBox="0 0 24 24" width="20" height="20"><path d="M12 2 L14.9 8.6 L22 9.3 L16.6 14 L18.2 21 L12 17.3 L5.8 21 L7.4 14 L2 9.3 L9.1 8.6 Z" fill="#FFD23F" stroke="#120C26" stroke-width="2" stroke-linejoin="round"/></svg></span></span>
+        <span class="mascot__star"><span><svg viewBox="0 0 24 24" width="20" height="20"><path d="M12 2 L14.9 8.6 L22 9.3 L16.6 14 L18.2 21 L12 17.3 L5.8 21 L7.4 14 L2 9.3 L9.1 8.6 Z" fill="#FFD23F" stroke="#120C26" stroke-width="2" stroke-linejoin="round"/></svg></span></span>
+      </span>
+    </button>
 
     <div class="home__pills">
       <span class="pill" style="--c: var(--web)">CODE</span>
@@ -65,4 +71,7 @@ export function render(root, app) {
       app.go('rules', { from: 'home' });
     }
   });
+
+  // L'oie qu'on peut taper (js/mascot.js) ; nettoyage quand on quitte l'écran
+  return attachMascot(root.querySelector('.home__mascot'));
 }

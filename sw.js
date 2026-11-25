@@ -7,7 +7,7 @@
    augmenter CACHE_VERSION pour que les téléphones récupèrent la nouvelle version.
    ========================================================= */
 
-const CACHE_VERSION = 'v13';
+const CACHE_VERSION = 'v14';
 const CACHE_NAME = 'goose-jumps-' + CACHE_VERSION;
 
 // Tous les fichiers nécessaires pour jouer hors-ligne
@@ -30,6 +30,7 @@ const APP_FILES = [
   'js/motion.js',
   'js/sound.js',
   'js/install.js',
+  'js/mascot.js',
   'js/screens/home.js',
   'js/screens/rules.js',
   'js/screens/players.js',

@@ -16,7 +16,8 @@ import { sfx } from './sound.js';
 const RIPPLE_TARGETS = '.btn, .icon-btn, .type-btn, .level-btn, .pick-btn, .theme-btn, .winner-btn, .cat-btn, .tab, .dashed-btn';
 
 // Oies qu'on peut faire sauter en les touchant
-const JUMP_TARGETS = '.home__mascot, .victory__goose, .turn-banner__avatar, .editor__preview';
+// (l'oie de l'accueil a ses propres réactions : voir js/mascot.js)
+const JUMP_TARGETS = '.victory__goose, .turn-banner__avatar, .editor__preview';
 
 // Réglage « Réduire les animations » du téléphone
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');

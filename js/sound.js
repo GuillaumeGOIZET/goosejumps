@@ -203,7 +203,27 @@ export const sfx = {
   }),
   pop: () => play((t) => tone(t, 380, { type: 'sine', dur: 0.16, vol: 0.45, to: 1100 })),
   remove: () => play((t) => tone(t, 700, { type: 'sine', dur: 0.2, vol: 0.4, to: 180 })),
-  honk: () => play((t) => honk(t)),
+  honk: (pitch = 1) => play((t) => honk(t, pitch)),
+  // Coup sur l'oie de l'accueil : « bop » sec
+  bop: () => play((t) => {
+    noise(t, { dur: 0.07, vol: 0.5, freq: 900, q: 1.2 });
+    tone(t, 240, { type: 'sine', dur: 0.1, vol: 0.5, to: 110 });
+  }),
+  // KO : choc, sifflet qui descend, puis petits oiseaux qui tournent
+  ko: () => play((t) => {
+    tone(t, 120, { type: 'sine', dur: 0.35, vol: 0.8, to: 40 });
+    noise(t, { dur: 0.15, vol: 0.5, freq: 600 });
+    tone(t + 0.05, 1400, { type: 'sine', dur: 0.6, vol: 0.25, to: 250 });
+    [0.8, 1.2, 1.6, 2.0].forEach((start) => {
+      tone(t + start, 2600, { type: 'sine', dur: 0.07, vol: 0.18, to: 3300 });
+      tone(t + start + 0.1, 2800, { type: 'sine', dur: 0.07, vol: 0.18, to: 3500 });
+    });
+  }),
+  // L'oie se relève : « boing » qui monte, puis un cri
+  getUp: () => play((t) => {
+    tone(t, 200, { type: 'sine', dur: 0.3, vol: 0.45, to: 800 });
+    honk(t + 0.3, 1.1);
+  }),
 
   // Dé
   dieTick: () => play((t) => {
@@ -513,7 +533,8 @@ function cycleSettings() {
 const SELECT_TARGETS = '.goose-pick, .chip, .tab, .cat-btn, .roster__item';
 document.addEventListener('pointerdown', (event) => {
   const button = event.target.closest('button');
-  if (!button || button.disabled || button.hasAttribute('data-sound-toggle')) return;
+  // data-silent : bouton qui a ses propres sons (ex. l'oie de l'accueil)
+  if (!button || button.disabled || button.hasAttribute('data-sound-toggle') || button.hasAttribute('data-silent')) return;
   if (button.matches(SELECT_TARGETS)) sfx.select();
   else sfx.click();
 });
