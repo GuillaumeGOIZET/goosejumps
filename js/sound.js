@@ -14,8 +14,8 @@
    ========================================================= */
 
 // ---------- Réglages faciles à modifier ----------
-const MUSIC_VOLUME = 0.4;   // volume de la musique (0 à 1) : assez bas pour pouvoir parler
-const SFX_VOLUME = 0.5;      // volume des bruitages (0 à 1)
+const MUSIC_VOLUME = 1;   // volume de la musique (0 à 1) : assez bas pour pouvoir parler
+const SFX_VOLUME = 1.5;      // volume des bruitages (0 à 1)
 const SETTINGS_KEY = 'goose-jumps-sound';
 
 // Musique jouée sur chaque écran (les autres écrans jouent 'main')
