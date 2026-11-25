@@ -19,6 +19,11 @@ export const MOVES = {
 export const BATTLE_WIN_MOVE = 1;  // le gagnant d'une Battle avance de 1
 export const HELP_MOVE = 1;        // carte Help!! : l'aidant avance de 1 si la réponse est bonne
 
+// Carte Chance qui ne fait pas avancer (Lucky Break, Golden Shield, Help!!…) :
+// le joueur avance en plus d'un nombre de cases tiré au hasard entre min et max,
+// pour ne pas rester bloqué sur la case Chance.
+export const CHANCE_BONUS_MOVE = { min: 1, max: 3 };
+
 // Affiche « EXAMPLE CARD · REAL CARDS TO COME » sur les cartes Chance / Special.
 // Les vraies cartes de l'équipe sont en place : false.
 export const SHOW_EXAMPLE_CARD_NOTICE = false;

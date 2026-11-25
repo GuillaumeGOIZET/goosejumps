@@ -37,7 +37,7 @@ const RULES = [
   {
     title: 'Chance & Special',
     color: 'var(--design)',
-    text: 'Draw a card and do what it says. Chance cards are always good news. Special cards can be tricky! Some cards are kept for later: they show under your name until they are used.'
+    text: 'Draw a card and do what it says. Chance cards are always good news and always move you forward. Special cards can be tricky! Some cards are kept for later: they show under your name until they are used.'
   },
   {
     title: 'Battle',

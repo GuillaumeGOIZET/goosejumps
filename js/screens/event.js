@@ -21,11 +21,11 @@
    ========================================================= */
 
 import {
-  SPACE_TYPES, SHOW_EXAMPLE_CARD_NOTICE, EFFECTS,
+  SPACE_TYPES, SHOW_EXAMPLE_CARD_NOTICE, EFFECTS, CHANCE_BONUS_MOVE,
   currentPlayer, otherPlayers, getPlayer, drawCard, movePlayer, setPosition, nextTurn,
   setEffect, skipNextTurn, nextSpaceOfType
 } from '../game.js';
-import { esc, backButton, bindActions, moveSentence, fromTo, spaceName, spaceMark } from '../ui.js';
+import { esc, backButton, bindActions, moveSentence, fromTo, spaceName, spaceMark, spaces } from '../ui.js';
 import { sfx } from '../sound.js';
 
 export function render(root, app, params) {
@@ -37,6 +37,27 @@ export function render(root, app, params) {
   let card = null;        // carte tirée
   let outcome = null;     // lignes de résultat une fois l'effet appliqué
   let justDrawn = false;  // pour n'animer la carte qu'une seule fois
+  let bonusMove = 0;      // cases en plus pour une carte Chance qui ne fait pas avancer
+
+  // Carte Chance qui ne fait pas bouger le joueur ? (sinon il resterait bloqué sur la case)
+  function needsBonusMove() {
+    if (deck !== 'chance') return false;
+    const effect = card.effect || { type: 'manual' };
+    if (effect.type === 'status' || effect.type === 'manual') return true;
+    if (effect.type === 'jumpTo') return nextSpaceOfType(player.position, effect.space) === null;
+    return false;
+  }
+
+  // Applique le bonus de cases (s'il y en a un) et renvoie la ligne de résultat
+  function applyBonusMove() {
+    if (!bonusMove) return [];
+    const { from, to } = movePlayer(state, player.id, bonusMove);
+    sfx.moveUp();
+    return [`Bonus! ${moveLines(player, from, to)}`];
+  }
+
+  // « + 2 SPACES » ajouté aux boutons
+  const bonusLabel = () => (bonusMove ? ` · +${bonusMove}` : '');
 
   // Liste des autres joueurs à choisir (data-action = action déclenchée)
   function pickList(question, action) {
@@ -61,12 +82,12 @@ export function render(root, app, params) {
       case 'jumpTo': {
         const target = nextSpaceOfType(player.position, effect.space);
         return target === null
-          ? `<p class="hint hint--center">No ${SPACE_TYPES[effect.space].label} space ahead: you stay where you are.</p>
-             <button type="button" class="btn btn--sm" data-action="applyJump">OK · NEXT PLAYER</button>`
+          ? `<p class="hint hint--center">No ${SPACE_TYPES[effect.space].label} space ahead.</p>
+             <button type="button" class="btn btn--sm" data-action="applyJump">MOVE FORWARD ${bonusMove}</button>`
           : `<button type="button" class="btn btn--sm" data-action="applyJump">JUMP TO SPACE ${target}</button>`;
       }
       case 'status':
-        return `<button type="button" class="btn btn--sm" data-action="applyStatus">KEEP THIS CARD</button>`;
+        return `<button type="button" class="btn btn--sm" data-action="applyStatus">KEEP THIS CARD${bonusLabel()}</button>`;
       case 'brainSwap':
         return pickList(`${name}, who answers your question?`, 'applyBrainSwap');
       case 'freeze':
@@ -103,7 +124,7 @@ export function render(root, app, params) {
       default: // manual
         return `
         <p class="hint hint--center">Apply this card yourselves on the board.</p>
-        <button type="button" class="btn btn--sm" data-action="finish">DONE · NEXT PLAYER</button>`;
+        <button type="button" class="btn btn--sm" data-action="finish">DONE${bonusLabel() || ' · NEXT PLAYER'}</button>`;
     }
   }
 
@@ -131,6 +152,7 @@ export function render(root, app, params) {
         </div>
         <h2 class="event-card__title">${esc(card.title)}</h2>
         <p class="event-card__text">${esc(card.text)}</p>
+        ${bonusMove ? `<p class="event-card__bonus">+ Move forward ${spaces(bonusMove)}!</p>` : ''}
         <div class="spacer"></div>
         ${SHOW_EXAMPLE_CARD_NOTICE ? '<span class="event-card__notice">EXAMPLE CARD · REAL CARDS TO COME</span>' : ''}
       </div>`;
@@ -194,6 +216,8 @@ export function render(root, app, params) {
     draw() {
       card = drawCard(state, deck);
       justDrawn = true;
+      const { min, max } = CHANCE_BONUS_MOVE;
+      bonusMove = needsBonusMove() ? min + Math.floor(Math.random() * (max - min + 1)) : 0;
       app.save(); // la carte est marquée comme tirée
       draw();
       sfx.cardFlip();
@@ -214,7 +238,7 @@ export function render(root, app, params) {
     applyJump() {
       const target = nextSpaceOfType(player.position, card.effect.space);
       if (target === null) {
-        finishWith([`${name} stays on ${spaceName(player.position)}.`]);
+        finishWith(applyBonusMove()); // pas de case Chance devant : le bonus fait avancer
         return;
       }
       const { from, to } = setPosition(state, player.id, target);
@@ -225,7 +249,7 @@ export function render(root, app, params) {
       const status = card.effect.status;
       setEffect(player, status, true);
       sfx.reveal();
-      finishWith([`${name} keeps <strong>${EFFECTS[status].label}</strong>. ${EFFECTS[status].text}`]);
+      finishWith([`${name} keeps <strong>${EFFECTS[status].label}</strong>. ${EFFECTS[status].text}`, ...applyBonusMove()]);
     },
     applyBrainSwap({ id }) {
       // La carte est déjà marquée comme tirée : on passe à la question,
@@ -282,6 +306,10 @@ export function render(root, app, params) {
       app.go('question', { bonus: { level: e.level || 'hard', right: e.right, wrong: e.wrong || 0 } });
     },
     finish() {
+      if (bonusMove) {
+        finishWith(applyBonusMove());
+        return;
+      }
       if (state.phase !== 'finished') nextTurn(state);
       app.save();
       app.go('turn');
