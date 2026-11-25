@@ -21,7 +21,7 @@
    ========================================================= */
 
 import {
-  SPACE_TYPES, SHOW_EXAMPLE_CARD_NOTICE, EFFECTS, CHANCE_BONUS_MOVE,
+  SPACE_TYPES, SHOW_EXAMPLE_CARD_NOTICE, EFFECTS, BONUS_MOVE,
   currentPlayer, otherPlayers, getPlayer, drawCard, movePlayer, setPosition, nextTurn,
   setEffect, skipNextTurn, nextSpaceOfType
 } from '../game.js';
@@ -37,13 +37,16 @@ export function render(root, app, params) {
   let card = null;        // carte tirée
   let outcome = null;     // lignes de résultat une fois l'effet appliqué
   let justDrawn = false;  // pour n'animer la carte qu'une seule fois
-  let bonusMove = 0;      // cases en plus pour une carte Chance qui ne fait pas avancer
+  let bonusMove = 0;      // cases en plus pour une carte qui ne fait pas bouger le joueur
 
-  // Carte Chance qui ne fait pas bouger le joueur ? (sinon il resterait bloqué sur la case)
+  // Effets qui ne font jamais bouger le joueur qui tire la carte
+  // (move, moveWith, swap… le font déjà avancer ou reculer : pas de bonus)
+  const NO_MOVE_EFFECTS = ['status', 'manual', 'freeze', 'brainSwap', 'skipTurn', 'moveOthers'];
+
+  // La carte laisse-t-elle le joueur sur place ? (sinon il resterait bloqué sur la case)
   function needsBonusMove() {
-    if (deck !== 'chance') return false;
     const effect = card.effect || { type: 'manual' };
-    if (effect.type === 'status' || effect.type === 'manual') return true;
+    if (NO_MOVE_EFFECTS.includes(effect.type)) return true;
     if (effect.type === 'jumpTo') return nextSpaceOfType(player.position, effect.space) === null;
     return false;
   }
@@ -98,7 +101,7 @@ export function render(root, app, params) {
       }
       case 'moveOthers': {
         const label = effect.value >= 0 ? `EVERYONE ELSE: +${effect.value}` : `EVERYONE ELSE: −${-effect.value}`;
-        return `<button type="button" class="btn btn--sm" data-action="applyMoveOthers">${label}</button>`;
+        return `<button type="button" class="btn btn--sm" data-action="applyMoveOthers">${label}${bonusLabel()}</button>`;
       }
       case 'swap':
         return `
@@ -111,7 +114,7 @@ export function render(root, app, params) {
             </button>`).join('')}
         </div>`;
       case 'skipTurn':
-        return `<button type="button" class="btn btn--sm" data-action="applySkip">GOT IT</button>`;
+        return `<button type="button" class="btn btn--sm" data-action="applySkip">GOT IT${bonusLabel()}</button>`;
       case 'judged':
         return `
         <p class="hint hint--center">Other players: did ${name} succeed?</p>
@@ -216,7 +219,7 @@ export function render(root, app, params) {
     draw() {
       card = drawCard(state, deck);
       justDrawn = true;
-      const { min, max } = CHANCE_BONUS_MOVE;
+      const { min, max } = BONUS_MOVE;
       bonusMove = needsBonusMove() ? min + Math.floor(Math.random() * (max - min + 1)) : 0;
       app.save(); // la carte est marquée comme tirée
       draw();
@@ -253,18 +256,21 @@ export function render(root, app, params) {
     },
     applyBrainSwap({ id }) {
       // La carte est déjà marquée comme tirée : on passe à la question,
-      // le tour se termine après le jugement
+      // le tour se termine après le jugement. Le bonus de cases du joueur
+      // est appliqué tout de suite et rappelé sur l'écran de résultat.
+      const notes = applyBonusMove();
+      app.save();
       sfx.swap();
-      app.go('question', { answererId: Number(id) });
+      app.go('question', { answererId: Number(id), notes });
     },
     applyFreeze({ id }) {
       const target = getPlayer(state, Number(id));
       if (skipNextTurn(state, target.id)) {
         sfx.freeze();
-        finishWith([`${esc(target.name)} is frozen and will skip their next turn!`]);
+        finishWith([`${esc(target.name)} is frozen and will skip their next turn!`, ...applyBonusMove()]);
       } else {
         sfx.reveal();
-        finishWith([`Lucky Break! ${esc(target.name)} ignores the freeze.`]);
+        finishWith([`Lucky Break! ${esc(target.name)} ignores the freeze.`, ...applyBonusMove()]);
       }
     },
     applyMoveOthers() {
@@ -274,7 +280,7 @@ export function render(root, app, params) {
       });
       if (card.effect.value >= 0) sfx.moveUp();
       else sfx.moveDown();
-      finishWith(lines);
+      finishWith([...lines, ...applyBonusMove()]);
     },
     applySwap({ id }) {
       const other = otherPlayers(state, player.id).find((p) => p.id === Number(id));
@@ -292,7 +298,7 @@ export function render(root, app, params) {
     applySkip() {
       player.skipTurns += 1;
       sfx.snore();
-      finishWith([`${name} will skip their next turn.`]);
+      finishWith([`${name} will skip their next turn.`, ...applyBonusMove()]);
     },
     applyJudged({ value }) {
       const delta = value === 'right' ? card.effect.right : -(card.effect.wrong || 0);

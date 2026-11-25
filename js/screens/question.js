@@ -5,6 +5,7 @@
    params.type       : catégorie de la case ('web', 'cyber', 'design', 'marketing')
    params.bonus      : question bonus d'une carte { level, right, wrong }
    params.answererId : carte Brain Swap, un autre joueur répond (et bouge) à ta place
+   params.notes      : lignes ajoutées au résultat (ex. bonus de cases de la carte)
 
    Cartes gardées par celui qui répond (voir EFFECTS dans game.js) :
    Golden Shield (pas de recul si faux), Double Trouble (×2 si juste),
@@ -267,7 +268,7 @@ export function render(root, app, params) {
       const right = value === 'right';
       const m = moves(level);
       const move = movePlayer(state, answerer.id, right ? m.right : -m.wrong);
-      const notes = [];
+      const notes = [...(params.notes || [])];
 
       // Les cartes gardées servent une seule fois
       if (right && double) {
