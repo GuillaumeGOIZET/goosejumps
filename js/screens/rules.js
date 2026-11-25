@@ -16,7 +16,7 @@ const RULES = [
   {
     title: 'Get ready',
     color: 'var(--text)',
-    text: `${MIN_PLAYERS} to ${MAX_PLAYERS} players, one phone on the table. Add your names and customise your goose.`
+    text: `${MIN_PLAYERS} to ${MAX_PLAYERS} players and one phone for everyone: scan the QR code, then put the phone on the table. Add your names and choose your goose.`
   },
   {
     title: 'Roll for order',
