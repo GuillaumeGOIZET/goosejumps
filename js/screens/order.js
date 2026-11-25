@@ -58,7 +58,7 @@ export function render(root, app) {
       } else if (!done && isTied(players, rolls, p.id)) {
         note = p.id === next ? 'Tie! Roll again' : 'Tie! Waiting to roll again';
       } else {
-        note = `Starts on space ${mine[0]}`;
+        note = `Goose on space ${mine[0]}`;
         if (mine.length > 1) note += ` · tie-break ${mine.slice(1).join(', ')}`;
       }
       const isRolling = rolling && p.id === lastRollerId && mine.length === 1;
@@ -84,7 +84,12 @@ export function render(root, app) {
         ${backButton('back')}
         <h1>Roll for order</h1>
       </div>
-      <p class="hint">Highest roll plays first. Your roll is also your first move from START. After this, no more dice!</p>
+      <ol class="order-steps">
+        <li>Each player <strong>rolls the die once</strong>.</li>
+        <li>The <strong>highest roll plays first</strong>, then the others in order. Ties roll again.</li>
+        <li>Your roll is your first move: <strong>put your goose on that space</strong> of the board (roll 4 → space 4).</li>
+        <li>After this, <strong>no more dice!</strong> You move by answering questions.</li>
+      </ol>
 
       <ol class="order-list">${rows}</ol>
 
@@ -93,11 +98,15 @@ export function render(root, app) {
       <div class="die-zone" aria-live="polite">
         ${shownValue !== null ? `
           <div class="die${rolling ? ' is-rolling' : ''}">${dieSVG(shownValue)}</div>
-          <p class="die-zone__text">${rolling ? 'Rolling…' : `${esc(lastRoller.name)} rolled ${shownValue}!`}</p>` : ''}
+          <p class="die-zone__text">${rolling ? 'Rolling…' : `${esc(lastRoller.name)} rolled ${shownValue}!`}</p>
+          ${rolling ? '' : (rolls[lastRollerId] || []).length > 1
+            ? `<p class="die-zone__move">Tie-break roll: it only decides the order. ${esc(lastRoller.name)}'s goose stays on <strong>space ${rolls[lastRollerId][0]}</strong>.</p>`
+            : `<p class="die-zone__move">Put ${esc(lastRoller.name)}'s goose on <strong>space ${shownValue}</strong> of the board.</p>`}` : ''}
       </div>
 
       ${done
-        ? `<button type="button" class="btn" data-action="start">START THE GAME</button>`
+        ? `<p class="hint hint--center">All set! Check that every goose is on its space, then start.</p>
+           <button type="button" class="btn" data-action="start">START THE GAME</button>`
         : rolling
           ? `<button type="button" class="btn" disabled>ROLLING…</button>`
           : `<button type="button" class="btn" data-action="roll">

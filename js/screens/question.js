@@ -6,6 +6,7 @@
    params.bonus      : question bonus d'une carte { level, right, wrong }
    params.answererId : carte Brain Swap, un autre joueur répond (et bouge) à ta place
    params.notes      : lignes ajoutées au résultat (ex. bonus de cases de la carte)
+   params.start      : le joueur est sur START, les autres lui ont choisi la catégorie
 
    Cartes gardées par celui qui répond (voir EFFECTS dans game.js) :
    Golden Shield (pas de recul si faux), Double Trouble (×2 si juste),
@@ -121,7 +122,7 @@ export function render(root, app, params) {
     return `
     <div class="choose">
       <div class="choose__cats">
-        <span class="label" id="cat-label">${bonus || swap ? 'Pick any category' : 'Category of your space'}</span>
+        <span class="label" id="cat-label">${bonus || swap ? 'Pick any category' : params.start ? 'Category chosen by the other players' : 'Category of your space'}</span>
         <div class="cat-grid" role="group" aria-labelledby="cat-label">${cats}</div>
       </div>
       <h1>${bonus ? `Bonus round, ${name}!` : swap ? `Brain Swap! ${name}, answer for ${esc(player.name)}` : `${name}, pick your level`}</h1>
@@ -157,7 +158,7 @@ export function render(root, app, params) {
     const moved = moveSentence(name, result.from, result.to);
     const next = state.phase === 'finished' ? null : currentPlayer(state);
     return `
-    <div class="result" style="--c: ${result.right ? 'var(--blue)' : 'var(--accent)'}">
+    <div class="result ${result.right ? 'result--right' : 'result--wrong'}">
       <h1 class="result__title">${result.right ? 'Correct!' : 'Wrong!'}</h1>
       <span class="result__move">${moved}</span>
       <span class="result__space">${fromTo(result.from, result.to)}</span>
@@ -190,8 +191,8 @@ export function render(root, app, params) {
       <div class="footer-stack">
         <p class="hint hint--center">${timeLeft === 0 ? "Time's up! " : ''}Other players: was ${name} right?</p>
         <div class="two-buttons">
-          <button type="button" class="btn btn--blue btn--sm" data-action="judge" data-value="right">CORRECT</button>
-          <button type="button" class="btn btn--sm" data-action="judge" data-value="wrong">WRONG</button>
+          <button type="button" class="btn btn--correct btn--sm" data-action="judge" data-value="right">CORRECT</button>
+          <button type="button" class="btn btn--wrong btn--sm" data-action="judge" data-value="wrong">WRONG</button>
         </div>
       </div>`;
     }

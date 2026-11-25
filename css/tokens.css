@@ -43,7 +43,13 @@
   --accent: #FF8A1F;
 
   /* Couleurs de l'interface (boutons, chrono…), indépendantes des cases */
-  --blue: #4C8DFF;    /* bouton CORRECT, résultat « Correct! » */
+  --blue: #4C8DFF;
+
+  /* Jugement des réponses */
+  --correct-bg: #CDEFC4;    /* vert clair */
+  --correct-text: #1B6B2B;  /* vert foncé */
+  --wrong-bg: #FFD3D6;      /* rose / rouge clair */
+  --wrong-text: #B0171F;    /* rouge foncé */
   --yellow: #FFD23F;  /* bouton classement, barre du chrono */
 
   /* Catégories de cases (fond, et contour quand il n'est pas #120C26) */
@@ -53,8 +59,9 @@
   --marketing: #FFD561;
   --chance: #C6DA89;
   --chance-border: #04A339;
-  --special: #F18814;
-  --special-border: #FFF7E7;
+  --special: #FFF7E7;
+  --special-border: #F18814;
+  --special-text: #F18814;
   --battle: #F9D0D2;          /* bouton « VS · Battle » de l'écran du tour */
   --battle-border: #E52421;   /* contour et texte */
 

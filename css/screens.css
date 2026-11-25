@@ -616,6 +616,91 @@
   font-size: 13px;
 }
 
+/* Où est l'oie, et quelle case choisir (écran du tour) */
+.landing {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-radius: var(--r-md);
+  background: var(--surface);
+  border: var(--b-thin) solid var(--ink);
+}
+
+/* Petite case du plateau, avec son numéro */
+.landing__tile {
+  flex-shrink: 0;
+  width: 54px;
+  height: 54px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  border: var(--b-thin) solid var(--bd, var(--ink));
+  background: var(--c, var(--text));
+  color: var(--fg, var(--ink));
+  font-family: var(--font-title);
+  font-size: 22px;
+  line-height: 1;
+}
+
+.landing__tile small {
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+}
+
+.landing__text {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.landing__text strong {
+  font-weight: 900;
+}
+
+.landing__text .landing__main {
+  display: block;
+  font-size: 16px;
+  font-weight: 800;
+  margin-bottom: 2px;
+}
+
+/* Étapes du lancer de dé */
+.order-steps {
+  margin: 0;
+  padding: 12px 14px 12px 34px;
+  border-radius: var(--r-md);
+  background: var(--surface);
+  border: var(--b-thin) solid var(--ink);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.order-steps strong {
+  color: var(--accent);
+  font-weight: 900;
+}
+
+.die-zone__move {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--text-2);
+  text-align: center;
+}
+
+.die-zone__move strong {
+  color: var(--accent);
+  font-weight: 900;
+}
+
 .types__hint strong {
   color: var(--text);
   font-weight: 900;
@@ -789,7 +874,7 @@
 
 .cat-btn.is-selected {
   border-color: var(--text);
-  box-shadow: 0 0 0 3px var(--accent);
+  box-shadow: 0 0 0 3px var(--text);
 }
 
 .level-btn {
@@ -982,7 +1067,7 @@
   font-family: var(--font-title);
   font-size: 140px;
   line-height: 1;
-  color: var(--text);
+  color: var(--mark, var(--text));
   -webkit-text-stroke: 5px var(--ink);
   paint-order: stroke fill;
 }
@@ -1007,6 +1092,7 @@
 .event-card__small-mark {
   font-family: var(--font-title);
   font-size: 34px;
+  color: var(--mark, var(--ink));
 }
 
 .event-card__title {

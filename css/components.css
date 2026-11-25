@@ -77,6 +77,17 @@
   border: var(--b-thin) dashed var(--dashed);
 }
 
+/* Boutons de jugement : vert pour juste, rouge pour faux */
+.btn--correct {
+  --btn-bg: var(--correct-bg);
+  color: var(--correct-text);
+}
+
+.btn--wrong {
+  --btn-bg: var(--wrong-bg);
+  color: var(--wrong-text);
+}
+
 /* ---------- Bouton icône carré 44 px ---------- */
 .icon-btn {
   --btn-bg: var(--text);
@@ -221,7 +232,7 @@
   border-radius: var(--r-md);
   border: var(--b-thin) solid var(--bd, var(--ink));
   background: var(--c);
-  color: var(--ink);
+  color: var(--fg, var(--ink));
   font-family: var(--font-body);
   font-weight: 900;
   font-size: 17px;
@@ -234,10 +245,17 @@
   box-shadow: 0 2px 0 var(--ink);
 }
 
-/* Case pré-sélectionnée grâce à board.json */
+/* Case pré-sélectionnée grâce à board.json : entourée de blanc */
 .type-btn.is-selected {
   border-color: var(--bd, var(--text));
-  box-shadow: 0 0 0 3px var(--accent), 0 5px 0 var(--ink);
+  box-shadow: 0 0 0 4px var(--text), 0 5px 0 var(--ink);
+}
+
+/* Case impossible (ex. Chance, Special et Battle quand on est sur START) */
+.type-btn:disabled {
+  filter: grayscale(0.7) opacity(0.3); /* filter : l'animation d'apparition (opacity) ne l'écrase pas */
+  box-shadow: none;
+  cursor: not-allowed;
 }
 
 .type-btn--battle {
@@ -317,6 +335,7 @@
 }
 
 /* ---------- Encadré de résultat (Correct!, Wrong!, …) ---------- */
+
 .result {
   display: flex;
   flex-direction: column;
@@ -330,6 +349,16 @@
   background: var(--c, var(--accent));
   color: var(--ink);
   animation: pop 0.3s ease-out;
+}
+
+.result--right {
+  --c: var(--correct-bg);
+  color: var(--correct-text);
+}
+
+.result--wrong {
+  --c: var(--wrong-bg);
+  color: var(--wrong-text);
 }
 
 .result__title {

@@ -56,7 +56,7 @@ export const SPACE_TYPES = {
   design: { label: 'Design', color: 'var(--design)' },
   marketing: { label: 'Marketing', color: 'var(--marketing)' },
   chance: { label: 'Chance', color: 'var(--chance)', border: 'var(--chance-border)' },
-  special: { label: 'Special', color: 'var(--special)', border: 'var(--special-border)' },
+  special: { label: 'Special', color: 'var(--special)', border: 'var(--special-border)', text: 'var(--special-text)' },
   battle: { label: 'Battle', color: 'var(--battle)', border: 'var(--battle-border)' }
 };
 

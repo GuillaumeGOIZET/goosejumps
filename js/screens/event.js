@@ -121,8 +121,8 @@ export function render(root, app, params) {
         return `
         <p class="hint hint--center">Other players: did ${name} succeed?</p>
         <div class="two-buttons">
-          <button type="button" class="btn btn--blue btn--sm" data-action="applyJudged" data-value="right">SUCCESS</button>
-          <button type="button" class="btn btn--sm" data-action="applyJudged" data-value="wrong">FAILED</button>
+          <button type="button" class="btn btn--correct btn--sm" data-action="applyJudged" data-value="right">SUCCESS</button>
+          <button type="button" class="btn btn--wrong btn--sm" data-action="applyJudged" data-value="wrong">FAILED</button>
         </div>`;
       case 'bonusQuestion':
         return `<button type="button" class="btn btn--sm" data-action="bonus">PLAY THE BONUS QUESTION</button>`;
@@ -138,7 +138,7 @@ export function render(root, app, params) {
     const info = SPACE_TYPES[deck];
     const kind = info.label.toUpperCase();
     const mark = spaceMark(deck);
-    const colors = `--c: ${info.color}; --bd: ${info.border}`;
+    const colors = `--c: ${info.color}; --bd: ${info.border}${info.text ? `; --mark: ${info.text}` : ''}`;
     const canSwitch = card === null;
 
     let cardHTML;

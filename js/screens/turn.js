@@ -5,7 +5,7 @@
    ========================================================= */
 
 import { avatar, gooseImg } from '../goose.js';
-import { FINISH, SPACE_TYPES, EFFECTS, activeEffects, currentPlayer, nextTurn, spaceTypeAt } from '../game.js';
+import { FINISH, SPACE_TYPES, CATEGORIES, EFFECTS, activeEffects, currentPlayer, nextTurn, spaceTypeAt } from '../game.js';
 import { esc, bindActions, ICONS, spaceMark } from '../ui.js';
 import { sfx, soundButton } from '../sound.js';
 
@@ -52,18 +52,49 @@ export function render(root, app) {
   const player = currentPlayer(state);
   const suggested = spaceTypeAt(player.position);
   const napping = player.skipTurns > 0;
+  // Retour sur START : seules les 4 catégories sont possibles,
+  // et ce sont les autres joueurs qui en choisissent une
+  const onStart = player.position <= 0;
+  const name = esc(player.name);
+
+  // Variables CSS d'un type de case (fond, contour, texte)
+  const tileStyle = (info) => `--c: ${info.color}${info.border ? `; --bd: ${info.border}` : ''}${info.text ? `; --fg: ${info.text}` : ''}`;
 
   const typeButtons = TYPE_BUTTONS.map((type) => {
     const info = SPACE_TYPES[type];
     const selected = type === suggested;
+    const disabled = onStart && !CATEGORIES.includes(type);
     const mark = spaceMark(type);
     const text = type === 'battle' ? 'VS · Battle' : (mark ? `${mark} ${info.label}` : info.label);
-    const border = info.border ? `; --bd: ${info.border}` : '';
     return `
     <button type="button" class="type-btn${type === 'battle' ? ' type-btn--battle' : ''}${selected ? ' is-selected' : ''}"
-            style="--c: ${info.color}${border}" data-action="pick" data-type="${type}"
-            ${selected ? 'aria-describedby="suggestion"' : ''}>${text}</button>`;
+            style="${tileStyle(info)}" data-action="pick" data-type="${type}"
+            ${disabled ? 'disabled' : ''} ${selected ? 'aria-describedby="suggestion"' : ''}>${text}</button>`;
   }).join('');
+
+  // Encadré « Ana landed on space 5, a Code space. Tap Code below. »
+  function landingHTML() {
+    if (onStart) {
+      return `
+      <div class="landing" id="suggestion">
+        <div class="landing__tile"><small>START</small></div>
+        <p class="landing__text">
+          <span class="landing__main">${name} is back on START!</span>
+          <strong>Other players: choose a category</strong> for ${name}.
+          Chance, Special and Battle are not available on START.
+        </p>
+      </div>`;
+    }
+    const info = SPACE_TYPES[suggested];
+    return `
+    <div class="landing" id="suggestion">
+      <div class="landing__tile" style="${tileStyle(info)}"><small>SPACE</small>${player.position}</div>
+      <p class="landing__text">
+        <span class="landing__main">${name} is on space ${player.position}: <strong>${info.label}</strong></span>
+        Tap <strong>${info.label}</strong> below (it's outlined in white).
+      </p>
+    </div>`;
+  }
 
   root.innerHTML = `
   <section class="screen turn">
@@ -101,13 +132,10 @@ export function render(root, app) {
       <button type="button" class="btn" data-action="skip">NEXT PLAYER</button>
     ` : `
       <div class="types">
-        <span class="label">What colour is your space?</span>
+        ${landingHTML()}
+        <span class="label">${onStart ? 'Category for ' + name : 'What colour is your space?'}</span>
         <div class="types__grid">${typeButtons}</div>
-        <p class="hint types__hint" id="suggestion">
-          ${SPACE_TYPES[suggested]
-            ? `Space ${player.position} should be <strong>${SPACE_TYPES[suggested].label}</strong>. Tap another colour if your goose is somewhere else.`
-            : `You're on <strong>START</strong>: pick the category you want.`}
-        </p>
+        ${onStart ? '' : `<p class="hint types__hint">Goose on another space? Tap the colour of that space instead.</p>`}
       </div>
     `}
   </section>`;
@@ -133,7 +161,7 @@ export function render(root, app) {
     pick({ type }) {
       if (type === 'battle') app.go('battle');
       else if (type === 'chance' || type === 'special') app.go('event', { type });
-      else app.go('question', { type });
+      else app.go('question', { type, start: onStart });
     },
     skip() {
       player.skipTurns -= 1;
