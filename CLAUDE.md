@@ -34,7 +34,7 @@ docs/       (maquettes, schéma) → référence uniquement, ne pas servir
 
 - `questions.json` : 160 questions validées par l'équipe. Structure `{ web|cyber|design|marketing: { easy: [...20], hard: [...20] } }`, chaque entrée a la forme `{ id, question, answer }`. **Ne pas modifier le contenu.**
 - `cards.json` : cartes Chance et Special **d'exemple**, chacune avec un champ `effect` exploitable par l'app, plus les questions éclair des Battles (3 par thème).
-- `board.json` : le type de chaque case du plateau physique, indexé par numéro de case (0 = start, 52 = finish).
+- `board.json` : le type de chaque case du plateau physique, indexé par numéro de case (0 = start, 45 = finish), d'après le plateau final `docs/Plateau Goose Jumps 2.pdf`.
 
 ## Déroulé de la partie
 
@@ -61,7 +61,7 @@ docs/       (maquettes, schéma) → référence uniquement, ne pas servir
    2. Une **question éclair très facile** s'affiche, **sans timer**. Le premier qui répond correctement, à voix haute et en anglais, gagne.
    3. On clique sur « Show answer », puis on indique le gagnant : le joueur, l'adversaire ou « Nobody ».
    4. Le gagnant avance d'1 case et l'autre reste sur place. Si personne ne gagne, personne ne bouge.
-8. **Fin de partie** : le premier joueur qui atteint ou dépasse la case 52 (FINISH) gagne. On affiche alors un écran de victoire et le classement final.
+8. **Fin de partie** : le premier joueur qui atteint ou dépasse la case 45 (FINISH) gagne. On affiche alors un écran de victoire et le classement final.
 - Une position ne descend jamais sous 0 (START).
 - **Classement** : trié par position, avec le nombre de cases restantes. Il est accessible à tout moment pendant la partie.
 - **Rules** : un écran qui reprend ces règles en anglais, en version courte.

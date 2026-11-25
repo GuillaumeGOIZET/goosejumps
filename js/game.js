@@ -5,7 +5,7 @@
 
 // ---------- Réglages (valeurs provisoires, faciles à changer) ----------
 
-export const FINISH = 52;          // numéro de la case FINISH
+export const FINISH = 45;          // numéro de la case FINISH (plateau final : 44 cases + START + FINISH)
 export const MIN_PLAYERS = 2;
 export const MAX_PLAYERS = 5;
 export const TIMER_SECONDS = 60;   // durée du chrono des questions (en secondes)
@@ -65,6 +65,10 @@ export async function loadData() {
     }))
   );
   files.forEach((name, i) => { data[name] = results[i]; });
+  // Vérification : board.json et FINISH doivent décrire le même plateau
+  if (data.board.spaces.length !== FINISH + 1) {
+    console.warn(`board.json has ${data.board.spaces.length - 1} spaces after START, but FINISH = ${FINISH}.`);
+  }
 }
 
 /** Type de la case n° `position` sur le plateau physique */
