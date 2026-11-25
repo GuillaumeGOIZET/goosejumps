@@ -3,7 +3,6 @@
    PLAY / RULES, ou CONTINUE / NEW GAME si une partie est en cours.
    ========================================================= */
 
-import { gooseImg } from '../goose.js';
 import { bindActions } from '../ui.js';
 import { hasGameInProgress } from '../state.js';
 import { soundButton } from '../sound.js';
@@ -27,7 +26,9 @@ export function render(root, app) {
     </h1>
 
     <button type="button" class="home__mascot" aria-label="Poke Sir Honk" data-silent>
-      ${gooseImg('sir-honk', 210)}
+      <span class="mascot__shadow" aria-hidden="true"></span>
+      <!-- Sir Honk sans son ombre : l'ombre est dessinée à part pour rester au sol quand il tombe -->
+      <img class="goose" src="assets/gooses/sir-honk-solo.webp" width="210" height="210" alt="" draggable="false">
       <span class="mascot__stars" aria-hidden="true">
         <span class="mascot__star"><span><svg viewBox="0 0 24 24" width="20" height="20"><path d="M12 2 L14.9 8.6 L22 9.3 L16.6 14 L18.2 21 L12 17.3 L5.8 21 L7.4 14 L2 9.3 L9.1 8.6 Z" fill="#FFD23F" stroke="#120C26" stroke-width="2" stroke-linejoin="round"/></svg></span></span>
         <span class="mascot__star"><span><svg viewBox="0 0 24 24" width="20" height="20"><path d="M12 2 L14.9 8.6 L22 9.3 L16.6 14 L18.2 21 L12 17.3 L5.8 21 L7.4 14 L2 9.3 L9.1 8.6 Z" fill="#FFD23F" stroke="#120C26" stroke-width="2" stroke-linejoin="round"/></svg></span></span>

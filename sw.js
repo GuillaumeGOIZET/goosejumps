@@ -7,7 +7,7 @@
    augmenter CACHE_VERSION pour que les téléphones récupèrent la nouvelle version.
    ========================================================= */
 
-const CACHE_VERSION = 'v20';
+const CACHE_VERSION = 'v21';
 const CACHE_NAME = 'goose-jumps-' + CACHE_VERSION;
 
 // Tous les fichiers nécessaires pour jouer hors-ligne
@@ -54,6 +54,7 @@ const APP_FILES = [
   // Les 5 oies (en pied + tête)
   'assets/gooses/sir-honk.webp',
   'assets/gooses/sir-honk-head.webp',
+  'assets/gooses/sir-honk-solo.webp',
   'assets/gooses/zippy.webp',
   'assets/gooses/zippy-head.webp',
   'assets/gooses/daisy.webp',
