@@ -27,6 +27,7 @@ import {
 } from '../game.js';
 import { esc, backButton, bindActions, moveSentence, fromTo, spaceName, spaceMark, spaces } from '../ui.js';
 import { sfx } from '../sound.js';
+import { t } from '../i18n.js';
 
 export function render(root, app, params) {
   const state = app.state;
@@ -58,7 +59,7 @@ export function render(root, app, params) {
     if (bonusMove > 0) sfx.moveUp();
     else sfx.moveDown();
     if (saved) return [moveLines(player, from, to, saved)]; // « Lucky Break! … ignores the penalty »
-    return [`${bonusMove > 0 ? 'Bonus!' : 'Ouch!'} ${moveLines(player, from, to)}`];
+    return [`${bonusMove > 0 ? t('Bonus!', 'Bonus !') : t('Ouch!', 'Aïe !')} ${moveLines(player, from, to)}`];
   }
 
   // « + 2 SPACES » ajouté aux boutons
@@ -72,7 +73,7 @@ export function render(root, app, params) {
       ${otherPlayers(state, player.id).map((p) => `
         <button type="button" class="pick-btn" data-action="${action}" data-id="${p.id}">
           <span class="pick-btn__name">${esc(p.name)}</span>
-          <span class="pick-btn__meta">Space ${p.position}</span>
+          <span class="pick-btn__meta">${p.position <= 0 ? 'START' : `${t('Space', 'Case')} ${p.position}`}</span>
         </button>`).join('')}
     </div>`;
   }
@@ -83,26 +84,26 @@ export function render(root, app, params) {
 
     switch (effect.type) {
       case 'moveWith':
-        return pickList(`${name}, who moves forward ${effect.value} spaces with you?`, 'applyMoveWith');
+        return pickList(t(`${name}, who moves forward ${effect.value} spaces with you?`, `${name}, qui avance de ${effect.value} cases avec toi ?`), 'applyMoveWith');
       case 'jumpTo': {
         const target = nextSpaceOfType(player.position, effect.space);
         return target === null
-          ? `<p class="hint hint--center">No ${SPACE_TYPES[effect.space].label} space ahead.</p>
-             <button type="button" class="btn btn--sm" data-action="applyJump">MOVE FORWARD ${bonusMove}</button>`
-          : `<button type="button" class="btn btn--sm" data-action="applyJump">JUMP TO SPACE ${target}</button>`;
+          ? `<p class="hint hint--center">${t(`No ${SPACE_TYPES[effect.space].label} space ahead.`, `Plus de case ${SPACE_TYPES[effect.space].label} devant toi.`)}</p>
+             <button type="button" class="btn btn--sm" data-action="applyJump">${t('MOVE FORWARD', 'AVANCER DE')} ${bonusMove}</button>`
+          : `<button type="button" class="btn btn--sm" data-action="applyJump">${t('JUMP TO SPACE', 'SAUTER À LA CASE')} ${target}</button>`;
       }
       case 'status':
-        return `<button type="button" class="btn btn--sm" data-action="applyStatus">KEEP THIS CARD${bonusLabel()}</button>`;
+        return `<button type="button" class="btn btn--sm" data-action="applyStatus">${t('KEEP THIS CARD', 'GARDER LA CARTE')}${bonusLabel()}</button>`;
       case 'brainSwap':
-        return pickList(`${name}, who answers your question?`, 'applyBrainSwap');
+        return pickList(t(`${name}, who answers your question?`, `${name}, qui répond à ta question ?`), 'applyBrainSwap');
       case 'freeze':
-        return pickList(`${name}, who skips their next turn?`, 'applyFreeze');
+        return pickList(t(`${name}, who skips their next turn?`, `${name}, qui passe son prochain tour ?`), 'applyFreeze');
       case 'move': {
-        const label = effect.value >= 0 ? `MOVE FORWARD ${effect.value}` : `MOVE BACK ${-effect.value}`;
+        const label = effect.value >= 0 ? t(`MOVE FORWARD ${effect.value}`, `AVANCER DE ${effect.value}`) : t(`MOVE BACK ${-effect.value}`, `RECULER DE ${-effect.value}`);
         return `<button type="button" class="btn btn--sm" data-action="applyMove">${label}</button>`;
       }
       case 'moveOthers': {
-        const label = effect.value >= 0 ? `EVERYONE ELSE: +${effect.value}` : `EVERYONE ELSE: −${-effect.value}`;
+        const label = effect.value >= 0 ? t(`EVERYONE ELSE: +${effect.value}`, `TOUS LES AUTRES : +${effect.value}`) : t(`EVERYONE ELSE: −${-effect.value}`, `TOUS LES AUTRES : −${-effect.value}`);
         return `<button type="button" class="btn btn--sm" data-action="applyMoveOthers">${label}${bonusLabel()}</button>`;
       }
       case 'swap':
@@ -112,24 +113,24 @@ export function render(root, app, params) {
           ${otherPlayers(state, player.id).map((p) => `
             <button type="button" class="pick-btn" data-action="applySwap" data-id="${p.id}">
               <span class="pick-btn__name">${esc(p.name)}</span>
-              <span class="pick-btn__meta">Space ${p.position}</span>
+              <span class="pick-btn__meta">${p.position <= 0 ? 'START' : `${t('Space', 'Case')} ${p.position}`}</span>
             </button>`).join('')}
         </div>`;
       case 'skipTurn':
-        return `<button type="button" class="btn btn--sm" data-action="applySkip">GOT IT${bonusLabel()}</button>`;
+        return `<button type="button" class="btn btn--sm" data-action="applySkip">${t('GOT IT', 'COMPRIS')}${bonusLabel()}</button>`;
       case 'judged':
         return `
-        <p class="hint hint--center">Other players: did ${name} succeed?</p>
+        <p class="hint hint--center">${t(`Other players: did ${name} succeed?`, `Les autres joueurs : ${name} a réussi ?`)}</p>
         <div class="two-buttons">
-          <button type="button" class="btn btn--correct btn--sm" data-action="applyJudged" data-value="right">SUCCESS</button>
-          <button type="button" class="btn btn--wrong btn--sm" data-action="applyJudged" data-value="wrong">FAILED</button>
+          <button type="button" class="btn btn--correct btn--sm" data-action="applyJudged" data-value="right">${t('SUCCESS', 'RÉUSSI')}</button>
+          <button type="button" class="btn btn--wrong btn--sm" data-action="applyJudged" data-value="wrong">${t('FAILED', 'RATÉ')}</button>
         </div>`;
       case 'bonusQuestion':
-        return `<button type="button" class="btn btn--sm" data-action="bonus">PLAY THE BONUS QUESTION</button>`;
+        return `<button type="button" class="btn btn--sm" data-action="bonus">${t('PLAY THE BONUS QUESTION', 'JOUER LA QUESTION BONUS')}</button>`;
       default: // manual
         return `
-        <p class="hint hint--center">Apply this card yourselves on the board.</p>
-        <button type="button" class="btn btn--sm" data-action="finish">DONE${bonusLabel() || ' · NEXT PLAYER'}</button>`;
+        <p class="hint hint--center">${t('Apply this card yourselves on the board.', 'Appliquez cette carte vous-mêmes sur le plateau.')}</p>
+        <button type="button" class="btn btn--sm" data-action="finish">${t('DONE', 'TERMINÉ')}${bonusLabel() || t(' · NEXT PLAYER', ' · JOUEUR SUIVANT')}</button>`;
     }
   }
 
@@ -146,7 +147,7 @@ export function render(root, app, params) {
       cardHTML = `
       <button type="button" class="event-card event-card--back" style="${colors}" data-action="draw">
         <span class="event-card__mark">${mark}</span>
-        <span class="event-card__cta">TAP TO DRAW</span>
+        <span class="event-card__cta">${t('TAP TO DRAW', 'TOUCHE POUR TIRER')}</span>
       </button>`;
     } else {
       cardHTML = `
@@ -156,9 +157,9 @@ export function render(root, app, params) {
           <span class="event-card__small-mark" aria-hidden="true">${mark}</span>
         </div>
         <h2 class="event-card__title">${esc(card.title)}</h2>
-        <p class="event-card__text">${esc(card.text)}</p>
-        ${bonusMove > 0 ? `<p class="event-card__bonus">+ Move forward ${spaces(bonusMove)}!</p>` : ''}
-        ${bonusMove < 0 ? `<p class="event-card__bonus event-card__bonus--back">− Move back ${spaces(bonusMove)}!</p>` : ''}
+        <p class="event-card__text">${esc(t(card.text, card.textFr || card.text))}</p>
+        ${bonusMove > 0 ? `<p class="event-card__bonus">${t(`+ Move forward ${spaces(bonusMove)}!`, `+ Avance de ${spaces(bonusMove)} !`)}</p>` : ''}
+        ${bonusMove < 0 ? `<p class="event-card__bonus event-card__bonus--back">${t(`− Move back ${spaces(bonusMove)}!`, `− Recule de ${spaces(bonusMove)} !`)}</p>` : ''}
         <div class="spacer"></div>
         ${SHOW_EXAMPLE_CARD_NOTICE ? '<span class="event-card__notice">EXAMPLE CARD · REAL CARDS TO COME</span>' : ''}
       </div>`;
@@ -174,8 +175,8 @@ export function render(root, app, params) {
         ${outcome.map((line) => `<p>${line}</p>`).join('')}
       </div>
       ${next
-        ? `<button type="button" class="btn btn--sm" data-action="next">NEXT PLAYER: ${esc(next.name.toUpperCase())}</button>`
-        : `<button type="button" class="btn btn--sm" data-action="winner">SEE THE WINNER</button>`}`;
+        ? `<button type="button" class="btn btn--sm" data-action="next">${t('NEXT PLAYER', 'JOUEUR SUIVANT')} : ${esc(next.name.toUpperCase())}</button>`
+        : `<button type="button" class="btn btn--sm" data-action="winner">${t('SEE THE WINNER', 'VOIR LE GAGNANT')}</button>`}`;
     }
 
     root.innerHTML = `
@@ -183,12 +184,12 @@ export function render(root, app, params) {
       <div class="topbar topbar--between">
         ${canSwitch ? backButton('back', 'Back to turn') : '<span></span>'}
         ${canSwitch ? `
-        <div class="tabs" role="group" aria-label="Deck">
+        <div class="tabs" role="group" aria-label="${t('Deck', 'Paquet')}">
           <button type="button" class="tab${deck === 'chance' ? ' is-selected' : ''}" data-action="deck" data-value="chance" aria-pressed="${deck === 'chance'}">Chance</button>
           <button type="button" class="tab${deck === 'special' ? ' is-selected' : ''}" data-action="deck" data-value="special" aria-pressed="${deck === 'special'}">Special</button>
         </div>` : ''}
       </div>
-      <h1>${name} landed on ${info.label}</h1>
+      <h1>${t(`${name} landed on ${info.label}`, `${name} arrive sur ${info.label}`)}</h1>
       ${cardHTML}
       <div class="spacer"></div>
       ${footer}
@@ -207,7 +208,7 @@ export function render(root, app, params) {
   // Phrase + "Space 7 → space 9" pour un déplacement
   // (saved = Lucky Break a annulé le recul)
   function moveLines(p, from, to, saved = false) {
-    if (saved) return `Lucky Break! ${esc(p.name)} ignores the penalty. <span class="outcome__space">Still on ${spaceName(from)}</span>`;
+    if (saved) return t(`Lucky Break! ${esc(p.name)} ignores the penalty. <span class="outcome__space">Still on ${spaceName(from)}</span>`, `Lucky Break ! ${esc(p.name)} évite la pénalité. <span class="outcome__space">Toujours sur ${spaceName(from)}</span>`);
     return `${moveSentence(esc(p.name), from, to)} <span class="outcome__space">${fromTo(from, to)}</span>`;
   }
 
@@ -257,7 +258,7 @@ export function render(root, app, params) {
       const status = card.effect.status;
       setEffect(player, status, true);
       sfx.reveal();
-      finishWith([`${name} keeps <strong>${EFFECTS[status].label}</strong>. ${EFFECTS[status].text}`, ...applyBonusMove()]);
+      finishWith([t(`${name} keeps <strong>${EFFECTS[status].label}</strong>. ${EFFECTS[status].text}`, `${name} garde <strong>${EFFECTS[status].label}</strong>. ${EFFECTS[status].textFr}`), ...applyBonusMove()]);
     },
     applyBrainSwap({ id }) {
       // La carte est déjà marquée comme tirée : on passe à la question,
@@ -272,10 +273,10 @@ export function render(root, app, params) {
       const target = getPlayer(state, Number(id));
       if (skipNextTurn(state, target.id)) {
         sfx.freeze();
-        finishWith([`${esc(target.name)} is frozen and will skip their next turn!`, ...applyBonusMove()]);
+        finishWith([t(`${esc(target.name)} is frozen and will skip their next turn!`, `${esc(target.name)} passera son prochain tour à cause du gel !`), ...applyBonusMove()]);
       } else {
         sfx.reveal();
-        finishWith([`Lucky Break! ${esc(target.name)} ignores the freeze.`, ...applyBonusMove()]);
+        finishWith([t(`Lucky Break! ${esc(target.name)} ignores the freeze.`, `Lucky Break ! ${esc(target.name)} évite le gel.`), ...applyBonusMove()]);
       }
     },
     applyMoveOthers() {
@@ -295,7 +296,7 @@ export function render(root, app, params) {
       setPosition(state, other.id, mine);
       sfx.swap();
       finishWith([
-        `${name} and ${esc(other.name)} swap places!`,
+        t(`${name} and ${esc(other.name)} swap places!`, `${name} et ${esc(other.name)} échangent leurs places !`),
         `<span class="outcome__space">${name}: ${spaceName(mine)} → ${spaceName(theirs)}</span>`,
         `<span class="outcome__space">${esc(other.name)}: ${spaceName(theirs)} → ${spaceName(mine)}</span>`
       ]);
@@ -310,7 +311,7 @@ export function render(root, app, params) {
       const { from, to } = movePlayer(state, player.id, delta);
       if (value === 'right') sfx.correct();
       else sfx.wrong();
-      finishWith([`${value === 'right' ? 'Well done!' : 'Not this time.'} ${moveLines(player, from, to)}`]);
+      finishWith([`${value === 'right' ? t('Well done!', 'Bravo !') : t('Not this time.', 'Pas cette fois.')} ${moveLines(player, from, to)}`]);
     },
     bonus() {
       const e = card.effect;

@@ -3,6 +3,7 @@
    ========================================================= */
 
 import { FINISH } from './game.js';
+import { t } from './i18n.js';
 
 /**
  * Protège un texte avant de l'insérer dans du HTML
@@ -55,7 +56,7 @@ export function spaceMark(type) {
 }
 
 /** Bouton retour carré. `action` = nom de l'action déclenchée au clic. */
-export function backButton(action = 'back', label = 'Back', extraClass = '') {
+export function backButton(action = 'back', label = t('Back', 'Retour'), extraClass = '') {
   return `<button type="button" class="icon-btn ${extraClass}" data-action="${action}" aria-label="${esc(label)}">${ICONS.back}</button>`;
 }
 
@@ -74,28 +75,28 @@ export function bindActions(root, actions) {
   };
 }
 
-/** "1 space" / "3 spaces" */
+/** "1 space" / "3 spaces" (« 1 case » / « 3 cases ») */
 export function spaces(n) {
   const abs = Math.abs(n);
-  return abs + (abs === 1 ? ' space' : ' spaces');
+  return abs + (abs === 1 ? t(' space', ' case') : t(' spaces', ' cases'));
 }
 
-/** Nom d'une case : "START", "FINISH" ou "space 14" */
+/** Nom d'une case : "START", "FINISH" ou "space 14" (« case 14 ») */
 export function spaceName(position) {
   if (position <= 0) return 'START';
   if (position >= FINISH) return 'FINISH';
-  return `space ${position}`;
+  return t(`space ${position}`, `case ${position}`);
 }
 
 /** "Ziad moves forward 3 spaces." / "Ziad moves back 1 space." / "Ziad stays on space 14." */
 export function moveSentence(name, from, to) {
-  if (to > from) return `${name} moves forward ${spaces(to - from)}.`;
-  if (to < from) return `${name} moves back ${spaces(from - to)}.`;
-  return `${name} stays on ${spaceName(from)}.`;
+  if (to > from) return t(`${name} moves forward ${spaces(to - from)}.`, `${name} avance de ${spaces(to - from)}.`);
+  if (to < from) return t(`${name} moves back ${spaces(from - to)}.`, `${name} recule de ${spaces(from - to)}.`);
+  return t(`${name} stays on ${spaceName(from)}.`, `${name} reste sur ${spaceName(from)}.`);
 }
 
 /** "Space 14 → space 17" (avec majuscule), ou "Still on space 14" */
 export function fromTo(from, to) {
-  const text = from === to ? `Still on ${spaceName(from)}` : `${spaceName(from)} → ${spaceName(to)}`;
+  const text = from === to ? t(`Still on ${spaceName(from)}`, `Toujours sur ${spaceName(from)}`) : `${spaceName(from)} → ${spaceName(to)}`;
   return text.charAt(0).toUpperCase() + text.slice(1);
 }

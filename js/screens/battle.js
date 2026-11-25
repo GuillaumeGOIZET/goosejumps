@@ -12,6 +12,7 @@ import {
 } from '../game.js';
 import { esc, backButton, bindActions, moveSentence, spaceName } from '../ui.js';
 import { sfx } from '../sound.js';
+import { t } from '../i18n.js';
 
 const STEPS = { opponent: '1/3', theme: '2/3', question: '3/3', winner: '3/3', result: '' };
 
@@ -30,7 +31,7 @@ export function render(root, app) {
       return `
       <div class="fighter">
         <div class="fighter__ring fighter__ring--empty"><span>?</span></div>
-        <span class="fighter__name">Rival</span>
+        <span class="fighter__name">${t('Rival', 'Adversaire')}</span>
       </div>`;
     }
     return `
@@ -45,19 +46,19 @@ export function render(root, app) {
   function bodyHTML() {
     if (phase === 'opponent') {
       return `
-      <h1 class="battle__title">${esc(me.name)}, who do you challenge?</h1>
+      <h1 class="battle__title">${t(`${esc(me.name)}, who do you challenge?`, `${esc(me.name)}, qui défies-tu ?`)}</h1>
       <div class="pick-list">
         ${otherPlayers(state, me.id).map((p) => `
           <button type="button" class="pick-btn pick-btn--battle" data-action="opponent" data-id="${p.id}">
             <span class="pick-btn__name">${esc(p.name)}</span>
-            <span class="pick-btn__meta">Space ${p.position}</span>
+            <span class="pick-btn__meta">${p.position <= 0 ? 'START' : `${t('Space', 'Case')} ${p.position}`}</span>
           </button>`).join('')}
       </div>`;
     }
 
     if (phase === 'theme') {
       return `
-      <h1 class="battle__title">Pick the battle theme</h1>
+      <h1 class="battle__title">${t('Pick the battle theme', 'Choisis le thème de la Battle')}</h1>
       <div class="theme-grid">
         ${CATEGORIES.map((c) => `
           <button type="button" class="theme-btn" style="--c: ${SPACE_TYPES[c].color}" data-action="theme" data-value="${c}">
@@ -72,12 +73,12 @@ export function render(root, app) {
       <div class="card battle-card" style="--c: ${info.color}">
         <div class="card__head">
           <span class="tag">${info.label.toUpperCase()}</span>
-          <span class="battle-card__kind">SPEED QUESTION</span>
+          <span class="battle-card__kind">${t('SPEED QUESTION', 'QUESTION ÉCLAIR')}</span>
         </div>
         <h1 class="battle-card__question">${esc(question.question)}</h1>
         ${phase === 'winner' ? `
           <div class="answer">
-            <span class="label">Answer</span>
+            <span class="label">${t('Answer', 'Réponse')}</span>
             <span class="answer__text">${esc(question.answer)}</span>
           </div>` : ''}
       </div>`;
@@ -87,16 +88,16 @@ export function render(root, app) {
     if (result.winner) {
       return `
       <div class="battle-result">
-        <h1 class="battle-result__title">${esc(result.winner.name)} wins the battle!</h1>
+        <h1 class="battle-result__title">${t(`${esc(result.winner.name)} wins the battle!`, `${esc(result.winner.name)} gagne la Battle !`)}</h1>
         <span class="battle-result__move">${moveSentence(esc(result.winner.name), result.from, result.to)}</span>
-        <span class="battle-result__stay">${esc(result.loser.name)} stays on ${spaceName(result.loser.position)}.</span>
+        <span class="battle-result__stay">${t(`${esc(result.loser.name)} stays on ${spaceName(result.loser.position)}.`, `${esc(result.loser.name)} reste sur la ${spaceName(result.loser.position)}.`)}</span>
       </div>`;
     }
     return `
     <div class="battle-result">
-      <h1 class="battle-result__title">No winner this time</h1>
-      <span class="battle-result__move">Nobody moves.</span>
-      <span class="battle-result__stay">${esc(me.name)} and ${esc(opponent.name)} stay where they are.</span>
+      <h1 class="battle-result__title">${t('No winner this time', 'Pas de gagnant cette fois')}</h1>
+      <span class="battle-result__move">${t('Nobody moves.', 'Personne ne bouge.')}</span>
+      <span class="battle-result__stay">${t(`${esc(me.name)} and ${esc(opponent.name)} stay where they are.`, `${esc(me.name)} et ${esc(opponent.name)} restent sur place.`)}</span>
     </div>`;
   }
 
@@ -104,26 +105,26 @@ export function render(root, app) {
     if (phase === 'question') {
       return `
       <div class="footer-stack">
-        <p class="hint hint--center">First to shout the right answer in English wins!</p>
-        <button type="button" class="btn btn--cream btn--battle btn--sm" data-action="reveal">SHOW ANSWER</button>
+        <p class="hint hint--center">${t('First to shout the right answer in English wins!', 'Le premier qui crie la bonne réponse en anglais gagne !')}</p>
+        <button type="button" class="btn btn--cream btn--battle btn--sm" data-action="reveal">${t('SHOW ANSWER', 'VOIR LA RÉPONSE')}</button>
       </div>`;
     }
     if (phase === 'winner') {
       return `
       <div class="footer-stack">
-        <p class="hint hint--center">Who gave the right answer first?</p>
+        <p class="hint hint--center">${t('Who gave the right answer first?', 'Qui a donné la bonne réponse en premier ?')}</p>
         <div class="two-buttons">
           <button type="button" class="winner-btn" data-action="win" data-id="${me.id}">${esc(me.name)}</button>
           <button type="button" class="winner-btn" data-action="win" data-id="${opponent.id}">${esc(opponent.name)}</button>
         </div>
-        <button type="button" class="dashed-btn" data-action="win" data-id="">Nobody got it</button>
+        <button type="button" class="dashed-btn" data-action="win" data-id="">${t('Nobody got it', 'Personne n’a trouvé')}</button>
       </div>`;
     }
     if (phase === 'result') {
       const next = state.phase === 'finished' ? null : currentPlayer(state);
       return next
-        ? `<button type="button" class="btn btn--cream btn--battle btn--sm" data-action="next">NEXT PLAYER: ${esc(next.name.toUpperCase())}</button>`
-        : `<button type="button" class="btn btn--cream btn--battle btn--sm" data-action="victory">SEE THE WINNER</button>`;
+        ? `<button type="button" class="btn btn--cream btn--battle btn--sm" data-action="next">${t('NEXT PLAYER', 'JOUEUR SUIVANT')} : ${esc(next.name.toUpperCase())}</button>`
+        : `<button type="button" class="btn btn--cream btn--battle btn--sm" data-action="victory">${t('SEE THE WINNER', 'VOIR LE GAGNANT')}</button>`;
     }
     return '';
   }
@@ -135,7 +136,7 @@ export function render(root, app) {
       <div class="deco" style="right:-90px;top:380px;width:240px;height:240px"></div>
 
       <div class="topbar topbar--between">
-        ${phase === 'opponent' ? backButton('back', 'Back to turn', 'icon-btn--battle') : '<span class="topbar__placeholder"></span>'}
+        ${phase === 'opponent' ? backButton('back', t('Back to turn', 'Retour au tour'), 'icon-btn--battle') : '<span class="topbar__placeholder"></span>'}
         <span class="battle__logo">BATTLE!</span>
         <span class="topbar__step battle__step">${STEPS[phase]}</span>
       </div>

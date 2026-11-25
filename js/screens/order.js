@@ -9,6 +9,7 @@ import { avatar } from '../goose.js';
 import { rollDie, nextRoller, isTied, orderFromRolls } from '../game.js';
 import { esc, backButton, bindActions } from '../ui.js';
 import { sfx } from '../sound.js';
+import { t } from '../i18n.js';
 
 const ROLL_ANIMATION_MS = 700;
 
@@ -54,12 +55,12 @@ export function render(root, app) {
       const first = done && index === 0;
       let note;
       if (mine.length === 0) {
-        note = p.id === next ? 'Your turn to roll' : 'Waiting…';
+        note = p.id === next ? t('Your turn to roll', 'À toi de lancer') : t('Waiting…', 'En attente…');
       } else if (!done && isTied(players, rolls, p.id)) {
-        note = p.id === next ? 'Tie! Roll again' : 'Tie! Waiting to roll again';
+        note = p.id === next ? t('Tie! Roll again', 'Égalité ! Relance') : t('Tie! Waiting to roll again', 'Égalité ! En attente pour relancer');
       } else {
-        note = `Goose on space ${mine[0]}`;
-        if (mine.length > 1) note += ` · tie-break ${mine.slice(1).join(', ')}`;
+        note = t(`Goose on space ${mine[0]}`, `Oie sur la case ${mine[0]}`);
+        if (mine.length > 1) note += t(` · tie-break ${mine.slice(1).join(', ')}`, ` · départage ${mine.slice(1).join(', ')}`);
       }
       const isRolling = rolling && p.id === lastRollerId && mine.length === 1;
       return `
@@ -70,7 +71,7 @@ export function render(root, app) {
           <span class="order-row__name">${esc(p.name)}</span>
           <span class="order-row__note">${note}</span>
         </div>
-        <div class="order-row__roll${isRolling ? ' is-rolling' : ''}" aria-label="Roll: ${mine[0] || 'not yet'}">
+        <div class="order-row__roll${isRolling ? ' is-rolling' : ''}" aria-label="${t('Roll', 'Lancer')} : ${mine[0] || t('not yet', 'pas encore')}">
           ${mine.length ? (isRolling ? shownValue : mine[0]) : '–'}
         </div>
       </li>`;
@@ -82,13 +83,18 @@ export function render(root, app) {
     <section class="screen order">
       <div class="topbar">
         ${backButton('back')}
-        <h1>Roll for order</h1>
+        <h1>${t('Roll for order', "Lancer pour l'ordre")}</h1>
       </div>
       <ol class="order-steps">
+        ${t(`
         <li>Each player <strong>rolls the die once</strong>.</li>
         <li>The <strong>highest roll plays first</strong>, then the others in order. Ties roll again.</li>
         <li>Your roll is your first move: <strong>put your goose on that space</strong> of the board (roll 4 → space 4).</li>
-        <li>After this, <strong>no more dice!</strong> You move by answering questions.</li>
+        <li>After this, <strong>no more dice!</strong> You move by answering questions.</li>`, `
+        <li>Chaque joueur <strong>lance le dé une fois</strong>.</li>
+        <li>Le <strong>plus haut score commence</strong>, puis les autres dans l’ordre. En cas d’égalité, on relance.</li>
+        <li>Ton score est ta première avancée : <strong>pose ton oie sur cette case</strong> du plateau (4 → case 4).</li>
+        <li>Ensuite, <strong>plus de dé !</strong> Tu avances en répondant aux questions.</li>`)}
       </ol>
 
       <ol class="order-list">${rows}</ol>
@@ -98,19 +104,19 @@ export function render(root, app) {
       <div class="die-zone" aria-live="polite">
         ${shownValue !== null ? `
           <div class="die${rolling ? ' is-rolling' : ''}">${dieSVG(shownValue)}</div>
-          <p class="die-zone__text">${rolling ? 'Rolling…' : `${esc(lastRoller.name)} rolled ${shownValue}!`}</p>
+          <p class="die-zone__text">${rolling ? t('Rolling…', 'Lancer…') : t(`${esc(lastRoller.name)} rolled ${shownValue}!`, `${esc(lastRoller.name)} a fait ${shownValue} !`)}</p>
           ${rolling ? '' : (rolls[lastRollerId] || []).length > 1
-            ? `<p class="die-zone__move">Tie-break roll: it only decides the order. ${esc(lastRoller.name)}'s goose stays on <strong>space ${rolls[lastRollerId][0]}</strong>.</p>`
-            : `<p class="die-zone__move">Put ${esc(lastRoller.name)}'s goose on <strong>space ${shownValue}</strong> of the board.</p>`}` : ''}
+            ? `<p class="die-zone__move">${t(`Tie-break roll: it only decides the order. ${esc(lastRoller.name)}'s goose stays on <strong>space ${rolls[lastRollerId][0]}</strong>.`, `Lancer de départage : il sert seulement à l’ordre. L’oie de ${esc(lastRoller.name)} reste sur la <strong>case ${rolls[lastRollerId][0]}</strong>.`)}</p>`
+            : `<p class="die-zone__move">${t(`Put ${esc(lastRoller.name)}'s goose on <strong>space ${shownValue}</strong> of the board.`, `Pose l’oie de ${esc(lastRoller.name)} sur la <strong>case ${shownValue}</strong> du plateau.`)}</p>`}` : ''}
       </div>
 
       ${done
-        ? `<p class="hint hint--center">All set! Check that every goose is on its space, then start.</p>
-           <button type="button" class="btn" data-action="start">START THE GAME</button>`
+        ? `<p class="hint hint--center">${t('All set! Check that every goose is on its space, then start.', 'C’est prêt ! Vérifiez que chaque oie est sur sa case, puis commencez.')}</p>
+           <button type="button" class="btn" data-action="start">${t('START THE GAME', 'COMMENCER LA PARTIE')}</button>`
         : rolling
-          ? `<button type="button" class="btn" disabled>ROLLING…</button>`
+          ? `<button type="button" class="btn" disabled>${t('ROLLING…', 'LANCER…')}</button>`
           : `<button type="button" class="btn" data-action="roll">
-               ${(rolls[next] || []).length ? 'ROLL AGAIN' : 'ROLL'} FOR ${esc(nextPlayer.name.toUpperCase())}
+               ${(rolls[next] || []).length ? t('ROLL AGAIN FOR', 'RELANCER POUR') : t('ROLL FOR', 'LANCER POUR')} ${esc(nextPlayer.name.toUpperCase())}
              </button>`}
     </section>`;
   }

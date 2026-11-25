@@ -8,6 +8,7 @@ import { avatar, gooseImg } from '../goose.js';
 import { FINISH, SPACE_TYPES, CATEGORIES, EFFECTS, activeEffects, currentPlayer, nextTurn, spaceTypeAt } from '../game.js';
 import { esc, bindActions, ICONS, spaceMark } from '../ui.js';
 import { sfx, soundButton } from '../sound.js';
+import { t } from '../i18n.js';
 
 // Pour ne jouer le « ding-dong » qu'au début d'un nouveau tour
 // (et pas en revenant du classement ou des règles)
@@ -31,13 +32,13 @@ export function raceTrack(state, activeId) {
   }).join('');
 
   return `
-  <div class="race panel" role="img" aria-label="Race to the finish: ${state.turnOrder
+  <div class="race panel" role="img" aria-label="${t('Race to the finish', 'Course vers l’arrivée')} : ${state.turnOrder
     .map((id) => {
       const p = state.players.find((pl) => pl.id === id);
-      return `${esc(p.name)} on space ${p.position}`;
+      return t(`${esc(p.name)} on space ${p.position}`, `${esc(p.name)} sur la case ${p.position}`);
     }).join(', ')}">
     <div class="race__labels" aria-hidden="true">
-      <span>START</span><span>RACE TO THE FINISH</span><span>FINISH</span>
+      <span>START</span><span>${t('RACE TO THE FINISH', 'COURSE À L’ARRIVÉE')}</span><span>FINISH</span>
     </div>
     <div class="race__track" aria-hidden="true">
       <div class="race__line"></div>
@@ -79,19 +80,22 @@ export function render(root, app) {
       <div class="landing" id="suggestion">
         <div class="landing__tile"><small>START</small></div>
         <p class="landing__text">
-          <span class="landing__main">${name} is back on START!</span>
+          ${t(`<span class="landing__main">${name} is back on START!</span>
           <strong>Other players: choose a category</strong> for ${name}.
-          Chance, Special and Battle are not available on START.
+          Chance, Special and Battle are not available on START.`, `<span class="landing__main">${name} retourne sur START !</span>
+          <strong>Les autres joueurs choisissent une catégorie</strong> pour ${name}.
+          Chance, Special et Battle ne sont pas possibles sur START.`)}
         </p>
       </div>`;
     }
     const info = SPACE_TYPES[suggested];
     return `
     <div class="landing" id="suggestion">
-      <div class="landing__tile" style="${tileStyle(info)}"><small>SPACE</small>${player.position}</div>
+      <div class="landing__tile" style="${tileStyle(info)}"><small>${t('SPACE', 'CASE')}</small>${player.position}</div>
       <p class="landing__text">
-        <span class="landing__main">${name} is on space ${player.position}: <strong>${info.label}</strong></span>
-        Tap <strong>${info.label}</strong> below (it's outlined in white).
+        ${t(`<span class="landing__main">${name} is on space ${player.position}: <strong>${info.label}</strong></span>
+        Tap <strong>${info.label}</strong> below (it's outlined in white).`, `<span class="landing__main">${name} est sur la case ${player.position} : <strong>${info.label}</strong></span>
+        Touche <strong>${info.label}</strong> en dessous (entourée en blanc).`)}
       </p>
     </div>`;
   }
@@ -99,10 +103,10 @@ export function render(root, app) {
   root.innerHTML = `
   <section class="screen turn">
     <div class="topbar topbar--between">
-      <button type="button" class="mini-logo" data-action="home" aria-label="Home">GOOSE JUMPS</button>
+      <button type="button" class="mini-logo" data-action="home" aria-label="${t('Home', 'Accueil')}">GOOSE JUMPS</button>
       <div class="topbar__actions">
-        <button type="button" class="icon-btn icon-btn--yellow" data-action="ranking" aria-label="Leaderboard">${ICONS.leaderboard}</button>
-        <button type="button" class="icon-btn" data-action="rules" aria-label="Rules">?</button>
+        <button type="button" class="icon-btn icon-btn--yellow" data-action="ranking" aria-label="${t('Leaderboard', 'Classement')}">${ICONS.leaderboard}</button>
+        <button type="button" class="icon-btn" data-action="rules" aria-label="${t('Rules', 'Règles')}">?</button>
         ${soundButton()}
       </div>
     </div>
@@ -114,28 +118,28 @@ export function render(root, app) {
         ${gooseImg(player.character, 68, { head: true })}
       </div>
       <div class="turn-banner__text">
-        <span class="turn-banner__meta">ROUND ${state.round} · SPACE ${player.position}</span>
-        <h1 class="${player.name.length > 10 ? 'is-very-long' : player.name.length > 7 ? 'is-long' : ''}">It's ${esc(player.name)}'s turn!</h1>
+        <span class="turn-banner__meta">${t('ROUND', 'TOUR')} ${state.round} · ${t('SPACE', 'CASE')} ${player.position}</span>
+        <h1 class="${player.name.length > 10 ? 'is-very-long' : player.name.length > 7 ? 'is-long' : ''}">${t(`It's ${esc(player.name)}'s turn!`, `À ${esc(player.name)} de jouer !`)}</h1>
         ${activeEffects(player).length ? `
-          <ul class="effect-pills" aria-label="Active cards">
-            ${activeEffects(player).map((e) => `<li class="effect-pill" title="${EFFECTS[e].text}">${EFFECTS[e].label}</li>`).join('')}
+          <ul class="effect-pills" aria-label="${t('Active cards', 'Cartes gardées')}">
+            ${activeEffects(player).map((e) => `<li class="effect-pill" title="${t(EFFECTS[e].text, EFFECTS[e].textFr)}">${EFFECTS[e].label}</li>`).join('')}
           </ul>` : ''}
       </div>
     </div>
 
     ${napping ? `
       <div class="panel nap">
-        <h2>Frozen!</h2>
-        <p>${esc(player.name)} is frozen and skips this turn.</p>
+        <h2>${t('Frozen!', 'Gel !')}</h2>
+        <p>${t(`${esc(player.name)} is frozen and skips this turn.`, `${esc(player.name)} passe ce tour à cause du gel.`)}</p>
       </div>
       <div class="spacer"></div>
-      <button type="button" class="btn" data-action="skip">NEXT PLAYER</button>
+      <button type="button" class="btn" data-action="skip">${t('NEXT PLAYER', 'JOUEUR SUIVANT')}</button>
     ` : `
       <div class="types">
         ${landingHTML()}
-        <span class="label">${onStart ? 'Category for ' + name : 'What colour is your space?'}</span>
+        <span class="label">${onStart ? t('Category for ', 'Catégorie pour ') + name : t('What colour is your space?', 'Quelle est la couleur de ta case ?')}</span>
         <div class="types__grid">${typeButtons}</div>
-        ${onStart ? '' : `<p class="hint types__hint">Goose on another space? Tap the colour of that space instead.</p>`}
+        ${onStart ? '' : `<p class="hint types__hint">${t('Goose on another space? Tap the colour of that space instead.', 'Ton oie est sur une autre case ? Touche plutôt la couleur de cette case.')}</p>`}
       </div>
     `}
   </section>`;

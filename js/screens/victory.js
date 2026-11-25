@@ -7,6 +7,7 @@ import { getPlayer, ranking } from '../game.js';
 import { esc, bindActions } from '../ui.js';
 import { rankingList } from './ranking.js';
 import { sfx } from '../sound.js';
+import { t } from '../i18n.js';
 
 // Confettis décoratifs : [gauche %, haut px, couleur, rotation]
 const CONFETTI = [
@@ -34,16 +35,16 @@ export function render(root, app) {
     <div class="victory__goose">
       ${gooseImg(winner.character, 170)}
     </div>
-    <h1 class="victory__title">${esc(winner.name)} wins!</h1>
-    <p class="hint hint--center">First goose to reach the FINISH. Well played, everyone!</p>
+    <h1 class="victory__title">${t(`${esc(winner.name)} wins!`, `${esc(winner.name)} gagne !`)}</h1>
+    <p class="hint hint--center">${t('First goose to reach the FINISH. Well played, everyone!', 'Première oie à atteindre FINISH. Bien joué à tous !')}</p>
 
-    <span class="label">Final ranking</span>
+    <span class="label">${t('Final ranking', 'Classement final')}</span>
     ${rankingList(state, ranking(state))}
 
     <div class="spacer"></div>
     <div class="victory__actions">
-      <button type="button" class="btn" data-action="newGame">PLAY AGAIN</button>
-      <button type="button" class="btn btn--cream btn--sm" data-action="home">HOME</button>
+      <button type="button" class="btn" data-action="newGame">${t('PLAY AGAIN', 'REJOUER')}</button>
+      <button type="button" class="btn btn--cream btn--sm" data-action="home">${t('HOME', 'ACCUEIL')}</button>
     </div>
   </section>`;
 

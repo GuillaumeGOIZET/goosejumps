@@ -15,7 +15,8 @@ import { loadData } from './game.js';
 import { loadState, saveState, createState } from './state.js';
 import { enterScreen } from './motion.js';
 import { setScreen } from './sound.js';
-import './install.js'; // bouton « Install the app » (écoute le navigateur dès le chargement)
+import './install.js';
+import { t } from './i18n.js'; // bouton « Install the app » (écoute le navigateur dès le chargement)
 
 import * as home from './screens/home.js';
 import * as rules from './screens/rules.js';
@@ -81,7 +82,7 @@ async function start() {
   } catch (error) {
     root.innerHTML = `<div class="screen" style="justify-content:center">
       <h1>Oops!</h1>
-      <p class="hint">The game data could not be loaded. Check your connection and reload the page.</p>
+      <p class="hint">${t('The game data could not be loaded. Check your connection and reload the page.', 'Les données du jeu n’ont pas pu être chargées. Vérifie ta connexion et recharge la page.')}</p>
     </div>`;
     console.error(error);
     return;

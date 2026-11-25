@@ -16,6 +16,7 @@
    ========================================================= */
 
 import { sfx } from './sound.js';
+import { t } from './i18n.js';
 
 let deferredPrompt = null; // événement gardé de côté (Android, Chrome, Edge)
 
@@ -48,7 +49,7 @@ const PLUS_ICON = `<svg class="install-sheet__icon" width="22" height="22" viewB
 /** HTML du bouton (vide si l'installation n'est pas possible) */
 function buttonHTML() {
   if (!mode()) return '';
-  return `<button type="button" class="install-btn" data-install>${DOWNLOAD_ICON}<span>Install the app</span></button>`;
+  return `<button type="button" class="install-btn" data-install>${DOWNLOAD_ICON}<span>${t('Install the app', 'Installer l’app')}</span></button>`;
 }
 
 /** Emplacement du bouton, à mettre dans l'écran d'accueil */
@@ -69,13 +70,13 @@ function openIOSGuide() {
   sheet.className = 'install-sheet';
   sheet.innerHTML = `
     <div class="install-sheet__panel" role="dialog" aria-modal="true" aria-labelledby="install-title">
-      <h2 id="install-title">Add Goose Jumps to your home screen</h2>
+      <h2 id="install-title">${t('Add Goose Jumps to your home screen', 'Ajouter Goose Jumps à l’écran d’accueil')}</h2>
       <ol class="install-sheet__steps">
-        <li><span class="install-sheet__num">1</span><span>Tap the <strong>Share</strong> button ${SHARE_ICON} in Safari's toolbar.</span></li>
-        <li><span class="install-sheet__num">2</span><span>Scroll down and tap <strong>Add to Home Screen</strong> ${PLUS_ICON}</span></li>
-        <li><span class="install-sheet__num">3</span><span>Tap <strong>Add</strong>. The goose is now on your home screen!</span></li>
+        <li><span class="install-sheet__num">1</span><span>${t(`Tap the <strong>Share</strong> button ${SHARE_ICON} in Safari's toolbar.`, `Touche le bouton <strong>Partager</strong> ${SHARE_ICON} dans la barre de Safari.`)}</span></li>
+        <li><span class="install-sheet__num">2</span><span>${t(`Scroll down and tap <strong>Add to Home Screen</strong> ${PLUS_ICON}`, `Descends et touche <strong>Sur l’écran d’accueil</strong> ${PLUS_ICON}`)}</span></li>
+        <li><span class="install-sheet__num">3</span><span>${t('Tap <strong>Add</strong>. The goose is now on your home screen!', 'Touche <strong>Ajouter</strong>. L’oie est sur ton écran d’accueil !')}</span></li>
       </ol>
-      <button type="button" class="btn btn--sm" data-install-close>GOT IT</button>
+      <button type="button" class="btn btn--sm" data-install-close>${t('GOT IT', 'COMPRIS')}</button>
     </div>`;
   document.body.appendChild(sheet);
 

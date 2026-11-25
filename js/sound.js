@@ -13,6 +13,8 @@
    Sur iPhone, le bouton « silencieux » coupe aussi le son de l'app.
    ========================================================= */
 
+import { t } from './i18n.js';
+
 // ---------- Réglages faciles à modifier ----------
 const MUSIC_VOLUME = 1;   // volume de la musique (0 à 1) : assez bas pour pouvoir parler
 const SFX_VOLUME = 1.5;      // volume des bruitages (0 à 1)
@@ -475,15 +477,15 @@ export function setScreen(name) {
 const SPEAKER = '<path d="M4 9h4l5-4v14l-5-4H4z"/>';
 const STATES = [
   {
-    music: true, sfx: true, label: 'Sound: music and effects on',
+    music: true, sfx: true, label: () => t('Sound: music and effects on', 'Son : musique et bruitages'),
     icon: '<path d="M9 18V5l11-2v13"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="17.5" cy="16" r="2.5"/>'
   },
   {
-    music: false, sfx: true, label: 'Sound: effects only',
+    music: false, sfx: true, label: () => t('Sound: effects only', 'Son : bruitages seulement'),
     icon: `${SPEAKER}<path d="M16.5 8.5a5 5 0 0 1 0 7M19.5 5.5a9 9 0 0 1 0 13"/>`
   },
   {
-    music: false, sfx: false, label: 'Sound off',
+    music: false, sfx: false, label: () => t('Sound off', 'Son coupé'),
     icon: `${SPEAKER}<path d="M17 9l5 5M22 9l-5 5"/>`
   }
 ];
@@ -498,7 +500,7 @@ function buttonInner() {
 }
 
 function buttonLabel() {
-  return `${STATES[Math.max(0, currentState())].label}. Tap to change.`;
+  return `${STATES[Math.max(0, currentState())].label()}${t('. Tap to change.', '. Toucher pour changer.')}`;
 }
 
 /** HTML du bouton son, à placer dans un écran */

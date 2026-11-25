@@ -4,6 +4,7 @@
    ========================================================= */
 
 import { CHARACTERS } from './goose.js';
+import { t } from './i18n.js';
 
 const STORAGE_KEY = 'goose-jumps-game';
 const VERSION = 2; // à augmenter si la forme de l'état change (2 = oies à choisir)
@@ -31,7 +32,7 @@ const VERSION = 2; // à augmenter si la forme de l'état change (2 = oies à ch
 export function makePlayer(id, existing = []) {
   const taken = existing.map((p) => p.character);
   const free = CHARACTERS.find((c) => !taken.includes(c.id)) || CHARACTERS[0];
-  return { id, name: `Player ${id}`, character: free.id, position: 0, skipTurns: 0, effects: {} };
+  return { id, name: t(`Player ${id}`, `Joueur ${id}`), character: free.id, position: 0, skipTurns: 0, effects: {} };
 }
 
 /** Ancienne sauvegarde (v1 : plumes + chapeau) → une oie différente par joueur */

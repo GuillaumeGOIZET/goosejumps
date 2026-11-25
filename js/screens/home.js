@@ -8,6 +8,7 @@ import { hasGameInProgress } from '../state.js';
 import { soundButton } from '../sound.js';
 import { installButton } from '../install.js';
 import { attachMascot } from '../mascot.js';
+import { t, getLang, setLang } from '../i18n.js';
 
 export function render(root, app) {
   const inProgress = hasGameInProgress(app.state);
@@ -17,6 +18,9 @@ export function render(root, app) {
     <div class="deco" style="top:-60px;right:-70px;width:220px;height:220px"></div>
     <div class="deco" style="bottom:120px;left:-90px;width:200px;height:200px"></div>
     ${soundButton('home__sound')}
+    <!-- Bouton de langue : affiche la langue vers laquelle on passe -->
+    <button type="button" class="icon-btn home__lang" data-action="lang"
+            aria-label="${t('Passer en français', 'Switch to English')}" lang="${t('fr', 'en')}">${t('FR', 'EN')}</button>
 
     <p class="home__kicker">ENGLISH GAME · 2026</p>
 
@@ -25,7 +29,7 @@ export function render(root, app) {
       <span class="home__jumps">JUMPS</span>
     </h1>
 
-    <button type="button" class="home__mascot" aria-label="Poke Sir Honk" data-silent>
+    <button type="button" class="home__mascot" aria-label="${t('Poke Sir Honk', 'Taper Sir Honk')}" data-silent>
       <span class="mascot__shadow" aria-hidden="true"></span>
       <!-- Sir Honk sans son ombre : l'ombre est dessinée à part pour rester au sol quand il tombe -->
       <img class="goose" src="assets/gooses/sir-honk-solo.webp" width="210" height="210" alt="" draggable="false">
@@ -47,10 +51,10 @@ export function render(root, app) {
 
     <div class="home__actions">
       ${inProgress
-        ? `<button type="button" class="btn home__play" data-action="continue">CONTINUE</button>
-           <button type="button" class="btn btn--cream" data-action="newGame">NEW GAME</button>`
-        : `<button type="button" class="btn home__play" data-action="play">PLAY</button>`}
-      <button type="button" class="btn btn--cream" data-action="rules">RULES</button>
+        ? `<button type="button" class="btn home__play" data-action="continue">${t('CONTINUE', 'CONTINUER')}</button>
+           <button type="button" class="btn btn--cream" data-action="newGame">${t('NEW GAME', 'NOUVELLE PARTIE')}</button>`
+        : `<button type="button" class="btn home__play" data-action="play">${t('PLAY', 'JOUER')}</button>`}
+      <button type="button" class="btn btn--cream" data-action="rules">${t('RULES', 'RÈGLES')}</button>
     </div>
     ${installButton()}
     <p class="home__credits">Guillaume · Ziad · Mikael · Chiara</p>
@@ -66,10 +70,20 @@ export function render(root, app) {
       app.go(app.state.phase === 'order' ? 'order' : 'turn');
     },
     newGame() {
-      if (confirm('Start a new game? The current game will be lost.')) app.newGame();
+      if (confirm(t('Start a new game? The current game will be lost.', 'Commencer une nouvelle partie ? La partie en cours sera perdue.'))) app.newGame();
     },
     rules() {
       app.go('rules', { from: 'home' });
+    },
+    lang() {
+      setLang(getLang() === 'fr' ? 'en' : 'fr');
+      // Prénoms par défaut (« Player 2 » ↔ « Joueur 2 ») traduits eux aussi
+      app.state.players.forEach((p) => {
+        const match = p.name.match(/^(Player|Joueur) (\d+)$/);
+        if (match) p.name = t(`Player ${match[2]}`, `Joueur ${match[2]}`);
+      });
+      app.save();
+      app.go('home'); // on redessine l'accueil dans la nouvelle langue
     }
   });
 

@@ -6,6 +6,7 @@
 import { gooseImg, character } from '../goose.js';
 import { FINISH, ranking } from '../game.js';
 import { esc, backButton, bindActions } from '../ui.js';
+import { t } from '../i18n.js';
 
 const MEDALS = ['#FFD23F', '#FFF6E5', '#FF8A1F'];  // 1er, 2e, 3e
 const HEIGHTS = [130, 96, 70];
@@ -39,7 +40,7 @@ export function rankingList(state, list) {
         <div class="rank-row__line">
           <span class="rank-row__rank">${i + 1}.</span>
           <span class="rank-row__name">${esc(p.name)}</span>
-          <span class="rank-row__left">${p.id === state.winnerId || left === 0 ? 'Finished!' : `${left} to go`}</span>
+          <span class="rank-row__left">${p.id === state.winnerId || left === 0 ? t('Finished!', 'Arrivée !') : t(`${left} to go`, `encore ${left}`)}</span>
           <span class="rank-row__space" aria-label="Space ${p.position}">${p.position}</span>
         </div>
         <div class="rank-row__bar" aria-hidden="true">
@@ -57,12 +58,12 @@ export function render(root, app, params) {
   root.innerHTML = `
   <section class="screen ranking">
     <div class="topbar">
-      ${backButton('back', 'Back to the game')}
-      <h1>Leaderboard</h1>
+      ${backButton('back', t('Back to the game', 'Retour au jeu'))}
+      <h1>${t('Leaderboard', 'Classement')}</h1>
     </div>
     ${podium(list)}
     ${rankingList(state, list)}
-    <p class="hint hint--center">Ranked by space on the board · FINISH is space ${FINISH}</p>
+    <p class="hint hint--center">${t(`Ranked by space on the board · FINISH is space ${FINISH}`, `Classé par case sur le plateau · FINISH est la case ${FINISH}`)}</p>
   </section>`;
 
   bindActions(root, {

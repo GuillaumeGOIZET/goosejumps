@@ -9,11 +9,11 @@
    ========================================================= */
 
 export const CHARACTERS = [
-  { id: 'sir-honk', name: 'Sir Honk', tagline: 'The perfect gentleman', color: '#FF8A1F' },
-  { id: 'zippy', name: 'Zippy', tagline: 'Full of energy', color: '#FFD23F' },
-  { id: 'daisy', name: 'Daisy', tagline: 'Stylish from beak to feet', color: '#FF7EC2' },
-  { id: 'bowie', name: 'Bowie', tagline: 'Never without a bow', color: '#4C8DFF' },
-  { id: 'queenie', name: 'Queenie', tagline: 'Born to win', color: '#B89CFF' }
+  { id: 'sir-honk', name: 'Sir Honk', tagline: 'The perfect gentleman', taglineFr: 'Le parfait gentleman', color: '#FF8A1F' },
+  { id: 'zippy', name: 'Zippy', tagline: 'Full of energy', taglineFr: 'Plein d’énergie', color: '#FFD23F' },
+  { id: 'daisy', name: 'Daisy', tagline: 'Stylish from beak to feet', taglineFr: 'Élégante du bec aux pattes', color: '#FF7EC2' },
+  { id: 'bowie', name: 'Bowie', tagline: 'Never without a bow', taglineFr: 'Jamais sans son nœud', color: '#4C8DFF' },
+  { id: 'queenie', name: 'Queenie', tagline: 'Born to win', taglineFr: 'Née pour gagner', color: '#B89CFF' }
 ];
 
 /** Oie d'un joueur (ou d'un id d'oie). Oie par défaut si l'id est inconnu. */

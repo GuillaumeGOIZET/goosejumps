@@ -4,7 +4,7 @@ Projet scolaire « English Game » (My Digital School Angers), équipe de 4 : Gu
 GOOSE JUMPS est un jeu de plateau physique inspiré du jeu de l'oie, joué **en anglais**, avec des questions sur le web, la cyber, le design et le marketing.
 Cette PWA est l'extension digitale du jeu : **un seul téléphone ou une tablette posé sur la table** gère toute la partie.
 
-- **Langue de l'interface : anglais.** Les commentaires du code peuvent être en français.
+- **Langue de l'interface : anglais par défaut, français en option** (bouton FR / EN sur l'accueil). Chaque texte s'écrit `t('English', 'Français')` (voir `js/i18n.js`). Les questions, les réponses, les noms des cases, des cartes et des oies restent en anglais. Les commentaires du code peuvent être en français.
 - Le développeur connaît HTML/CSS/JS, PHP, Docker et Git, mais n'a jamais utilisé de framework. Le code doit rester lisible, commenté et simple à modifier par lui.
 
 ## Stack et contraintes

@@ -10,6 +10,7 @@ import { MIN_PLAYERS, MAX_PLAYERS } from '../game.js';
 import { makePlayer } from '../state.js';
 import { esc, backButton, bindActions, ICONS } from '../ui.js';
 import { sfx } from '../sound.js';
+import { t } from '../i18n.js';
 
 export function render(root, app) {
   const state = app.state;
@@ -32,28 +33,28 @@ export function render(root, app) {
     <section class="screen players">
       <div class="topbar">
         ${backButton('back')}
-        <h1>Who's playing?</h1>
+        <h1>${t("Who's playing?", 'Qui joue ?')}</h1>
       </div>
-      <p class="hint">${MIN_PLAYERS} to ${MAX_PLAYERS} players · tap a player below to edit them</p>
+      <p class="hint">${t(`${MIN_PLAYERS} to ${MAX_PLAYERS} players · tap a player below to edit them`, `De ${MIN_PLAYERS} à ${MAX_PLAYERS} joueurs · touche un joueur en bas pour le modifier`)}</p>
 
       <div class="panel panel--lift editor">
         <div class="editor__preview">
           ${gooseImg(mine.id, 124)}
         </div>
-        <p class="editor__character"><strong>${mine.name}</strong>${mine.tagline}</p>
+        <p class="editor__character"><strong>${mine.name}</strong>${t(mine.tagline, mine.taglineFr)}</p>
 
-        <label for="player-name" class="sr-only">Player name</label>
+        <label for="player-name" class="sr-only">${t('Player name', 'Prénom du joueur')}</label>
         <input id="player-name" class="editor__name" type="text" maxlength="12"
                autocomplete="off" autocapitalize="words" spellcheck="false"
-               value="${esc(player.name)}" placeholder="Name">
+               value="${esc(player.name)}" placeholder="${t('Name', 'Prénom')}">
 
         <div class="editor__options">
-          <span class="label" id="goose-label">Choose your goose</span>
+          <span class="label" id="goose-label">${t('Choose your goose', 'Choisis ton oie')}</span>
           <div class="goose-picker" role="group" aria-labelledby="goose-label">
             ${CHARACTERS.map((c) => {
               const isMine = c.id === mine.id;
               const owner = state.players.find((p) => p.character === c.id && p.id !== player.id);
-              const label = owner ? `${c.name}, taken by ${esc(owner.name)}. Tap to swap.` : c.name;
+              const label = owner ? t(`${c.name}, taken by ${esc(owner.name)}. Tap to swap.`, `${c.name}, prise par ${esc(owner.name)}. Touche pour échanger.`) : c.name;
               return `
               <button type="button" class="goose-pick${isMine ? ' is-selected' : ''}${owner ? ' is-taken' : ''}"
                       data-action="goose" data-value="${c.id}" aria-pressed="${isMine}"
@@ -62,28 +63,28 @@ export function render(root, app) {
               </button>`;
             }).join('')}
           </div>
-          <p class="editor__picker-hint">Faded geese are taken: tap one to swap with its player.</p>
+          <p class="editor__picker-hint">${t('Faded geese are taken: tap one to swap with its player.', 'Les oies estompées sont prises : touches-en une pour l’échanger avec son joueur.')}</p>
         </div>
 
         ${canRemove ? `
           <button type="button" class="link-btn editor__remove" data-action="remove">
-            ${ICONS.close} Remove ${esc(player.name)}
+            ${ICONS.close} ${t('Remove', 'Retirer')} ${esc(player.name)}
           </button>` : ''}
       </div>
 
       <div class="roster">
         ${state.players.map((p) => `
           <button type="button" class="roster__item" data-action="select" data-id="${p.id}"
-                  aria-label="Edit ${esc(p.name)}" aria-pressed="${p.id === selectedId}">
+                  aria-label="${t('Edit', 'Modifier')} ${esc(p.name)}" aria-pressed="${p.id === selectedId}">
             ${avatar(p, 56, { active: p.id === selectedId })}
             <span class="roster__name" data-name-of="${p.id}">${esc(p.name)}</span>
           </button>`).join('')}
       </div>
 
-      ${canAdd ? `<button type="button" class="dashed-btn" data-action="add">+ Add a player</button>` : ''}
+      ${canAdd ? `<button type="button" class="dashed-btn" data-action="add">${t('+ Add a player', '+ Ajouter un joueur')}</button>` : ''}
 
       <div class="spacer"></div>
-      <button type="button" class="btn" data-action="roll">ROLL FOR ORDER</button>
+      <button type="button" class="btn" data-action="roll">${t('ROLL FOR ORDER', "LANCER POUR L'ORDRE")}</button>
     </section>`;
 
     // Le prénom est mis à jour pendant la frappe, sans tout redessiner (garde le clavier ouvert)
@@ -107,7 +108,7 @@ export function render(root, app) {
   // Remplace les prénoms vides par « Player N »
   function cleanNames() {
     state.players.forEach((p, i) => {
-      p.name = p.name.trim() || `Player ${i + 1}`;
+      p.name = p.name.trim() || t(`Player ${i + 1}`, `Joueur ${i + 1}`);
     });
   }
 
@@ -137,7 +138,7 @@ export function render(root, app) {
     add() {
       cleanNames();
       const player = makePlayer(state.nextId, state.players);
-      player.name = `Player ${state.players.length + 1}`;
+      player.name = t(`Player ${state.players.length + 1}`, `Joueur ${state.players.length + 1}`);
       state.nextId += 1;
       state.players.push(player);
       selectedId = player.id;

@@ -10,6 +10,7 @@
    ========================================================= */
 
 import { sfx } from './sound.js';
+import { t } from './i18n.js';
 
 // ---------- Réglages ----------
 const KO_HITS = 6;           // nombre de tapes pour mettre l'oie KO…
@@ -62,7 +63,7 @@ export function attachMascot(button) {
     hits = [];
     button.classList.remove(...HIT_ANIMATIONS);
     button.classList.add('is-ko');
-    button.setAttribute('aria-label', 'Sir Honk is knocked out!');
+    button.setAttribute('aria-label', t('Sir Honk is knocked out!', 'Sir Honk est KO !'));
     sfx.ko();
     timer = setTimeout(getUp, FALL_MS + KO_MS);
   }
@@ -70,7 +71,7 @@ export function attachMascot(button) {
   function getUp() {
     button.classList.remove('is-ko');
     play('is-getting-up');
-    button.setAttribute('aria-label', 'Poke Sir Honk');
+    button.setAttribute('aria-label', t('Poke Sir Honk', 'Taper Sir Honk'));
     sfx.getUp();
     ko = false;
   }

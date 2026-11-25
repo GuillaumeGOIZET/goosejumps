@@ -30,6 +30,7 @@ Puis ouvrir http://localhost:8080 et passer en vue mobile dans les DevTools (390
 | Modifier un écran                                | `js/screens/<écran>.js` + `css/screens.css` |
 | Renommer une oie, changer sa phrase ou sa couleur | `js/goose.js` (images dans `assets/gooses/`, découpées depuis `assets/icons/gooses.png`) |
 | Régler ou retirer les animations (hover, clic, entrées d'écran) | `css/motion.css` + `js/motion.js` |
+| Modifier un texte de l'interface (anglais / français) | Le fichier de l'écran : chaque texte est écrit `t('English', 'Français')` (voir `js/i18n.js`) ; texte français des cartes : `textFr` dans `data/cards.json` |
 | Régler le volume, la musique ou un bruitage      | `js/sound.js` (volumes et musiques en haut du fichier, sons synthétisés : aucun fichier audio) |
 
 Effets de cartes reconnus (`effect.type`) : `move`, `moveWith`, `jumpTo`, `status` (luckyBreak, goldenShield, help, double), `brainSwap`, `freeze`, `moveOthers`, `swap`, `skipTurn`, `judged`, `bonusQuestion`, `manual`.

@@ -19,18 +19,20 @@ import {
 } from '../game.js';
 import { esc, backButton, bindActions, ICONS, spaces, moveSentence, fromTo, spaceName } from '../ui.js';
 import { sfx } from '../sound.js';
+import { t } from '../i18n.js';
 
+// Étape affichée en haut (fonction : suit la langue choisie)
 const STEPS = {
-  choose: 'Step 1 of 3 · Level',
-  question: 'Step 2 of 3 · Answer',
-  judge: 'Step 3 of 3 · Judge',
-  result: 'Result'
+  choose: () => t('Step 1 of 3 · Level', 'Étape 1 sur 3 · Niveau'),
+  question: () => t('Step 2 of 3 · Answer', 'Étape 2 sur 3 · Réponse'),
+  judge: () => t('Step 3 of 3 · Judge', 'Étape 3 sur 3 · Jugement'),
+  result: () => t('Result', 'Résultat')
 };
 
 /** Texte « Right: +1 space · Wrong: −1 space » */
 function movesText(right, wrong) {
-  const wrongText = wrong === 0 ? 'stay where you are' : `−${spaces(wrong)}`;
-  return `Right: +${spaces(right)} · Wrong: ${wrongText}`;
+  const wrongText = wrong === 0 ? t('stay where you are', 'tu restes sur place') : `−${spaces(wrong)}`;
+  return t(`Right: +${spaces(right)} · Wrong: ${wrongText}`, `Juste : +${spaces(right)} · Faux : ${wrongText}`);
 }
 
 export function render(root, app, params) {
@@ -75,15 +77,15 @@ export function render(root, app, params) {
   // Rappel des cartes actives + choix de l'aidant (Help!!)
   function effectsHTML() {
     const notes = [];
-    if (double) notes.push('<strong>Double Trouble</strong> · a right answer counts double!');
-    if (shield) notes.push('<strong>Golden Shield</strong> · no move back if you are wrong.');
-    if (help) notes.push(`<strong>Help!!</strong> · your helper moves forward ${spaces(HELP_MOVE)} if you are right.`);
+    if (double) notes.push(t('<strong>Double Trouble</strong> · a right answer counts double!', '<strong>Double Trouble</strong> · une bonne réponse compte double !'));
+    if (shield) notes.push(t('<strong>Golden Shield</strong> · no move back if you are wrong.', '<strong>Golden Shield</strong> · pas de recul si tu te trompes.'));
+    if (help) notes.push(t(`<strong>Help!!</strong> · your helper moves forward ${spaces(HELP_MOVE)} if you are right.`, `<strong>Help!!</strong> · ton aidant avance de ${spaces(HELP_MOVE)} si tu as juste.`));
     if (!notes.length) return '';
     return `
     <div class="effect-notes">
       ${notes.map((n) => `<p class="effect-note">${n}</p>`).join('')}
       ${help ? `
-        <span class="label" id="helper-label">Who helps you?</span>
+        <span class="label" id="helper-label">${t('Who helps you?', 'Qui t’aide ?')}</span>
         <div class="chips" role="group" aria-labelledby="helper-label">
           ${helpers.map((p) => `
             <button type="button" class="chip${p.id === helperId ? ' is-selected' : ''}" data-action="helper" data-id="${p.id}"
@@ -122,12 +124,12 @@ export function render(root, app, params) {
     return `
     <div class="choose">
       <div class="choose__cats">
-        <span class="label" id="cat-label">${bonus || swap ? 'Pick any category' : params.start ? 'Category chosen by the other players' : 'Category of your space'}</span>
+        <span class="label" id="cat-label">${bonus || swap ? t('Pick any category', 'Choisis une catégorie') : params.start ? t('Category chosen by the other players', 'Catégorie choisie par les autres joueurs') : t('Category of your space', 'Catégorie de ta case')}</span>
         <div class="cat-grid" role="group" aria-labelledby="cat-label">${cats}</div>
       </div>
-      <h1>${bonus ? `Bonus round, ${name}!` : swap ? `Brain Swap! ${name}, answer for ${esc(player.name)}` : `${name}, pick your level`}</h1>
+      <h1>${bonus ? t(`Bonus round, ${name}!`, `Question bonus, ${name} !`) : swap ? t(`Brain Swap! ${name}, answer for ${esc(player.name)}`, `Brain Swap ! ${name}, réponds pour ${esc(player.name)}`) : t(`${name}, pick your level`, `${name}, choisis ton niveau`)}</h1>
       ${effectsHTML()}
-      <p class="hint">The timer starts as soon as you choose.</p>
+      <p class="hint">${t('The timer starts as soon as you choose.', 'Le chrono démarre dès que tu choisis.')}</p>
       ${bonus
         ? levelButton(bonus.level, bonus.level === 'hard' ? 'level-btn--hard' : '')
         : levelButton('easy', '') + levelButton('hard', 'level-btn--hard')}
@@ -147,7 +149,7 @@ export function render(root, app, params) {
       <div class="spacer"></div>
       ${phase === 'judge' ? `
         <div class="answer">
-          <span class="label">Answer</span>
+          <span class="label">${t('Answer', 'Réponse')}</span>
           <span class="answer__text">${esc(question.answer)}</span>
         </div>` : ''}
     </div>
@@ -159,15 +161,15 @@ export function render(root, app, params) {
     const next = state.phase === 'finished' ? null : currentPlayer(state);
     return `
     <div class="result ${result.right ? 'result--right' : 'result--wrong'}">
-      <h1 class="result__title">${result.right ? 'Correct!' : 'Wrong!'}</h1>
+      <h1 class="result__title">${result.right ? t('Correct!', 'Juste !') : t('Wrong!', 'Faux !')}</h1>
       <span class="result__move">${moved}</span>
       <span class="result__space">${fromTo(result.from, result.to)}</span>
       ${result.notes.map((note) => `<span class="result__note">${note}</span>`).join('')}
     </div>
     <div class="spacer"></div>
     ${next
-      ? `<button type="button" class="btn btn--sm" data-action="next">NEXT PLAYER: ${esc(next.name.toUpperCase())}</button>`
-      : `<button type="button" class="btn btn--sm" data-action="winner">SEE THE WINNER</button>`}`;
+      ? `<button type="button" class="btn btn--sm" data-action="next">${t('NEXT PLAYER', 'JOUEUR SUIVANT')} : ${esc(next.name.toUpperCase())}</button>`
+      : `<button type="button" class="btn btn--sm" data-action="winner">${t('SEE THE WINNER', 'VOIR LE GAGNANT')}</button>`}`;
   }
 
   function draw() {
@@ -181,18 +183,18 @@ export function render(root, app, params) {
       footer = `
       <div class="spacer"></div>
       <div class="footer-stack">
-        <p class="hint hint--center">Answer out loud! Others: stop the clock when ${name} is done.</p>
-        <button type="button" class="btn btn--cream btn--sm" data-action="reveal">SHOW ANSWER</button>
+        <p class="hint hint--center">${t(`Answer out loud! Others: stop the clock when ${name} is done.`, `Réponds à voix haute (en anglais) ! Les autres : arrêtez le chrono quand ${name} a fini.`)}</p>
+        <button type="button" class="btn btn--cream btn--sm" data-action="reveal">${t('SHOW ANSWER', 'VOIR LA RÉPONSE')}</button>
       </div>`;
     }
     if (phase === 'judge') {
       footer = `
       <div class="spacer"></div>
       <div class="footer-stack">
-        <p class="hint hint--center">${timeLeft === 0 ? "Time's up! " : ''}Other players: was ${name} right?</p>
+        <p class="hint hint--center">${timeLeft === 0 ? t("Time's up! ", 'Temps écoulé ! ') : ''}${t(`Other players: was ${name} right?`, `Les autres joueurs : la réponse de ${name} est-elle juste ?`)}</p>
         <div class="two-buttons">
-          <button type="button" class="btn btn--correct btn--sm" data-action="judge" data-value="right">CORRECT</button>
-          <button type="button" class="btn btn--wrong btn--sm" data-action="judge" data-value="wrong">WRONG</button>
+          <button type="button" class="btn btn--correct btn--sm" data-action="judge" data-value="right">${t('CORRECT', 'JUSTE')}</button>
+          <button type="button" class="btn btn--wrong btn--sm" data-action="judge" data-value="wrong">${t('WRONG', 'FAUX')}</button>
         </div>
       </div>`;
     }
@@ -202,8 +204,8 @@ export function render(root, app, params) {
     root.innerHTML = `
     <section class="screen question">
       <div class="topbar topbar--between">
-        ${canGoBack ? backButton('back', 'Back to turn') : '<span></span>'}
-        <span class="topbar__step">${STEPS[phase]}</span>
+        ${canGoBack ? backButton('back', t('Back to turn', 'Retour au tour')) : '<span></span>'}
+        <span class="topbar__step">${STEPS[phase]()}</span>
       </div>
       ${body}
       ${footer}
@@ -274,21 +276,21 @@ export function render(root, app, params) {
       // Les cartes gardées servent une seule fois
       if (right && double) {
         setEffect(answerer, 'double', false);
-        notes.push('Double Trouble: twice as many spaces!');
+        notes.push(t('Double Trouble: twice as many spaces!', 'Double Trouble : deux fois plus de cases !'));
       }
       if (shield) {
         setEffect(answerer, 'goldenShield', false);
-        if (!right) notes.push('Golden Shield: no move back!');
+        if (!right) notes.push(t('Golden Shield: no move back!', 'Golden Shield : pas de recul !'));
       }
-      if (move.saved) notes.push(`Lucky Break: ${name} ignores the penalty!`);
+      if (move.saved) notes.push(t(`Lucky Break: ${name} ignores the penalty!`, `Lucky Break : ${name} évite la pénalité !`));
       if (help) {
         setEffect(answerer, 'help', false);
         const helper = getPlayer(state, helperId);
         if (right) {
           const h = movePlayer(state, helper.id, HELP_MOVE);
-          notes.push(`${esc(helper.name)} helped and moves forward to ${spaceName(h.to)}.`);
+          notes.push(t(`${esc(helper.name)} helped and moves forward to ${spaceName(h.to)}.`, `${esc(helper.name)} a aidé et avance sur la ${spaceName(h.to)}.`));
         } else {
-          notes.push(`${esc(helper.name)} helped, but stays where they are.`);
+          notes.push(t(`${esc(helper.name)} helped, but stays where they are.`, `${esc(helper.name)} a aidé, mais reste sur place.`));
         }
       }
       result = { right, from: move.from, to: move.to, notes };

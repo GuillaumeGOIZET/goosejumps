@@ -17,6 +17,14 @@
   right: 16px;
 }
 
+/* Bouton de langue (FR / EN), en haut à gauche de l'accueil */
+.screen > .home__lang {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  font-size: 18px;
+}
+
 .home__kicker {
   font-size: 13px;
   font-weight: 800;

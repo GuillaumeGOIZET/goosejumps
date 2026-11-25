@@ -34,11 +34,12 @@ export const SHOW_EXAMPLE_CARD_NOTICE = false;
 
 // Effets de cartes « gardés pour plus tard » (stockés dans player.effects).
 // Ils s'affichent sous « It's X's turn! » tant qu'ils n'ont pas servi.
+// (textFr = la même phrase en français, voir js/i18n.js)
 export const EFFECTS = {
-  luckyBreak: { label: 'Lucky Break', text: 'Your next penalty is ignored.' },
-  goldenShield: { label: 'Golden Shield', text: 'No move back if your next answer is wrong.' },
-  help: { label: 'Help!!', text: 'Another player helps you with your next question.' },
-  double: { label: 'Double Trouble', text: 'Your next correct answer counts double.' }
+  luckyBreak: { label: 'Lucky Break', text: 'Your next penalty is ignored.', textFr: 'Ta prochaine pénalité est annulée.' },
+  goldenShield: { label: 'Golden Shield', text: 'No move back if your next answer is wrong.', textFr: 'Pas de recul si ta prochaine réponse est fausse.' },
+  help: { label: 'Help!!', text: 'Another player helps you with your next question.', textFr: 'Un autre joueur t’aide pour ta prochaine question.' },
+  double: { label: 'Double Trouble', text: 'Your next correct answer counts double.', textFr: 'Ta prochaine bonne réponse compte double.' }
 };
 
 // ---------- Types de cases ----------

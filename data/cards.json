@@ -1,17 +1,17 @@
 {
-  "_note": "Chance = bonuses only. Special = penalties and tricky cards. 'effect' lets the app apply the card (see the comment at the top of js/screens/event.js).",
+  "_note": "textFr = French text (shown when the app is in French; titles stay in English). Chance = bonuses only. Special = penalties and tricky cards. 'effect' lets the app apply the card (see the comment at the top of js/screens/event.js).",
   "chance": [
-    { "id": "chance-good-connection", "title": "Good Connection!", "text": "Choose a player to move forward 2 spaces with you.", "effect": { "type": "moveWith", "value": 2 } },
-    { "id": "chance-lucky-break", "title": "Lucky Break!", "text": "Ignore your next penalty.", "effect": { "type": "status", "status": "luckyBreak" } },
-    { "id": "chance-lucky-jump", "title": "Lucky Jump!", "text": "Move to the next Chance space!", "effect": { "type": "jumpTo", "space": "chance" } },
-    { "id": "chance-golden-shield", "title": "Golden Shield", "text": "If you answer your next question wrong, you don't move back.", "effect": { "type": "status", "status": "goldenShield" } },
-    { "id": "chance-help", "title": "Help!!", "text": "You can ask another player for help with your next question. If the answer is right, your helper moves forward 1 space. If it's wrong, they stay where they are.", "effect": { "type": "status", "status": "help" } }
+    { "id": "chance-good-connection", "title": "Good Connection!", "text": "Choose a player to move forward 2 spaces with you.", "textFr": "Choisis un joueur qui avance de 2 cases avec toi.", "effect": { "type": "moveWith", "value": 2 } },
+    { "id": "chance-lucky-break", "title": "Lucky Break!", "text": "Ignore your next penalty.", "textFr": "Ta prochaine pénalité est annulée.", "effect": { "type": "status", "status": "luckyBreak" } },
+    { "id": "chance-lucky-jump", "title": "Lucky Jump!", "text": "Move to the next Chance space!", "textFr": "Va jusqu’à la prochaine case Chance !", "effect": { "type": "jumpTo", "space": "chance" } },
+    { "id": "chance-golden-shield", "title": "Golden Shield", "text": "If you answer your next question wrong, you don't move back.", "textFr": "Si tu te trompes à ta prochaine question, tu ne recules pas.", "effect": { "type": "status", "status": "goldenShield" } },
+    { "id": "chance-help", "title": "Help!!", "text": "You can ask another player for help with your next question. If the answer is right, your helper moves forward 1 space. If it's wrong, they stay where they are.", "textFr": "Tu peux demander de l’aide à un autre joueur pour ta prochaine question. Si la réponse est juste, ton aidant avance d’1 case. Sinon, il reste sur place.", "effect": { "type": "status", "status": "help" } }
   ],
   "special": [
-    { "id": "special-brain-swap", "title": "Brain Swap!", "text": "Choose another player to answer your question. They move instead of you.", "effect": { "type": "brainSwap" } },
-    { "id": "special-404", "title": "404 Error!", "text": "You are lost! Move back 4 spaces.", "effect": { "type": "move", "value": -4 } },
-    { "id": "special-freeze", "title": "Freeze!", "text": "Choose a player to skip their next turn.", "effect": { "type": "freeze" } },
-    { "id": "special-double-trouble", "title": "Double Trouble!", "text": "Your next correct answer moves you forward twice as many spaces.", "effect": { "type": "status", "status": "double" } }
+    { "id": "special-brain-swap", "title": "Brain Swap!", "text": "Choose another player to answer your question. They move instead of you.", "textFr": "Choisis un autre joueur qui répond à ta question. C’est lui qui bouge à ta place.", "effect": { "type": "brainSwap" } },
+    { "id": "special-404", "title": "404 Error!", "text": "You are lost! Move back 4 spaces.", "textFr": "Tu es perdu ! Recule de 4 cases.", "effect": { "type": "move", "value": -4 } },
+    { "id": "special-freeze", "title": "Freeze!", "text": "Choose a player to skip their next turn.", "textFr": "Choisis un joueur qui passe son prochain tour.", "effect": { "type": "freeze" } },
+    { "id": "special-double-trouble", "title": "Double Trouble!", "text": "Your next correct answer moves you forward twice as many spaces.", "textFr": "Ta prochaine bonne réponse te fait avancer deux fois plus.", "effect": { "type": "status", "status": "double" } }
   ],
   "battle": {
     "web": [
