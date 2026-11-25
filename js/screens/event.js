@@ -2,8 +2,14 @@
    Cartes Chance / Special (maquette Event)
    On tire une carte, puis on applique son effet (champ `effect` de cards.json).
 
-   Effets gérés :
-   - move          : avancer / reculer de `value` cases
+   Effets gérés (champ effect.type) :
+   - move          : avancer / reculer de `value` cases (404 Error!)
+   - moveWith      : le joueur ET un joueur choisi avancent de `value` (Good Connection!)
+   - jumpTo        : aller à la prochaine case de type `space` (Lucky Jump!)
+   - status        : effet gardé pour plus tard, `status` = luckyBreak, goldenShield,
+                     help ou double (voir EFFECTS dans game.js)
+   - brainSwap     : un joueur choisi répond à la question à ta place (Brain Swap!)
+   - freeze        : un joueur choisi passe son prochain tour (Freeze!)
    - moveOthers    : tous les autres joueurs bougent de `value` cases
    - swap          : échanger sa place avec un joueur au choix
    - skipTurn      : passer son prochain tour
@@ -15,8 +21,9 @@
    ========================================================= */
 
 import {
-  SPACE_TYPES, SHOW_EXAMPLE_CARD_NOTICE,
-  currentPlayer, otherPlayers, drawCard, movePlayer, setPosition, nextTurn
+  SPACE_TYPES, SHOW_EXAMPLE_CARD_NOTICE, EFFECTS,
+  currentPlayer, otherPlayers, getPlayer, drawCard, movePlayer, setPosition, nextTurn,
+  setEffect, skipNextTurn, nextSpaceOfType
 } from '../game.js';
 import { esc, backButton, bindActions, moveSentence, fromTo, spaceName, spaceMark } from '../ui.js';
 import { sfx } from '../sound.js';
@@ -31,11 +38,39 @@ export function render(root, app, params) {
   let outcome = null;     // lignes de résultat une fois l'effet appliqué
   let justDrawn = false;  // pour n'animer la carte qu'une seule fois
 
+  // Liste des autres joueurs à choisir (data-action = action déclenchée)
+  function pickList(question, action) {
+    return `
+    <p class="hint hint--center">${question}</p>
+    <div class="pick-list">
+      ${otherPlayers(state, player.id).map((p) => `
+        <button type="button" class="pick-btn" data-action="${action}" data-id="${p.id}">
+          <span class="pick-btn__name">${esc(p.name)}</span>
+          <span class="pick-btn__meta">Space ${p.position}</span>
+        </button>`).join('')}
+    </div>`;
+  }
+
   // ---------- Boutons d'action selon l'effet de la carte ----------
   function actionsHTML() {
     const effect = card.effect || { type: 'manual' };
 
     switch (effect.type) {
+      case 'moveWith':
+        return pickList(`${name}, who moves forward ${effect.value} spaces with you?`, 'applyMoveWith');
+      case 'jumpTo': {
+        const target = nextSpaceOfType(player.position, effect.space);
+        return target === null
+          ? `<p class="hint hint--center">No ${SPACE_TYPES[effect.space].label} space ahead: you stay where you are.</p>
+             <button type="button" class="btn btn--sm" data-action="applyJump">OK · NEXT PLAYER</button>`
+          : `<button type="button" class="btn btn--sm" data-action="applyJump">JUMP TO SPACE ${target}</button>`;
+      }
+      case 'status':
+        return `<button type="button" class="btn btn--sm" data-action="applyStatus">KEEP THIS CARD</button>`;
+      case 'brainSwap':
+        return pickList(`${name}, who answers your question?`, 'applyBrainSwap');
+      case 'freeze':
+        return pickList(`${name}, who skips their next turn?`, 'applyFreeze');
       case 'move': {
         const label = effect.value >= 0 ? `MOVE FORWARD ${effect.value}` : `MOVE BACK ${-effect.value}`;
         return `<button type="button" class="btn btn--sm" data-action="applyMove">${label}</button>`;
@@ -142,7 +177,9 @@ export function render(root, app, params) {
   }
 
   // Phrase + "Space 7 → space 9" pour un déplacement
-  function moveLines(p, from, to) {
+  // (saved = Lucky Break a annulé le recul)
+  function moveLines(p, from, to, saved = false) {
+    if (saved) return `Lucky Break! ${esc(p.name)} ignores the penalty. <span class="outcome__space">Still on ${spaceName(from)}</span>`;
     return `${moveSentence(esc(p.name), from, to)} <span class="outcome__space">${fromTo(from, to)}</span>`;
   }
 
@@ -162,10 +199,49 @@ export function render(root, app, params) {
       sfx.cardFlip();
     },
     applyMove() {
-      const { from, to } = movePlayer(state, player.id, card.effect.value);
+      const { from, to, saved } = movePlayer(state, player.id, card.effect.value);
       if (to >= from) sfx.moveUp();
       else sfx.moveDown();
+      finishWith([moveLines(player, from, to, saved)]);
+    },
+    applyMoveWith({ id }) {
+      const friend = getPlayer(state, Number(id));
+      const mine = movePlayer(state, player.id, card.effect.value);
+      const theirs = movePlayer(state, friend.id, card.effect.value);
+      sfx.moveUp();
+      finishWith([moveLines(player, mine.from, mine.to), moveLines(friend, theirs.from, theirs.to)]);
+    },
+    applyJump() {
+      const target = nextSpaceOfType(player.position, card.effect.space);
+      if (target === null) {
+        finishWith([`${name} stays on ${spaceName(player.position)}.`]);
+        return;
+      }
+      const { from, to } = setPosition(state, player.id, target);
+      sfx.moveUp();
       finishWith([moveLines(player, from, to)]);
+    },
+    applyStatus() {
+      const status = card.effect.status;
+      setEffect(player, status, true);
+      sfx.reveal();
+      finishWith([`${name} keeps <strong>${EFFECTS[status].label}</strong>. ${EFFECTS[status].text}`]);
+    },
+    applyBrainSwap({ id }) {
+      // La carte est déjà marquée comme tirée : on passe à la question,
+      // le tour se termine après le jugement
+      sfx.swap();
+      app.go('question', { answererId: Number(id) });
+    },
+    applyFreeze({ id }) {
+      const target = getPlayer(state, Number(id));
+      if (skipNextTurn(state, target.id)) {
+        sfx.freeze();
+        finishWith([`${esc(target.name)} is frozen and will skip their next turn!`]);
+      } else {
+        sfx.reveal();
+        finishWith([`Lucky Break! ${esc(target.name)} ignores the freeze.`]);
+      }
     },
     applyMoveOthers() {
       const lines = otherPlayers(state, player.id).map((p) => {

@@ -55,7 +55,7 @@ docs/       (maquettes, schéma) → référence uniquement, ne pas servir
       - **Easy** : +1 si la réponse est bonne, −1 si elle est fausse.
       - **Hard** : +3 si la réponse est bonne, −2 si elle est fausse.
    - Ne pas reposer une question déjà tirée dans la partie, tant que la liste n'est pas épuisée.
-6. **Chance / Special** : on tire une carte au hasard dans le paquet correspondant. On applique son `effect` (déplacement, échange, tour passé, etc.), ou on laisse les joueurs l'appliquer si `type: "manual"`. Le contenu final sera fourni plus tard par l'équipe.
+6. **Chance / Special** : on tire une carte au hasard dans le paquet correspondant. On applique son `effect` (déplacement, échange, tour passé, etc.), ou on laisse les joueurs l'appliquer si `type: "manual"`. Les vraies cartes de l'équipe sont en place : Chance = que des bonus, Special = malus et cartes piège. Certaines cartes sont « gardées pour plus tard » (`player.effects` : Lucky Break, Golden Shield, Help!!, Double Trouble) et s'affichent sous le nom du joueur jusqu'à ce qu'elles servent.
 7. **Battle** (3 cases) :
    1. Le joueur désigne un adversaire, puis choisit un thème.
    2. Une **question éclair très facile** s'affiche, **sans timer**. Le premier qui répond correctement, à voix haute et en anglais, gagne.

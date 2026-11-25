@@ -260,6 +260,12 @@ export const sfx = {
     tone(t, 300, { type: 'sine', dur: 0.35, vol: 0.3, to: 900 });
     tone(t, 900, { type: 'sine', dur: 0.35, vol: 0.3, to: 300 });
   }),
+  // Gel : petits cristaux qui descendent
+  freeze: () => play((t) => {
+    melody(t, [[96, 0, 0.15], [91, 0.06, 0.15], [88, 0.12, 0.15], [84, 0.18, 0.3]], { type: 'triangle', vol: 0.2 });
+    noise(t, { dur: 0.5, vol: 0.2, type: 'highpass', freq: 6000, attack: 0.02 });
+  }),
+
   // Une oie qui ronfle (tour passé)
   snore: () => play((t) => {
     noise(t, { dur: 0.8, vol: 0.7, type: 'lowpass', freq: 250, to: 700, attack: 0.4 });
@@ -504,7 +510,7 @@ function cycleSettings() {
 });
 
 // Petit clic sur tous les boutons (un son plus aigu pour les sélections)
-const SELECT_TARGETS = '.goose-pick, .tab, .cat-btn, .roster__item';
+const SELECT_TARGETS = '.goose-pick, .chip, .tab, .cat-btn, .roster__item';
 document.addEventListener('pointerdown', (event) => {
   const button = event.target.closest('button');
   if (!button || button.disabled || button.hasAttribute('data-sound-toggle')) return;

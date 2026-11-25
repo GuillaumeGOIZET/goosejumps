@@ -13,7 +13,8 @@ const VERSION = 2; // à augmenter si la forme de l'état change (2 = oies à ch
   {
     version: 2,
     phase: 'setup' | 'order' | 'playing' | 'finished',
-    players: [{ id, name, character, position, skipTurns }],  // character = id d'une oie de goose.js
+    players: [{ id, name, character, position, skipTurns, effects }],
+    // character = id d'une oie de goose.js ; effects = cartes gardées ({ luckyBreak: true, … })
     nextId: 3,               // id du prochain joueur créé
     rolls: { [id]: [5, 2] }, // lancers pour l'ordre de jeu
     turnOrder: [id, …],      // ordre de jeu (après les lancers)
@@ -30,7 +31,7 @@ const VERSION = 2; // à augmenter si la forme de l'état change (2 = oies à ch
 export function makePlayer(id, existing = []) {
   const taken = existing.map((p) => p.character);
   const free = CHARACTERS.find((c) => !taken.includes(c.id)) || CHARACTERS[0];
-  return { id, name: `Player ${id}`, character: free.id, position: 0, skipTurns: 0 };
+  return { id, name: `Player ${id}`, character: free.id, position: 0, skipTurns: 0, effects: {} };
 }
 
 /** Ancienne sauvegarde (v1 : plumes + chapeau) → une oie différente par joueur */
@@ -50,7 +51,7 @@ function migrate(saved) {
 export function createState(previousPlayers = null) {
   let players;
   if (previousPlayers && previousPlayers.length) {
-    players = previousPlayers.map((p) => ({ ...p, position: 0, skipTurns: 0 }));
+    players = previousPlayers.map((p) => ({ ...p, position: 0, skipTurns: 0, effects: {} }));
   } else {
     const first = makePlayer(1);
     players = [first, makePlayer(2, [first])];

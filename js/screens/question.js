@@ -2,15 +2,20 @@
    Carte question (maquette Card)
    Étapes : niveau → question + timer → réponse + jugement → résultat
 
-   params.type  : catégorie de la case ('web', 'cyber', 'design', 'marketing')
-   params.bonus : question bonus d'une carte Chance { level, right, wrong }
+   params.type       : catégorie de la case ('web', 'cyber', 'design', 'marketing')
+   params.bonus      : question bonus d'une carte { level, right, wrong }
+   params.answererId : carte Brain Swap, un autre joueur répond (et bouge) à ta place
+
+   Cartes gardées par celui qui répond (voir EFFECTS dans game.js) :
+   Golden Shield (pas de recul si faux), Double Trouble (×2 si juste),
+   Help!! (un joueur aide, et avance de HELP_MOVE si c'est juste).
    ========================================================= */
 
 import {
-  CATEGORIES, SPACE_TYPES, MOVES, TIMER_SECONDS,
-  currentPlayer, drawQuestion, movePlayer, nextTurn
+  CATEGORIES, SPACE_TYPES, MOVES, TIMER_SECONDS, HELP_MOVE,
+  currentPlayer, getPlayer, otherPlayers, drawQuestion, movePlayer, nextTurn, hasEffect, setEffect
 } from '../game.js';
-import { esc, backButton, bindActions, ICONS, spaces, moveSentence, fromTo } from '../ui.js';
+import { esc, backButton, bindActions, ICONS, spaces, moveSentence, fromTo, spaceName } from '../ui.js';
 import { sfx } from '../sound.js';
 
 const STEPS = {
@@ -29,8 +34,19 @@ function movesText(right, wrong) {
 export function render(root, app, params) {
   const state = app.state;
   const player = currentPlayer(state);
-  const name = esc(player.name);
   const bonus = params.bonus || null;
+
+  // Brain Swap : un autre joueur répond (et avance ou recule) à la place du joueur dont c'est le tour
+  const answerer = params.answererId ? getPlayer(state, params.answererId) : player;
+  const swap = answerer !== player;
+  const name = esc(answerer.name);
+
+  // Cartes gardées par celui qui répond
+  const shield = hasEffect(answerer, 'goldenShield');
+  const double = hasEffect(answerer, 'double');
+  const help = hasEffect(answerer, 'help');
+  const helpers = otherPlayers(state, answerer.id);
+  let helperId = help ? helpers[0].id : null;
 
   // État local de l'écran (pas besoin de le sauvegarder)
   let phase = 'choose';
@@ -46,6 +62,32 @@ export function render(root, app, params) {
   function points(lvl) {
     if (bonus) return { right: bonus.right, wrong: bonus.wrong };
     return { right: MOVES[lvl].right, wrong: Math.abs(MOVES[lvl].wrong) };
+  }
+
+  // Les mêmes points, une fois les cartes Double Trouble et Golden Shield appliquées
+  function moves(lvl) {
+    const pts = points(lvl);
+    return { right: double ? pts.right * 2 : pts.right, wrong: shield ? 0 : pts.wrong };
+  }
+
+  // Rappel des cartes actives + choix de l'aidant (Help!!)
+  function effectsHTML() {
+    const notes = [];
+    if (double) notes.push('<strong>Double Trouble</strong> · a right answer counts double!');
+    if (shield) notes.push('<strong>Golden Shield</strong> · no move back if you are wrong.');
+    if (help) notes.push(`<strong>Help!!</strong> · your helper moves forward ${spaces(HELP_MOVE)} if you are right.`);
+    if (!notes.length) return '';
+    return `
+    <div class="effect-notes">
+      ${notes.map((n) => `<p class="effect-note">${n}</p>`).join('')}
+      ${help ? `
+        <span class="label" id="helper-label">Who helps you?</span>
+        <div class="chips" role="group" aria-labelledby="helper-label">
+          ${helpers.map((p) => `
+            <button type="button" class="chip${p.id === helperId ? ' is-selected' : ''}" data-action="helper" data-id="${p.id}"
+                    aria-pressed="${p.id === helperId}">${esc(p.name)}</button>`).join('')}
+        </div>` : ''}
+    </div>`;
   }
 
   function timerHTML() {
@@ -67,7 +109,7 @@ export function render(root, app, params) {
               data-action="category" data-value="${c}" aria-pressed="${c === category}">${SPACE_TYPES[c].label}</button>`).join('');
 
     const levelButton = (lvl, extraClass) => {
-      const pts = points(lvl);
+      const pts = moves(lvl);
       return `
       <button type="button" class="level-btn ${extraClass}" data-action="level" data-value="${lvl}">
         <span class="level-btn__title">${lvl.toUpperCase()}</span>
@@ -78,10 +120,11 @@ export function render(root, app, params) {
     return `
     <div class="choose">
       <div class="choose__cats">
-        <span class="label" id="cat-label">${bonus ? 'Pick any category' : 'Category of your space'}</span>
+        <span class="label" id="cat-label">${bonus || swap ? 'Pick any category' : 'Category of your space'}</span>
         <div class="cat-grid" role="group" aria-labelledby="cat-label">${cats}</div>
       </div>
-      <h1>${bonus ? `Bonus round, ${name}!` : `${name}, pick your level`}</h1>
+      <h1>${bonus ? `Bonus round, ${name}!` : swap ? `Brain Swap! ${name}, answer for ${esc(player.name)}` : `${name}, pick your level`}</h1>
+      ${effectsHTML()}
       <p class="hint">The timer starts as soon as you choose.</p>
       ${bonus
         ? levelButton(bonus.level, bonus.level === 'hard' ? 'level-btn--hard' : '')
@@ -96,7 +139,7 @@ export function render(root, app, params) {
       <div class="card__shine"></div>
       <div class="card__head">
         <span class="tag" style="--tag-color: ${info.color}">${info.label.toUpperCase()}</span>
-        <span class="question-card__level">${level === 'hard' ? 'Hard' : 'Easy'}${bonus ? ' · Bonus' : ''}</span>
+        <span class="question-card__level">${level === 'hard' ? 'Hard' : 'Easy'}${bonus ? ' · Bonus' : ''}${swap ? ' · Brain Swap' : ''}</span>
       </div>
       <h1 class="card__question">${esc(question.question)}</h1>
       <div class="spacer"></div>
@@ -117,6 +160,7 @@ export function render(root, app, params) {
       <h1 class="result__title">${result.right ? 'Correct!' : 'Wrong!'}</h1>
       <span class="result__move">${moved}</span>
       <span class="result__space">${fromTo(result.from, result.to)}</span>
+      ${result.notes.map((note) => `<span class="result__note">${note}</span>`).join('')}
     </div>
     <div class="spacer"></div>
     ${next
@@ -152,7 +196,7 @@ export function render(root, app, params) {
     }
 
     // On ne peut revenir en arrière qu'avant d'avoir vu la question
-    const canGoBack = phase === 'choose' && !bonus;
+    const canGoBack = phase === 'choose' && !bonus && !swap;
     root.innerHTML = `
     <section class="screen question">
       <div class="topbar topbar--between">
@@ -215,12 +259,37 @@ export function render(root, app, params) {
       sfx.reveal();
       showAnswer();
     },
+    helper({ id }) {
+      helperId = Number(id);
+      draw();
+    },
     judge({ value }) {
       const right = value === 'right';
-      const pts = points(level);
-      const delta = right ? pts.right : -pts.wrong;
-      const { from, to } = movePlayer(state, player.id, delta);
-      result = { right, from, to };
+      const m = moves(level);
+      const move = movePlayer(state, answerer.id, right ? m.right : -m.wrong);
+      const notes = [];
+
+      // Les cartes gardées servent une seule fois
+      if (right && double) {
+        setEffect(answerer, 'double', false);
+        notes.push('Double Trouble: twice as many spaces!');
+      }
+      if (shield) {
+        setEffect(answerer, 'goldenShield', false);
+        if (!right) notes.push('Golden Shield: no move back!');
+      }
+      if (move.saved) notes.push(`Lucky Break: ${name} ignores the penalty!`);
+      if (help) {
+        setEffect(answerer, 'help', false);
+        const helper = getPlayer(state, helperId);
+        if (right) {
+          const h = movePlayer(state, helper.id, HELP_MOVE);
+          notes.push(`${esc(helper.name)} helped and moves forward to ${spaceName(h.to)}.`);
+        } else {
+          notes.push(`${esc(helper.name)} helped, but stays where they are.`);
+        }
+      }
+      result = { right, from: move.from, to: move.to, notes };
       if (right) sfx.correct();
       else sfx.wrong();
       if (state.phase !== 'finished') nextTurn(state);

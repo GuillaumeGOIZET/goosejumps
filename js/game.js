@@ -17,10 +17,20 @@ export const MOVES = {
 };
 
 export const BATTLE_WIN_MOVE = 1;  // le gagnant d'une Battle avance de 1
+export const HELP_MOVE = 1;        // carte Help!! : l'aidant avance de 1 si la réponse est bonne
 
 // Affiche « EXAMPLE CARD · REAL CARDS TO COME » sur les cartes Chance / Special.
-// Passer à false quand l'équipe aura fourni les vraies cartes.
-export const SHOW_EXAMPLE_CARD_NOTICE = true;
+// Les vraies cartes de l'équipe sont en place : false.
+export const SHOW_EXAMPLE_CARD_NOTICE = false;
+
+// Effets de cartes « gardés pour plus tard » (stockés dans player.effects).
+// Ils s'affichent sous « It's X's turn! » tant qu'ils n'ont pas servi.
+export const EFFECTS = {
+  luckyBreak: { label: 'Lucky Break', text: 'Your next penalty is ignored.' },
+  goldenShield: { label: 'Golden Shield', text: 'No move back if your next answer is wrong.' },
+  help: { label: 'Help!!', text: 'Another player helps you with your next question.' },
+  double: { label: 'Double Trouble', text: 'Your next correct answer counts double.' }
+};
 
 // ---------- Types de cases ----------
 
@@ -96,9 +106,56 @@ export function setPosition(state, id, position) {
   return { from, to };
 }
 
-/** Avance (delta > 0) ou recule (delta < 0) un joueur */
+// ---------- Effets gardés pour plus tard ----------
+
+export function hasEffect(player, name) {
+  return Boolean(player.effects && player.effects[name]);
+}
+
+export function setEffect(player, name, active) {
+  player.effects = { ...(player.effects || {}), [name]: active };
+}
+
+/** Noms des effets actifs d'un joueur ('luckyBreak', 'double'…) */
+export function activeEffects(player) {
+  return Object.keys(EFFECTS).filter((name) => hasEffect(player, name));
+}
+
+/**
+ * Avance (delta > 0) ou recule (delta < 0) un joueur.
+ * Lucky Break : un recul est annulé (et la carte est utilisée).
+ * Renvoie { from, to, saved } — saved = true si Lucky Break a servi.
+ */
 export function movePlayer(state, id, delta) {
-  return setPosition(state, id, getPlayer(state, id).position + delta);
+  const player = getPlayer(state, id);
+  if (delta < 0 && hasEffect(player, 'luckyBreak')) {
+    setEffect(player, 'luckyBreak', false);
+    return { from: player.position, to: player.position, saved: true };
+  }
+  return { ...setPosition(state, id, player.position + delta), saved: false };
+}
+
+/**
+ * Fait passer son prochain tour à un joueur (carte Freeze).
+ * Lucky Break annule cette pénalité. Renvoie false si elle a été annulée.
+ */
+export function skipNextTurn(state, id) {
+  const player = getPlayer(state, id);
+  if (hasEffect(player, 'luckyBreak')) {
+    setEffect(player, 'luckyBreak', false);
+    return false;
+  }
+  player.skipTurns += 1;
+  return true;
+}
+
+/** Prochaine case d'un type donné après `position` (ex. 'chance'), ou null */
+export function nextSpaceOfType(position, type) {
+  const spaces = data.board.spaces;
+  for (let i = position + 1; i < spaces.length; i++) {
+    if (spaces[i] === type) return i;
+  }
+  return null;
 }
 
 /** Passe au joueur suivant (et au tour suivant quand tout le monde a joué) */

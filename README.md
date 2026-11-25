@@ -24,7 +24,7 @@ Puis ouvrir http://localhost:8080 et passer en vue mobile dans les DevTools (390
 | Je veux…                                         | Fichier |
 |--------------------------------------------------|---------|
 | Changer les points (Easy/Hard, Battle), le timer, la case FINISH | `js/game.js` (constantes en haut) |
-| Remplacer les cartes Chance / Special d'exemple  | `data/cards.json` (garder le champ `effect`) puis passer `SHOW_EXAMPLE_CARD_NOTICE` à `false` dans `js/game.js` |
+| Modifier ou ajouter une carte Chance / Special    | `data/cards.json` (garder le champ `effect`) |
 | Corriger le type d'une case du plateau           | `data/board.json` |
 | Changer une couleur, une police, un arrondi      | `css/tokens.css` |
 | Modifier un écran                                | `js/screens/<écran>.js` + `css/screens.css` |
@@ -32,7 +32,7 @@ Puis ouvrir http://localhost:8080 et passer en vue mobile dans les DevTools (390
 | Régler ou retirer les animations (hover, clic, entrées d'écran) | `css/motion.css` + `js/motion.js` |
 | Régler le volume, la musique ou un bruitage      | `js/sound.js` (volumes et musiques en haut du fichier, sons synthétisés : aucun fichier audio) |
 
-Effets de cartes reconnus (`effect.type`) : `move`, `moveOthers`, `swap`, `skipTurn`, `judged`, `bonusQuestion`, `manual`.
+Effets de cartes reconnus (`effect.type`) : `move`, `moveWith`, `jumpTo`, `status` (luckyBreak, goldenShield, help, double), `brainSwap`, `freeze`, `moveOthers`, `swap`, `skipTurn`, `judged`, `bonusQuestion`, `manual`.
 Voir le commentaire en haut de `js/screens/event.js`.
 
 ## Mettre à jour l'app en production

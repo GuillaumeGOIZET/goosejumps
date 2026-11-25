@@ -1,16 +1,17 @@
 {
-  "_note": "Example cards only. Chance = bonuses only (good news). Special = everything else, including all the penalties (move back, skip a turn…). The team will send the real Chance and Special cards later. 'effect' lets the app move the goose automatically; type 'manual' = players apply it themselves.",
+  "_note": "Chance = bonuses only. Special = penalties and tricky cards. 'effect' lets the app apply the card (see the comment at the top of js/screens/event.js).",
   "chance": [
-    { "id": "chance-01", "title": "Tailwind!", "text": "A gust of wind lifts your feathers. Move forward 2 spaces.", "effect": { "type": "move", "value": 2 } },
-    { "id": "chance-03", "title": "Bonus round", "text": "Answer a Hard question from any category. Right: +4 spaces. Wrong: stay where you are.", "effect": { "type": "bonusQuestion", "level": "hard", "right": 4, "wrong": 0 } },
-    { "id": "chance-04", "title": "Lucky egg", "text": "Keep this card. Use it once to cancel a move back.", "effect": { "type": "manual" } }
+    { "id": "chance-good-connection", "title": "Good Connection!", "text": "Choose a player to move forward 2 spaces with you.", "effect": { "type": "moveWith", "value": 2 } },
+    { "id": "chance-lucky-break", "title": "Lucky Break!", "text": "Ignore your next penalty.", "effect": { "type": "status", "status": "luckyBreak" } },
+    { "id": "chance-lucky-jump", "title": "Lucky Jump!", "text": "Move to the next Chance space!", "effect": { "type": "jumpTo", "space": "chance" } },
+    { "id": "chance-golden-shield", "title": "Golden Shield", "text": "If you answer your next question wrong, you don't move back.", "effect": { "type": "status", "status": "goldenShield" } },
+    { "id": "chance-help", "title": "Help!!", "text": "You can ask another player for help with your next question. If the answer is right, your helper moves forward 1 space. If it's wrong, they stay where they are.", "effect": { "type": "status", "status": "help" } }
   ],
   "special": [
-    { "id": "special-01", "title": "Swap!", "text": "Swap places with the player of your choice.", "effect": { "type": "swap" } },
-    { "id": "special-02", "title": "Goose nap", "text": "You fell asleep on the job. Skip your next turn.", "effect": { "type": "skipTurn" } },
-    { "id": "special-03", "title": "Honk attack", "text": "Every other player moves back 1 space.", "effect": { "type": "moveOthers", "value": -1 } },
-    { "id": "special-04", "title": "Teach me", "text": "Explain a web word in English to the group in 20 seconds. Success: +2 spaces.", "effect": { "type": "judged", "right": 2, "wrong": 0 } },
-    { "id": "special-05", "title": "Wi-Fi down", "text": "Your connection dropped. Move back 1 space.", "effect": { "type": "move", "value": -1 } }
+    { "id": "special-brain-swap", "title": "Brain Swap!", "text": "Choose another player to answer your question. They move instead of you.", "effect": { "type": "brainSwap" } },
+    { "id": "special-404", "title": "404 Error!", "text": "You are lost! Move back 4 spaces.", "effect": { "type": "move", "value": -4 } },
+    { "id": "special-freeze", "title": "Freeze!", "text": "Choose a player to skip their next turn.", "effect": { "type": "freeze" } },
+    { "id": "special-double-trouble", "title": "Double Trouble!", "text": "Your next correct answer moves you forward twice as many spaces.", "effect": { "type": "status", "status": "double" } }
   ],
   "battle": {
     "web": [

@@ -5,7 +5,7 @@
    ========================================================= */
 
 import { avatar, gooseImg } from '../goose.js';
-import { FINISH, SPACE_TYPES, currentPlayer, nextTurn, spaceTypeAt } from '../game.js';
+import { FINISH, SPACE_TYPES, EFFECTS, activeEffects, currentPlayer, nextTurn, spaceTypeAt } from '../game.js';
 import { esc, bindActions, ICONS, spaceMark } from '../ui.js';
 import { sfx, soundButton } from '../sound.js';
 
@@ -85,13 +85,17 @@ export function render(root, app) {
       <div class="turn-banner__text">
         <span class="turn-banner__meta">ROUND ${state.round} · SPACE ${player.position}</span>
         <h1 class="${player.name.length > 10 ? 'is-very-long' : player.name.length > 7 ? 'is-long' : ''}">It's ${esc(player.name)}'s turn!</h1>
+        ${activeEffects(player).length ? `
+          <ul class="effect-pills" aria-label="Active cards">
+            ${activeEffects(player).map((e) => `<li class="effect-pill" title="${EFFECTS[e].text}">${EFFECTS[e].label}</li>`).join('')}
+          </ul>` : ''}
       </div>
     </div>
 
     ${napping ? `
       <div class="panel nap">
-        <h2>Goose nap!</h2>
-        <p>${esc(player.name)} fell asleep and skips this turn.</p>
+        <h2>Frozen!</h2>
+        <p>${esc(player.name)} is frozen and skips this turn.</p>
       </div>
       <div class="spacer"></div>
       <button type="button" class="btn" data-action="skip">NEXT PLAYER</button>
@@ -112,7 +116,7 @@ export function render(root, app) {
   const turnKey = JSON.stringify([state.round, state.current, state.players.map((p) => p.position)]);
   if (turnKey !== lastTurnKey) {
     lastTurnKey = turnKey;
-    if (napping) sfx.snore();
+    if (napping) sfx.freeze();
     else sfx.turn();
   }
 
